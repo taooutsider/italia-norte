@@ -4876,10 +4876,11 @@ function renderRegions() {
     `).join("");
 }
 
-function switchTab(tab) {
+function switchTab(tab, el) {
     document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
     document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-    event.target.classList.add("active");
+    const btn = el || (typeof event !== 'undefined' && event?.target) || document.querySelector(`.tab-btn[onclick*="'${tab}'"]`);
+    if (btn) btn.classList.add("active");
     document.getElementById("tab-" + tab).classList.add("active");
 }
 
