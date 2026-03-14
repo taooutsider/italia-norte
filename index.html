@@ -763,7 +763,172 @@
         }
         .lang-btn:hover { background: rgba(255,255,255,0.15); color: white; }
         .lang-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+        .budget-filter {
+            max-width: 1400px;
+            margin: 0 auto 8px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .budget-label {
+            font-size: 13px;
+            color: var(--text-dim);
+            white-space: nowrap;
+            min-width: 180px;
+        }
+        .budget-label strong { color: var(--accent); margin-left: 6px; }
+        #budget-slider {
+            flex: 1;
+            accent-color: var(--accent);
+            max-width: 300px;
+        }
+
+        .fav-btn {
+            position: absolute;
+            top: 10px;
+            right: 44px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.2s, transform 0.2s;
+            line-height: 1;
+            padding: 2px;
+        }
+        .fav-btn:hover { opacity: 0.8; transform: scale(1.2); }
+        .fav-btn.active { opacity: 1; }
+        .fav-filter-btn {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-dim);
+            font-size: 12px;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .fav-filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+        .compare-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-dim);
+            font-size: 11px;
+            padding: 4px 8px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.2s;
+        }
+        .compare-btn:hover, .compare-btn.selected { background: var(--accent); border-color: var(--accent); color: white; }
+        .compare-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 10px 20px;
+            z-index: 100;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .compare-bar.visible { display: flex; }
+        .compare-bar-chip {
+            background: var(--accent);
+            color: white;
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .compare-bar-chip button { background: none; border: none; color: white; cursor: pointer; font-size: 14px; line-height: 1; padding: 0; }
+        .compare-go-btn {
+            background: var(--green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .compare-clear-btn {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .compare-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 300;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
+        .compare-modal-overlay.open { display: flex; }
+        .compare-modal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 1000px;
+            overflow: hidden;
+        }
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .compare-table th {
+            background: var(--surface2);
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .compare-table th.city-header {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            text-transform: none;
+        }
+        .compare-table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .compare-table .row-label { color: var(--text-dim); font-size: 12px; }
+        .compare-best { color: var(--green); font-weight: 700; }
     </style>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#6c8cff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -784,6 +949,8 @@
     <button class="tab-btn" onclick="switchTab('regions')" data-i18n="tabRegions">Regioes</button>
     <button class="tab-btn" onclick="switchTab('checklist')" data-i18n="tabChecklist">Checklist Mudanca</button>
     <button class="tab-btn" onclick="switchTab('cronograma')" data-i18n="tabCronograma">Cronograma</button>
+    <button class="tab-btn" onclick="switchTab('calculator')" data-i18n="tabCalc">Calculadora</button>
+    <button class="tab-btn" onclick="switchTab('map');initMap()" data-i18n="tabMap">Mapa</button>
 </div>
 
 <!-- TAB: CITIES -->
@@ -836,17 +1003,54 @@
     </select>
 </div>
 
-<div class="sort-controls">
+<div class="budget-filter">
+    <label class="budget-label">
+        <span data-i18n="budgetLabel">Aluguel 3Q máx:</span>
+        <strong id="budget-val">€3.000</strong>
+    </label>
+    <input type="range" id="budget-slider" min="500" max="3000" step="100" value="3000" oninput="onBudgetChange(this.value)">
+</div>
+
+<div class="sort-controls" style="flex-wrap:wrap;gap:6px;">
+    <button class="fav-filter-btn" id="fav-filter-btn" onclick="toggleFavFilter()">⭐ <span data-i18n="favOnly">Só Favoritos</span></button>
     <span class="sort-label" data-i18n="sortLabel">Ordenar:</span>
     <button class="sort-btn active" data-sort="grade" onclick="setSort('grade')" data-i18n="sortGrade">Nota</button>
     <button class="sort-btn" data-sort="rent" onclick="setSort('rent')" data-i18n="sortRent">Aluguel</button>
     <button class="sort-btn" data-sort="foreigners" onclick="setSort('foreigners')" data-i18n="sortForeigners">% Estrangeiros</button>
     <button class="sort-btn" data-sort="population" onclick="setSort('population')" data-i18n="sortPop">Populacao</button>
     <button class="sort-btn" data-sort="name" onclick="setSort('name')">A-Z</button>
+    <button class="sort-btn" data-sort="income" onclick="setSort('income')" data-i18n="sortIncome">Renda</button>
+    <button class="sort-btn" data-sort="crime" onclick="setSort('crime')" data-i18n="sortCrime">Seguranca</button>
 </div>
 
 <div class="grid" id="city-grid"></div>
 
+</div>
+
+<!-- TAB: CALCULATOR -->
+<div id="tab-calculator" class="tab-content">
+    <div style="max-width:700px;margin:0 auto;padding:32px 24px;">
+        <h2 style="font-size:20px;margin-bottom:8px;" data-i18n="calcTitle">Calculadora de Viabilidade</h2>
+        <p style="color:var(--text-dim);font-size:14px;margin-bottom:28px;" data-i18n="calcSubtitle">Informe seu orçamento e veja quais cidades são viáveis.</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+            <div>
+                <label style="font-size:12px;color:var(--text-dim);display:block;margin-bottom:6px;" data-i18n="calcBudget">Orçamento mensal total (€)</label>
+                <input type="number" id="calc-budget" value="4000" min="1000" max="20000" step="100" style="width:100%;padding:10px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;" oninput="runCalc()">
+            </div>
+            <div>
+                <label style="font-size:12px;color:var(--text-dim);display:block;margin-bottom:6px;" data-i18n="calcRentPct">% do orçamento para aluguel</label>
+                <input type="number" id="calc-rent-pct" value="35" min="10" max="70" step="5" style="width:100%;padding:10px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;" oninput="runCalc()">
+            </div>
+        </div>
+
+        <div id="calc-result" style="margin-top:8px;"></div>
+    </div>
+</div>
+
+<!-- TAB: MAP -->
+<div id="tab-map" class="tab-content">
+    <div id="city-map" style="height:calc(100vh - 160px);min-height:500px;width:100%;"></div>
 </div>
 
 <!-- TAB: REGIONS -->
@@ -1013,6 +1217,9 @@ const cities = [
         neighborhoods: "Centro historico e arredores residenciais.",
         rentRange: "7-10",
         avgIncome: 22800,
+        crimeIndex: 2100,
+        airportKm: 110,
+        rentApt3br: 750,
         tags: ["montana", "alpina", "pequena", "tranquila"],
         scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 5, custoVida: 7, qualidadeVida: 7 }
     },
@@ -1033,6 +1240,9 @@ const cities = [
         neighborhoods: "San Salvario (multicultural), Crocetta (familiar), Lingotto, Cenisia, Santa Rita.",
         rentRange: "9-14",
         avgIncome: 23200,
+        crimeIndex: 4200,
+        airportKm: 15,
+        rentApt3br: 1100,
         tags: ["metropole", "industria", "universidade", "cultura", "diversa"],
         scores: { escola: 9, saude: 9, mercados: 9, transporte: 9, estrangeiros: 8, custoVida: 7, qualidadeVida: 7 }
     },
@@ -1052,6 +1262,9 @@ const cities = [
         neighborhoods: "Centro, zona residencial sul e leste.",
         rentRange: "7-10",
         avgIncome: 21400,
+        crimeIndex: 3100,
+        airportKm: 40,
+        rentApt3br: 750,
         tags: ["logistica", "pratica", "economica", "entre-Milao-Turim"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 8, custoVida: 8, qualidadeVida: 7 }
     },
@@ -1071,6 +1284,9 @@ const cities = [
         neighborhoods: "Centro, San Cassiano (aluguel mais barato ~8.9/m2).",
         rentRange: "9-11",
         avgIncome: 23500,
+        crimeIndex: 1800,
+        airportKm: 70,
+        rentApt3br: 700,
         tags: ["vinho", "gastronomia", "organizada", "pequena", "rica"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 5, estrangeiros: 6, custoVida: 7, qualidadeVida: 8 }
     },
@@ -1090,6 +1306,9 @@ const cities = [
         neighborhoods: "Centro e areas residenciais.",
         rentRange: "6-9",
         avgIncome: 22600,
+        crimeIndex: 1900,
+        airportKm: 90,
+        rentApt3br: 680,
         tags: ["economica", "provincial", "tranquila"],
         scores: { escola: 6, saude: 7, mercados: 7, transporte: 5, estrangeiros: 6, custoVida: 9, qualidadeVida: 7 }
     },
@@ -1109,6 +1328,9 @@ const cities = [
         neighborhoods: "Centro, Pista, Cristo.",
         rentRange: "5-8",
         avgIncome: 20800,
+        crimeIndex: 3300,
+        airportKm: 60,
+        rentApt3br: 700,
         tags: ["economica", "logistica", "funcional"],
         scores: { escola: 6, saude: 6, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 9, qualidadeVida: 6 }
     },
@@ -1129,6 +1351,9 @@ const cities = [
         neighborhoods: "Albaro (familiar), Castelletto, Nervi, Quarto. Centro historico mais complexo. Principe/Carmine ~9.35/m2.",
         rentRange: "8-14",
         avgIncome: 21900,
+        crimeIndex: 4500,
+        airportKm: 10,
+        rentApt3br: 950,
         tags: ["porto", "grande", "multicultural", "litoral", "universidade"],
         scores: { escola: 8, saude: 9, mercados: 9, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -1148,6 +1373,9 @@ const cities = [
         neighborhoods: "Centro, areas residenciais proximas ao mar.",
         rentRange: "8-12",
         avgIncome: 19800,
+        crimeIndex: 3600,
+        airportKm: 80,
+        rentApt3br: 750,
         tags: ["porto", "litoral", "Cinque Terre", "aberta"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 8, custoVida: 7, qualidadeVida: 8 }
     },
@@ -1167,6 +1395,9 @@ const cities = [
         neighborhoods: "Centro e zona costeira.",
         rentRange: "8-11",
         avgIncome: 20500,
+        crimeIndex: 3200,
+        airportKm: 50,
+        rentApt3br: 700,
         tags: ["litoral", "funcional"],
         scores: { escola: 6, saude: 6, mercados: 7, transporte: 6, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
     },
@@ -1187,6 +1418,9 @@ const cities = [
         neighborhoods: "Citta Bassa (vida pratica), Longuelo, Colognola (residenciais). Citta Alta (historica, turistica).",
         rentRange: "10-15",
         avgIncome: 24100,
+        crimeIndex: 2800,
+        airportKm: 5,
+        rentApt3br: 1050,
         tags: ["aeroporto", "multicultural", "industria", "Milao-proximo"],
         scores: { escola: 9, saude: 9, mercados: 9, transporte: 9, estrangeiros: 9, custoVida: 6, qualidadeVida: 8 }
     },
@@ -1206,6 +1440,9 @@ const cities = [
         neighborhoods: "Centro, San Polo, Lamarmora, Don Bosco (residenciais).",
         rentRange: "9-14",
         avgIncome: 23400,
+        crimeIndex: 3100,
+        airportKm: 40,
+        rentApt3br: 950,
         tags: ["multicultural", "industria", "metro", "funcional"],
         scores: { escola: 9, saude: 9, mercados: 9, transporte: 9, estrangeiros: 9, custoVida: 7, qualidadeVida: 7 }
     },
@@ -1225,6 +1462,9 @@ const cities = [
         neighborhoods: "Centro, San Rocco, San Biagio.",
         rentRange: "11-17",
         avgIncome: 25200,
+        crimeIndex: 2900,
+        airportKm: 25,
+        rentApt3br: 1200,
         tags: ["Milao-satelite", "residencial", "metro"],
         scores: { escola: 8, saude: 8, mercados: 9, transporte: 9, estrangeiros: 7, custoVida: 5, qualidadeVida: 8 }
     },
@@ -1244,6 +1484,9 @@ const cities = [
         neighborhoods: "Centro, Masnago, Biumo (residenciais).",
         rentRange: "8-12",
         avgIncome: 22800,
+        crimeIndex: 2700,
+        airportKm: 30,
+        rentApt3br: 950,
         tags: ["Suica-proxima", "residencial", "organizada"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 8 }
     },
@@ -1263,6 +1506,9 @@ const cities = [
         neighborhoods: "Borghi (familiar), Albate, Rebbio. Centro = turismo forte.",
         rentRange: "14-18",
         avgIncome: 24600,
+        crimeIndex: 2600,
+        airportKm: 50,
+        rentApt3br: 1100,
         tags: ["lago", "internacional", "cara", "Suica"],
         scores: { escola: 8, saude: 8, mercados: 8, transporte: 8, estrangeiros: 8, custoVida: 4, qualidadeVida: 9 }
     },
@@ -1282,6 +1528,9 @@ const cities = [
         neighborhoods: "Centro, Pescarenico, Bonacina, areas residenciais.",
         rentRange: "9-13",
         avgIncome: 23100,
+        crimeIndex: 2400,
+        airportKm: 55,
+        rentApt3br: 950,
         tags: ["lago", "industria", "Politecnico", "alpina"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 8, custoVida: 7, qualidadeVida: 8 }
     },
@@ -1301,6 +1550,9 @@ const cities = [
         neighborhoods: "Centro, Borgo Ticino.",
         rentRange: "8-12",
         avgIncome: 21200,
+        crimeIndex: 3200,
+        airportKm: 50,
+        rentApt3br: 800,
         tags: ["universidade", "pesquisa", "historica"],
         scores: { escola: 8, saude: 9, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -1320,6 +1572,9 @@ const cities = [
         neighborhoods: "Centro e areas residenciais.",
         rentRange: "6-9",
         avgIncome: 21600,
+        crimeIndex: 2500,
+        airportKm: 60,
+        rentApt3br: 750,
         tags: ["economica", "tradicional", "violinos"],
         scores: { escola: 6, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 9, qualidadeVida: 7 }
     },
@@ -1339,6 +1594,9 @@ const cities = [
         neighborhoods: "Centro historico, Te, Valletta Valsecchi.",
         rentRange: "7-10",
         avgIncome: 22400,
+        crimeIndex: 2300,
+        airportKm: 70,
+        rentApt3br: 780,
         tags: ["UNESCO", "cultura", "economica"],
         scores: { escola: 6, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 8, qualidadeVida: 8 }
     },
@@ -1358,6 +1616,9 @@ const cities = [
         neighborhoods: "Rivoltella (melhor custo-beneficio familiar), Centro (caro), San Martino della Battaglia (tranquilo).",
         rentRange: "11-16",
         avgIncome: 23800,
+        crimeIndex: 2200,
+        airportKm: 45,
+        rentApt3br: 950,
         tags: ["lago", "turismo", "qualidade-vida", "Garda"],
         scores: { escola: 7, saude: 6, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 5, qualidadeVida: 9 }
     },
@@ -1378,6 +1639,9 @@ const cities = [
         neighborhoods: "Gardolo, Mattarello, centro residencial.",
         rentRange: "10-14",
         avgIncome: 24200,
+        crimeIndex: 2100,
+        airportKm: 90,
+        rentApt3br: 950,
         tags: ["alpina", "universidade", "saude-top", "organizada"],
         scores: { escola: 9, saude: 10, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 6, qualidadeVida: 9 }
     },
@@ -1397,6 +1661,9 @@ const cities = [
         neighborhoods: "Don Bosco, Europa-Novacella, Oltrisarco.",
         rentRange: "12-17",
         avgIncome: 27600,
+        crimeIndex: 2000,
+        airportKm: 50,
+        rentApt3br: 1300,
         tags: ["alpina", "bilingue", "Austria-proxima", "organizada"],
         scores: { escola: 9, saude: 10, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 5, qualidadeVida: 9 }
     },
@@ -1416,6 +1683,9 @@ const cities = [
         neighborhoods: "Maia Alta, Maia Bassa, centro residencial.",
         rentRange: "12-16",
         avgIncome: 25100,
+        crimeIndex: 1800,
+        airportKm: 55,
+        rentApt3br: 1150,
         tags: ["termas", "alpina", "diversa", "bilingue"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 5, estrangeiros: 8, custoVida: 5, qualidadeVida: 9 }
     },
@@ -1435,6 +1705,9 @@ const cities = [
         neighborhoods: "Centro e areas residenciais.",
         rentRange: "8-12",
         avgIncome: 23000,
+        crimeIndex: 2000,
+        airportKm: 95,
+        rentApt3br: 850,
         tags: ["museus", "alpina", "tranquila"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 7, qualidadeVida: 8 }
     },
@@ -1454,6 +1727,9 @@ const cities = [
         neighborhoods: "Cidade compacta, poucas divisoes.",
         rentRange: "11-16",
         avgIncome: 22500,
+        crimeIndex: 1700,
+        airportKm: 80,
+        rentApt3br: 900,
         tags: ["lago", "outdoor", "bonita", "isolada"],
         scores: { escola: 6, saude: 5, mercados: 6, transporte: 4, estrangeiros: 6, custoVida: 5, qualidadeVida: 9 }
     },
@@ -1474,6 +1750,9 @@ const cities = [
         neighborhoods: "Borgo Roma, San Zeno, Borgo Trento (familiar), Borgo Milano.",
         rentRange: "10-14",
         avgIncome: 23100,
+        crimeIndex: 3300,
+        airportKm: 10,
+        rentApt3br: 1000,
         tags: ["hub-logistico", "aeroporto", "cultura", "Garda-proximo"],
         scores: { escola: 9, saude: 9, mercados: 9, transporte: 9, estrangeiros: 8, custoVida: 6, qualidadeVida: 8 }
     },
@@ -1493,6 +1772,9 @@ const cities = [
         neighborhoods: "Arcella, Mandria, Guizza, Ponte di Brenta.",
         rentRange: "9-13",
         avgIncome: 22400,
+        crimeIndex: 3800,
+        airportKm: 40,
+        rentApt3br: 950,
         tags: ["universidade", "aberta", "diversa", "pesquisa"],
         scores: { escola: 9, saude: 9, mercados: 8, transporte: 8, estrangeiros: 9, custoVida: 7, qualidadeVida: 8 }
     },
@@ -1512,6 +1794,9 @@ const cities = [
         neighborhoods: "Centro, Bertesinella, Laghetto.",
         rentRange: "8-11",
         avgIncome: 22000,
+        crimeIndex: 2900,
+        airportKm: 55,
+        rentApt3br: 850,
         tags: ["industria", "ouro", "funcional", "economica"],
         scores: { escola: 8, saude: 8, mercados: 8, transporte: 8, estrangeiros: 8, custoVida: 8, qualidadeVida: 7 }
     },
@@ -1531,6 +1816,9 @@ const cities = [
         neighborhoods: "Centro, Santa Bona, San Zeno.",
         rentRange: "9-12",
         avgIncome: 22300,
+        crimeIndex: 2600,
+        airportKm: 25,
+        rentApt3br: 850,
         tags: ["moda", "Prosecco", "aeroporto-low-cost"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 8 }
     },
@@ -1550,6 +1838,9 @@ const cities = [
         neighborhoods: "Cidade compacta.",
         rentRange: "11-17",
         avgIncome: 22700,
+        crimeIndex: 2100,
+        airportKm: 20,
+        rentApt3br: 900,
         tags: ["lago", "turistica", "pequena", "cara"],
         scores: { escola: 5, saude: 4, mercados: 5, transporte: 7, estrangeiros: 6, custoVida: 4, qualidadeVida: 7 }
     },
@@ -1569,6 +1860,9 @@ const cities = [
         neighborhoods: "Colombare (residencial), peninsula (turismo).",
         rentRange: "13-18",
         avgIncome: 26400,
+        crimeIndex: 1900,
+        airportKm: 40,
+        rentApt3br: 1100,
         tags: ["termas", "turismo", "cara", "limitada"],
         scores: { escola: 4, saude: 3, mercados: 4, transporte: 3, estrangeiros: 7, custoVida: 3, qualidadeVida: 8 }
     },
@@ -1588,6 +1882,9 @@ const cities = [
         neighborhoods: "Cidade compacta.",
         rentRange: "10-14",
         avgIncome: 22000,
+        crimeIndex: 1800,
+        airportKm: 55,
+        rentApt3br: 800,
         tags: ["lago", "Franciacorta", "pequena", "tranquila"],
         scores: { escola: 5, saude: 5, mercados: 5, transporte: 5, estrangeiros: 4, custoVida: 6, qualidadeVida: 7 }
     },
@@ -1608,6 +1905,9 @@ const cities = [
         neighborhoods: "Roiano, Barcola, San Giovanni (residenciais familiares).",
         rentRange: "7-12",
         avgIncome: 23800,
+        crimeIndex: 3400,
+        airportKm: 35,
+        rentApt3br: 800,
         tags: ["porto", "fronteira", "pesquisa", "subestimada"],
         scores: { escola: 8, saude: 8, mercados: 8, transporte: 7, estrangeiros: 7, custoVida: 8, qualidadeVida: 8 }
     },
@@ -1627,6 +1927,9 @@ const cities = [
         neighborhoods: "Centro, Rizzi, Cussignacco.",
         rentRange: "6-10",
         avgIncome: 22100,
+        crimeIndex: 2800,
+        airportKm: 20,
+        rentApt3br: 750,
         tags: ["economica", "funcional", "diversa"],
         scores: { escola: 7, saude: 8, mercados: 8, transporte: 7, estrangeiros: 8, custoVida: 9, qualidadeVida: 7 }
     },
@@ -1646,6 +1949,9 @@ const cities = [
         neighborhoods: "Centro, Torre, Villanova.",
         rentRange: "6-9",
         avgIncome: 21800,
+        crimeIndex: 2500,
+        airportKm: 55,
+        rentApt3br: 700,
         tags: ["industria", "economica", "diversa"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 8, custoVida: 9, qualidadeVida: 7 }
     },
@@ -1665,6 +1971,9 @@ const cities = [
         neighborhoods: "Centro e areas de fronteira.",
         rentRange: "5-8",
         avgIncome: 20900,
+        crimeIndex: 2300,
+        airportKm: 40,
+        rentApt3br: 650,
         tags: ["fronteira", "economica", "compacta"],
         scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 6, custoVida: 9, qualidadeVida: 6 }
     },
@@ -1685,6 +1994,9 @@ const cities = [
         neighborhoods: "Bolognina (multicultural), Saragozza, San Donato, Savena.",
         rentRange: "12-18",
         avgIncome: 25600,
+        crimeIndex: 5100,
+        airportKm: 10,
+        rentApt3br: 1200,
         tags: ["universidade", "gastronomia", "hub-central", "aberta", "cara"],
         scores: { escola: 10, saude: 10, mercados: 9, transporte: 10, estrangeiros: 8, custoVida: 4, qualidadeVida: 8 }
     },
@@ -1704,6 +2016,9 @@ const cities = [
         neighborhoods: "Oltretorrente, Cittadella, San Leonardo.",
         rentRange: "8-13",
         avgIncome: 24800,
+        crimeIndex: 3600,
+        airportKm: 5,
+        rentApt3br: 950,
         tags: ["gastronomia", "diversa", "equilibrada", "familiar"],
         scores: { escola: 9, saude: 9, mercados: 9, transporte: 8, estrangeiros: 9, custoVida: 7, qualidadeVida: 9 }
     },
@@ -1723,6 +2038,9 @@ const cities = [
         neighborhoods: "Buon Pastore, San Faustino, Modena Est.",
         rentRange: "8-13",
         avgIncome: 24500,
+        crimeIndex: 3800,
+        airportKm: 45,
+        rentApt3br: 950,
         tags: ["Ferrari", "gastronomia", "industria", "funcional"],
         scores: { escola: 8, saude: 8, mercados: 9, transporte: 8, estrangeiros: 8, custoVida: 7, qualidadeVida: 8 }
     },
@@ -1742,6 +2060,9 @@ const cities = [
         neighborhoods: "Centro, Canalina, Rivalta, Mancasale.",
         rentRange: "7-12",
         avgIncome: 23200,
+        crimeIndex: 3500,
+        airportKm: 55,
+        rentApt3br: 850,
         tags: ["educacao-infantil", "cooperativas", "diversa", "alta-velocidade"],
         scores: { escola: 10, saude: 8, mercados: 8, transporte: 9, estrangeiros: 9, custoVida: 8, qualidadeVida: 8 }
     },
@@ -1761,6 +2082,9 @@ const cities = [
         neighborhoods: "Centro, Besurica, Farnesiana.",
         rentRange: "6-10",
         avgIncome: 22100,
+        crimeIndex: 3700,
+        airportKm: 65,
+        rentApt3br: 780,
         tags: ["logistica", "economica", "diversa", "Milao-proximo"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 9, custoVida: 9, qualidadeVida: 7 }
     },
@@ -1780,6 +2104,9 @@ const cities = [
         neighborhoods: "Centro historico, zona universitaria.",
         rentRange: "6-10",
         avgIncome: 20600,
+        crimeIndex: 3200,
+        airportKm: 50,
+        rentApt3br: 750,
         tags: ["UNESCO", "universidade", "economica", "bicicletas"],
         scores: { escola: 8, saude: 8, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 8, qualidadeVida: 8 }
     },
@@ -1799,6 +2126,9 @@ const cities = [
         neighborhoods: "Centro, zona mare, area residencial.",
         rentRange: "7-11",
         avgIncome: 21800,
+        crimeIndex: 3000,
+        airportKm: 70,
+        rentApt3br: 780,
         tags: ["UNESCO", "mosaicos", "porto", "praia"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 8, qualidadeVida: 8 }
     },
@@ -1818,6 +2148,9 @@ const cities = [
         neighborhoods: "Centro, Villafranca, Cava.",
         rentRange: "6-10",
         avgIncome: 21400,
+        crimeIndex: 3100,
+        airportKm: 5,
+        rentApt3br: 750,
         tags: ["economica", "funcional"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 8, qualidadeVida: 7 }
     },
@@ -1837,6 +2170,9 @@ const cities = [
         neighborhoods: "Centro, zona universitaria.",
         rentRange: "7-10",
         avgIncome: 21600,
+        crimeIndex: 2800,
+        airportKm: 20,
+        rentApt3br: 730,
         tags: ["universidade", "agroalimentar"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 6, custoVida: 8, qualidadeVida: 7 }
     },
@@ -1856,6 +2192,9 @@ const cities = [
         neighborhoods: "Marina Centro, Viserba, Miramare, centro storico.",
         rentRange: "9-14",
         avgIncome: 20900,
+        crimeIndex: 4200,
+        airportKm: 5,
+        rentApt3br: 850,
         tags: ["praia", "feiras", "turismo", "sazonal"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 7, custoVida: 6, qualidadeVida: 7 }
     },
@@ -1876,6 +2215,9 @@ const cities = [
         neighborhoods: "Centro storico, Borgo San Pietro, San Secondo.",
         rentRange: "6-8",
         avgIncome: 20400,
+        crimeIndex: 2900,
+        airportKm: 55,
+        rentApt3br: 680,
         tags: ["vinho", "tradicional", "economica"],
         scores: { escola: 6, saude: 7, mercados: 7, transporte: 6, estrangeiros: 6, custoVida: 8, qualidadeVida: 7 }
     },
@@ -1895,6 +2237,9 @@ const cities = [
         neighborhoods: "Centro, Borgo San Pietro, Revigliasco.",
         rentRange: "8-11",
         avgIncome: 22100,
+        crimeIndex: 3400,
+        airportKm: 20,
+        rentApt3br: 900,
         tags: ["grande-Turim", "familiar", "bem-conectada"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -1914,6 +2259,9 @@ const cities = [
         neighborhoods: "Centro, Leumann, Le Vallette.",
         rentRange: "8-10",
         avgIncome: 20900,
+        crimeIndex: 3600,
+        airportKm: 20,
+        rentApt3br: 850,
         tags: ["grande-Turim", "industrial", "metro"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 6 }
     },
@@ -1933,6 +2281,9 @@ const cities = [
         neighborhoods: "Centro, San Martino, Cascine Vica.",
         rentRange: "8-10",
         avgIncome: 21200,
+        crimeIndex: 3200,
+        airportKm: 22,
+        rentApt3br: 850,
         tags: ["grande-Turim", "familiar", "metro"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -1952,6 +2303,9 @@ const cities = [
         neighborhoods: "Centro storico, Isola.",
         rentRange: "5-8",
         avgIncome: 20600,
+        crimeIndex: 2800,
+        airportKm: 65,
+        rentApt3br: 650,
         tags: ["arroz", "provincial", "economica"],
         scores: { escola: 6, saude: 6, mercados: 6, transporte: 6, estrangeiros: 6, custoVida: 9, qualidadeVida: 6 }
     },
@@ -1971,6 +2325,9 @@ const cities = [
         neighborhoods: "Centro, Borgo Stupinigi.",
         rentRange: "8-10",
         avgIncome: 20200,
+        crimeIndex: 3500,
+        airportKm: 18,
+        rentApt3br: 850,
         tags: ["grande-Turim", "metro", "diversa"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 6 }
     },
@@ -1990,6 +2347,9 @@ const cities = [
         neighborhoods: "Centro, Borgata Paradiso.",
         rentRange: "7-10",
         avgIncome: 20800,
+        crimeIndex: 3300,
+        airportKm: 12,
+        rentApt3br: 820,
         tags: ["grande-Turim", "industrial", "metro"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 8, qualidadeVida: 6 }
     },
@@ -2009,6 +2369,9 @@ const cities = [
         neighborhoods: "Centro, Piano biellese.",
         rentRange: "5-7",
         avgIncome: 20100,
+        crimeIndex: 2400,
+        airportKm: 75,
+        rentApt3br: 620,
         tags: ["textil", "montanha", "economica", "industrial"],
         scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 5, custoVida: 9, qualidadeVida: 6 }
     },
@@ -2028,6 +2391,9 @@ const cities = [
         neighborhoods: "Centro, Borgo.",
         rentRange: "8-10",
         avgIncome: 20600,
+        crimeIndex: 3400,
+        airportKm: 18,
+        rentApt3br: 830,
         tags: ["grande-Turim", "universitaria", "metro"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2047,6 +2413,9 @@ const cities = [
         neighborhoods: "Centro storico medieval, Borgo San Pietro.",
         rentRange: "7-10",
         avgIncome: 22400,
+        crimeIndex: 2600,
+        airportKm: 25,
+        rentApt3br: 850,
         tags: ["tranquila", "grande-Turim", "historica"],
         scores: { escola: 7, saude: 6, mercados: 6, transporte: 6, estrangeiros: 6, custoVida: 8, qualidadeVida: 7 }
     },
@@ -2066,6 +2435,9 @@ const cities = [
         neighborhoods: "Centro, Abbadia Alpina.",
         rentRange: "6-8",
         avgIncome: 20300,
+        crimeIndex: 2500,
+        airportKm: 40,
+        rentApt3br: 720,
         tags: ["montana", "tranquila", "economica"],
         scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 5, custoVida: 8, qualidadeVida: 7 }
     },
@@ -2085,6 +2457,9 @@ const cities = [
         neighborhoods: "Centro storico, riva del Po.",
         rentRange: "5-7",
         avgIncome: 20500,
+        crimeIndex: 2700,
+        airportKm: 65,
+        rentApt3br: 650,
         tags: ["historica", "vinho", "economica"],
         scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 6, custoVida: 9, qualidadeVida: 6 }
     },
@@ -2104,6 +2479,9 @@ const cities = [
         neighborhoods: "Centro, zona Reggia.",
         rentRange: "8-10",
         avgIncome: 21400,
+        crimeIndex: 3100,
+        airportKm: 12,
+        rentApt3br: 880,
         tags: ["grande-Turim", "turismo", "historica"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 7, qualidadeVida: 8 }
     },
@@ -2124,6 +2502,9 @@ const cities = [
         neighborhoods: "Centro, La Pigna (medieval), Borgo Foce.",
         rentRange: "8-12",
         avgIncome: 21200,
+        crimeIndex: 3800,
+        airportKm: 55,
+        rentApt3br: 850,
         tags: ["praia", "mediterraneo", "festival", "flores", "turismo"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 6, qualidadeVida: 8 }
     },
@@ -2143,6 +2524,9 @@ const cities = [
         neighborhoods: "Porto Maurizio, Oneglia (as duas partes da cidade).",
         rentRange: "7-11",
         avgIncome: 19600,
+        crimeIndex: 3200,
+        airportKm: 65,
+        rentApt3br: 750,
         tags: ["praia", "mediterraneo", "azeite", "tranquila"],
         scores: { escola: 6, saude: 6, mercados: 6, transporte: 6, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2163,6 +2547,9 @@ const cities = [
         neighborhoods: "Navigli (jovem), Brera (elite), Isola (hipster), Nolo, Lambrate, Porta Romana.",
         rentRange: "18-30",
         avgIncome: 30400,
+        crimeIndex: 5800,
+        airportKm: 40,
+        rentApt3br: 2200,
         tags: ["metropole", "financas", "moda", "design", "expats", "cosmopolita"],
         scores: { escola: 10, saude: 10, mercados: 10, transporte: 10, estrangeiros: 10, custoVida: 2, qualidadeVida: 8 }
     },
@@ -2182,6 +2569,9 @@ const cities = [
         neighborhoods: "Centro, San Michele.",
         rentRange: "8-12",
         avgIncome: 22100,
+        crimeIndex: 2900,
+        airportKm: 20,
+        rentApt3br: 900,
         tags: ["grande-Milao", "industrial", "malpensa"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2201,6 +2591,9 @@ const cities = [
         neighborhoods: "Centro, Pelucca, Monza ovest.",
         rentRange: "9-13",
         avgIncome: 22400,
+        crimeIndex: 3200,
+        airportKm: 30,
+        rentApt3br: 1050,
         tags: ["grande-Milao", "metro", "renovada"],
         scores: { escola: 7, saude: 8, mercados: 8, transporte: 9, estrangeiros: 8, custoVida: 6, qualidadeVida: 7 }
     },
@@ -2220,6 +2613,9 @@ const cities = [
         neighborhoods: "Centro, Balsamo.",
         rentRange: "9-12",
         avgIncome: 20100,
+        crimeIndex: 3400,
+        airportKm: 28,
+        rentApt3br: 1000,
         tags: ["grande-Milao", "metro", "diversa"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 9, estrangeiros: 8, custoVida: 6, qualidadeVida: 7 }
     },
@@ -2239,6 +2635,9 @@ const cities = [
         neighborhoods: "Piazza Ducale (centro), Sforzesca.",
         rentRange: "7-10",
         avgIncome: 20600,
+        crimeIndex: 3000,
+        airportKm: 55,
+        rentApt3br: 780,
         tags: ["calcados", "historica", "economica"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2258,6 +2657,9 @@ const cities = [
         neighborhoods: "Centro, San Magno.",
         rentRange: "8-12",
         avgIncome: 22300,
+        crimeIndex: 2900,
+        airportKm: 25,
+        rentApt3br: 880,
         tags: ["grande-Milao", "industrial", "conectada"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2277,6 +2679,9 @@ const cities = [
         neighborhoods: "Centro, Madonna in Campagna.",
         rentRange: "8-11",
         avgIncome: 21800,
+        crimeIndex: 2800,
+        airportKm: 18,
+        rentApt3br: 870,
         tags: ["grande-Milao", "malpensa", "logistica"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2296,6 +2701,9 @@ const cities = [
         neighborhoods: "Centro, Mazzo, Passirana.",
         rentRange: "9-12",
         avgIncome: 22900,
+        crimeIndex: 2900,
+        airportKm: 35,
+        rentApt3br: 950,
         tags: ["grande-Milao", "fiera", "metro", "logistica"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 9, estrangeiros: 8, custoVida: 6, qualidadeVida: 7 }
     },
@@ -2315,6 +2723,9 @@ const cities = [
         neighborhoods: "Inzago, Niguarda norte.",
         rentRange: "8-11",
         avgIncome: 21200,
+        crimeIndex: 3100,
+        airportKm: 28,
+        rentApt3br: 950,
         tags: ["grande-Milao", "industrial"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 6 }
     },
@@ -2334,6 +2745,9 @@ const cities = [
         neighborhoods: "Centro, Muggiano.",
         rentRange: "9-12",
         avgIncome: 21400,
+        crimeIndex: 3300,
+        airportKm: 30,
+        rentApt3br: 1000,
         tags: ["grande-Milao", "metro", "media"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 9, estrangeiros: 7, custoVida: 6, qualidadeVida: 7 }
     },
@@ -2353,6 +2767,9 @@ const cities = [
         neighborhoods: "Centro, San Giorgio.",
         rentRange: "8-12",
         avgIncome: 22800,
+        crimeIndex: 2600,
+        airportKm: 22,
+        rentApt3br: 950,
         tags: ["grande-Milao", "design", "moveis", "brianza"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2372,6 +2789,9 @@ const cities = [
         neighborhoods: "Centro storico, Castello.",
         rentRange: "7-11",
         avgIncome: 21500,
+        crimeIndex: 3000,
+        airportKm: 50,
+        rentApt3br: 820,
         tags: ["grande-Milao", "historica", "queijo"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2391,6 +2811,9 @@ const cities = [
         neighborhoods: "Centro, San Salvatore.",
         rentRange: "8-12",
         avgIncome: 22600,
+        crimeIndex: 2700,
+        airportKm: 20,
+        rentApt3br: 950,
         tags: ["grande-Milao", "brianza", "industrial"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2410,6 +2833,9 @@ const cities = [
         neighborhoods: "Centro.",
         rentRange: "8-12",
         avgIncome: 22100,
+        crimeIndex: 2700,
+        airportKm: 22,
+        rentApt3br: 920,
         tags: ["grande-Milao", "brianza"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2429,6 +2855,9 @@ const cities = [
         neighborhoods: "Centro, Milanofiori.",
         rentRange: "9-13",
         avgIncome: 19800,
+        crimeIndex: 3600,
+        airportKm: 45,
+        rentApt3br: 950,
         tags: ["grande-Milao", "metro", "hospitalar", "farmaceutica"],
         scores: { escola: 7, saude: 9, mercados: 8, transporte: 9, estrangeiros: 8, custoVida: 6, qualidadeVida: 7 }
     },
@@ -2448,6 +2877,9 @@ const cities = [
         neighborhoods: "Centro, San Rocco.",
         rentRange: "8-11",
         avgIncome: 22400,
+        crimeIndex: 2500,
+        airportKm: 40,
+        rentApt3br: 900,
         tags: ["moveis", "design", "grande-Milao"],
         scores: { escola: 7, saude: 6, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2467,6 +2899,9 @@ const cities = [
         neighborhoods: "Centro, Sesto Ulteriano.",
         rentRange: "9-12",
         avgIncome: 21600,
+        crimeIndex: 3200,
+        airportKm: 40,
+        rentApt3br: 980,
         tags: ["grande-Milao", "metro", "logistica"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 8, custoVida: 6, qualidadeVida: 7 }
     },
@@ -2486,6 +2921,9 @@ const cities = [
         neighborhoods: "Centro, Binzago, Moron.",
         rentRange: "8-11",
         avgIncome: 21900,
+        crimeIndex: 2800,
+        airportKm: 22,
+        rentApt3br: 900,
         tags: ["grande-Milao", "brianza"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2505,6 +2943,9 @@ const cities = [
         neighborhoods: "Centro storico.",
         rentRange: "6-9",
         avgIncome: 19400,
+        crimeIndex: 3100,
+        airportKm: 70,
+        rentApt3br: 700,
         tags: ["economica", "provincial"],
         scores: { escola: 6, saude: 6, mercados: 7, transporte: 6, estrangeiros: 6, custoVida: 8, qualidadeVida: 6 }
     },
@@ -2524,6 +2965,9 @@ const cities = [
         neighborhoods: "Centro, San Giuseppe.",
         rentRange: "8-12",
         avgIncome: 23100,
+        crimeIndex: 2700,
+        airportKm: 28,
+        rentApt3br: 950,
         tags: ["grande-Milao", "farmaceutica", "conectada"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2543,6 +2987,9 @@ const cities = [
         neighborhoods: "Seggiano, Limito.",
         rentRange: "9-12",
         avgIncome: 19200,
+        crimeIndex: 3800,
+        airportKm: 32,
+        rentApt3br: 950,
         tags: ["grande-Milao", "diversa", "logistica"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 8, custoVida: 6, qualidadeVida: 6 }
     },
@@ -2562,6 +3009,9 @@ const cities = [
         neighborhoods: "Milano 2, Centro.",
         rentRange: "10-14",
         avgIncome: 24800,
+        crimeIndex: 2900,
+        airportKm: 28,
+        rentApt3br: 1100,
         tags: ["grande-Milao", "linate", "editorial", "premium"],
         scores: { escola: 7, saude: 7, mercados: 8, transporte: 9, estrangeiros: 7, custoVida: 5, qualidadeVida: 8 }
     },
@@ -2581,6 +3031,9 @@ const cities = [
         neighborhoods: "Centro, Ospiate.",
         rentRange: "8-12",
         avgIncome: 21700,
+        crimeIndex: 2900,
+        airportKm: 32,
+        rentApt3br: 920,
         tags: ["grande-Milao"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2600,6 +3053,9 @@ const cities = [
         neighborhoods: "Centro.",
         rentRange: "8-11",
         avgIncome: 20400,
+        crimeIndex: 2600,
+        airportKm: 25,
+        rentApt3br: 870,
         tags: ["grande-Milao", "brianza"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2619,6 +3075,9 @@ const cities = [
         neighborhoods: "Centro.",
         rentRange: "8-12",
         avgIncome: 22500,
+        crimeIndex: 2700,
+        airportKm: 22,
+        rentApt3br: 950,
         tags: ["grande-Milao", "brianza"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2638,6 +3097,9 @@ const cities = [
         neighborhoods: "Centro.",
         rentRange: "9-13",
         avgIncome: 24200,
+        crimeIndex: 2500,
+        airportKm: 28,
+        rentApt3br: 1050,
         tags: ["grande-Milao", "metro", "residencial", "premium"],
         scores: { escola: 8, saude: 8, mercados: 8, transporte: 9, estrangeiros: 7, custoVida: 5, qualidadeVida: 8 }
     },
@@ -2657,6 +3119,9 @@ const cities = [
         neighborhoods: "Centro.",
         rentRange: "9-12",
         avgIncome: 20600,
+        crimeIndex: 3300,
+        airportKm: 40,
+        rentApt3br: 1000,
         tags: ["grande-Milao", "metro"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 9, estrangeiros: 8, custoVida: 6, qualidadeVida: 7 }
     },
@@ -2676,6 +3141,9 @@ const cities = [
         neighborhoods: "Centro storico, Castellazzo.",
         rentRange: "7-10",
         avgIncome: 21100,
+        crimeIndex: 2600,
+        airportKm: 45,
+        rentApt3br: 850,
         tags: ["grande-Milao", "historica", "arroz"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2695,6 +3163,9 @@ const cities = [
         neighborhoods: "Centro, San Donato.",
         rentRange: "9-13",
         avgIncome: 26100,
+        crimeIndex: 2800,
+        airportKm: 38,
+        rentApt3br: 1100,
         tags: ["grande-Milao", "metro", "energia", "saude-premium"],
         scores: { escola: 7, saude: 9, mercados: 8, transporte: 9, estrangeiros: 7, custoVida: 5, qualidadeVida: 8 }
     },
@@ -2714,6 +3185,9 @@ const cities = [
         neighborhoods: "Centro storico.",
         rentRange: "8-11",
         avgIncome: 22000,
+        crimeIndex: 2500,
+        airportKm: 30,
+        rentApt3br: 850,
         tags: ["grande-Milao", "industrial", "bergamo"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2734,6 +3208,9 @@ const cities = [
         neighborhoods: "Mestre (residencial, pratico), Venezia insulare (historica, cara), Lido.",
         rentRange: "10-18",
         avgIncome: 23100,
+        crimeIndex: 4100,
+        airportKm: 10,
+        rentApt3br: 1050,
         tags: ["metropole", "turismo", "porto", "cultura", "UNESCO", "mestre"],
         scores: { escola: 9, saude: 9, mercados: 8, transporte: 9, estrangeiros: 8, custoVida: 4, qualidadeVida: 8 }
     },
@@ -2753,6 +3230,9 @@ const cities = [
         neighborhoods: "Centro, Commenda.",
         rentRange: "6-9",
         avgIncome: 19800,
+        crimeIndex: 2800,
+        airportKm: 55,
+        rentApt3br: 680,
         tags: ["economica", "provincial", "agricola"],
         scores: { escola: 6, saude: 6, mercados: 6, transporte: 6, estrangeiros: 6, custoVida: 8, qualidadeVida: 6 }
     },
@@ -2772,6 +3252,9 @@ const cities = [
         neighborhoods: "Centro storico (Piccola Venezia), Sottomarina (praia).",
         rentRange: "6-10",
         avgIncome: 18900,
+        crimeIndex: 2300,
+        airportKm: 40,
+        rentApt3br: 650,
         tags: ["pesca", "praia", "veneziana", "tipica"],
         scores: { escola: 6, saude: 6, mercados: 7, transporte: 5, estrangeiros: 5, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2791,6 +3274,9 @@ const cities = [
         neighborhoods: "Centro storico, Ponte Vecchio.",
         rentRange: "7-11",
         avgIncome: 22600,
+        crimeIndex: 2400,
+        airportKm: 60,
+        rentApt3br: 850,
         tags: ["historica", "ceramica", "grappa", "prealpina"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 7, qualidadeVida: 8 }
     },
@@ -2810,6 +3296,9 @@ const cities = [
         neighborhoods: "Centro.",
         rentRange: "7-10",
         avgIncome: 21400,
+        crimeIndex: 2600,
+        airportKm: 35,
+        rentApt3br: 780,
         tags: ["grande-Venezia", "pratica"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2829,6 +3318,9 @@ const cities = [
         neighborhoods: "Centro, Magrè.",
         rentRange: "6-9",
         avgIncome: 21800,
+        crimeIndex: 2300,
+        airportKm: 65,
+        rentApt3br: 780,
         tags: ["industrial", "textil", "economica", "prealpina"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 8, qualidadeVida: 7 }
     },
@@ -2848,6 +3340,9 @@ const cities = [
         neighborhoods: "Mira Porte, Oriago.",
         rentRange: "7-11",
         avgIncome: 21200,
+        crimeIndex: 2500,
+        airportKm: 20,
+        rentApt3br: 780,
         tags: ["grande-Venezia", "tranquila"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2867,6 +3362,9 @@ const cities = [
         neighborhoods: "Centro storico, Borgo Piave.",
         rentRange: "6-9",
         avgIncome: 22400,
+        crimeIndex: 1900,
+        airportKm: 85,
+        rentApt3br: 720,
         tags: ["montana", "oculos", "dolomitas", "alpina"],
         scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 5, custoVida: 7, qualidadeVida: 8 }
     },
@@ -2886,6 +3384,9 @@ const cities = [
         neighborhoods: "Centro storico, Collalbrigo.",
         rentRange: "7-10",
         avgIncome: 22100,
+        crimeIndex: 2400,
+        airportKm: 30,
+        rentApt3br: 780,
         tags: ["prosecco", "vinho", "historia", "grande-Venezia"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 7, qualidadeVida: 8 }
     },
@@ -2905,6 +3406,9 @@ const cities = [
         neighborhoods: "Centro murado (castelo medieval).",
         rentRange: "7-11",
         avgIncome: 22300,
+        crimeIndex: 2300,
+        airportKm: 35,
+        rentApt3br: 780,
         tags: ["historica", "medieval", "grande-Venezia"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2924,6 +3428,9 @@ const cities = [
         neighborhoods: "Centro, Alpo.",
         rentRange: "8-11",
         avgIncome: 22500,
+        crimeIndex: 2200,
+        airportKm: 5,
+        rentApt3br: 850,
         tags: ["grande-Verona", "aeroporto", "pratica"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2943,6 +3450,9 @@ const cities = [
         neighborhoods: "Centro.",
         rentRange: "7-10",
         avgIncome: 22800,
+        crimeIndex: 2300,
+        airportKm: 30,
+        rentApt3br: 800,
         tags: ["calcado-esportivo", "industrial", "prealpina"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
     },
@@ -2963,6 +3473,9 @@ const cities = [
         neighborhoods: "Centro, Porto.",
         rentRange: "6-9",
         avgIncome: 22000,
+        crimeIndex: 2900,
+        airportKm: 35,
+        rentApt3br: 700,
         tags: ["naval", "industrial", "diversa"],
         scores: { escola: 6, saude: 6, mercados: 6, transporte: 6, estrangeiros: 7, custoVida: 8, qualidadeVida: 6 }
     },
@@ -2983,6 +3496,9 @@ const cities = [
         neighborhoods: "Centro storico (Piazza dei Martiri).",
         rentRange: "7-11",
         avgIncome: 23400,
+        crimeIndex: 2900,
+        airportKm: 55,
+        rentApt3br: 850,
         tags: ["moda", "textil", "grande-Modena"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -3002,6 +3518,9 @@ const cities = [
         neighborhoods: "Centro storico, Pedagna.",
         rentRange: "7-11",
         avgIncome: 22900,
+        crimeIndex: 3000,
+        airportKm: 30,
+        rentApt3br: 800,
         tags: ["formula1", "ceramica", "grande-Bologna"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -3021,6 +3540,9 @@ const cities = [
         neighborhoods: "Centro storico.",
         rentRange: "7-10",
         avgIncome: 21600,
+        crimeIndex: 2800,
+        airportKm: 45,
+        rentApt3br: 750,
         tags: ["ceramica", "historica", "gastronomia"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
     },
@@ -3040,6 +3562,9 @@ const cities = [
         neighborhoods: "Centro.",
         rentRange: "7-10",
         avgIncome: 22800,
+        crimeIndex: 3000,
+        airportKm: 55,
+        rentApt3br: 800,
         tags: ["azulejo", "ceramica", "industrial", "diversa"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 8, custoVida: 7, qualidadeVida: 7 }
     },
@@ -3059,6 +3584,9 @@ const cities = [
         neighborhoods: "Centro storico.",
         rentRange: "6-9",
         avgIncome: 21800,
+        crimeIndex: 2700,
+        airportKm: 55,
+        rentApt3br: 720,
         tags: ["economica", "industrial"],
         scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 6, custoVida: 8, qualidadeVida: 6 }
     },
@@ -3078,6 +3606,9 @@ const cities = [
         neighborhoods: "Centro, Ceretolo.",
         rentRange: "9-13",
         avgIncome: 25100,
+        crimeIndex: 2900,
+        airportKm: 15,
+        rentApt3br: 1050,
         tags: ["grande-Bologna", "residencial", "pratica"],
         scores: { escola: 8, saude: 8, mercados: 8, transporte: 8, estrangeiros: 7, custoVida: 6, qualidadeVida: 8 }
     },
@@ -3097,6 +3628,9 @@ const cities = [
         neighborhoods: "Centro, Magreta.",
         rentRange: "7-10",
         avgIncome: 24600,
+        crimeIndex: 2400,
+        airportKm: 50,
+        rentApt3br: 900,
         tags: ["motor-valley", "grande-Modena", "industrial"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -3116,6 +3650,9 @@ const cities = [
         neighborhoods: "Centro, Viale Ceccarini, lungomare.",
         rentRange: "8-14",
         avgIncome: 21400,
+        crimeIndex: 3800,
+        airportKm: 10,
+        rentApt3br: 900,
         tags: ["praia", "turismo", "discoteca", "sazonal"],
         scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 5, qualidadeVida: 7 }
     },
@@ -3135,6 +3672,9 @@ const cities = [
         neighborhoods: "Centro storico (castello).",
         rentRange: "7-10",
         avgIncome: 22200,
+        crimeIndex: 2600,
+        airportKm: 45,
+        rentApt3br: 780,
         tags: ["tortellini", "historica", "via-emilia"],
         scores: { escola: 7, saude: 7, mercados: 6, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
     },
@@ -3154,6 +3694,9 @@ const cities = [
         neighborhoods: "Centro, Idice.",
         rentRange: "9-13",
         avgIncome: 25400,
+        crimeIndex: 2800,
+        airportKm: 12,
+        rentApt3br: 1050,
         tags: ["grande-Bologna", "residencial-premium", "tecnologia"],
         scores: { escola: 8, saude: 8, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 5, qualidadeVida: 8 }
     },
@@ -3173,6 +3716,9 @@ const cities = [
         neighborhoods: "Centro storico, Pieve.",
         rentRange: "6-9",
         avgIncome: 20900,
+        crimeIndex: 2700,
+        airportKm: 60,
+        rentApt3br: 680,
         tags: ["economica", "romagna", "provincial"],
         scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 6, custoVida: 8, qualidadeVida: 6 }
     },
@@ -3192,6 +3738,9 @@ const cities = [
         neighborhoods: "Bazzano, Monteveglio, Crespellano.",
         rentRange: "7-11",
         avgIncome: 21100,
+        crimeIndex: 2100,
+        airportKm: 20,
+        rentApt3br: 780,
         tags: ["grande-Bologna", "colinas", "vinho"],
         scores: { escola: 7, saude: 6, mercados: 6, transporte: 6, estrangeiros: 6, custoVida: 7, qualidadeVida: 8 }
     }
@@ -3285,6 +3834,7 @@ function renderCards(list) {
                     <div class="card-title">${c.name}</div>
                     <div class="card-region">${c.region} &bull; ${c.macro}</div>
                 </div>
+                <button class="fav-btn ${isFav(c.name)?'active':''}" onclick="toggleFav('${c.name}',event)" title="Favoritar">⭐</button>
                 <div class="card-grade ${getGradeClass(c.grade)}">${c.gradeLabel}</div>
             </div>
             <div class="card-metrics">
@@ -3308,6 +3858,7 @@ function renderCards(list) {
             <div class="card-tags">
                 ${c.tags.slice(0, 4).map(t => `<span class="tag ${c.tags.indexOf(t) === 0 ? 'tag-highlight' : ''}">${t}</span>`).join("")}
             </div>
+            <button class="compare-btn ${compareList.includes(c.name)?'selected':''}" onclick="toggleCompare('${c.name}',event)">⚖️ ${t('compareAdd')}</button>
         </div>
     `).join("");
 }
@@ -3346,6 +3897,16 @@ const translations = {
         macroNW: "Noroeste", macroNE: "Nordeste", macroCN: "Centro-Norte",
         sortLabel: "Ordenar:",
         sortGrade: "Nota", sortRent: "Aluguel", sortForeigners: "% Estrangeiros", sortPop: "Populacao",
+        sortIncome: "Renda", sortCrime: "Seguranca",
+        budgetLabel: "Aluguel 3Q máx:",
+        favOnly: "Só Favoritos",
+        compareAdd: "Comparar", compareLabel: "Comparar:", compareBtn: "Ver Comparacao", compareClear: "Limpar",
+        compareTitle: "Comparacao de Cidades", compareMax: "Maximo 3 cidades", compareMin: "Selecione ao menos 2 cidades", compareMetric: "Indicador",
+        sCrime: "Criminalidade/100k", sAirport: "Aeroporto",
+        tabCalc: "Calculadora", tabMap: "Mapa",
+        calcTitle: "Calculadora de Viabilidade", calcSubtitle: "Informe seu orçamento e veja quais cidades são viáveis.",
+        calcBudget: "Orçamento mensal total (€)", calcRentPct: "% para aluguel",
+        calcMaxRent: "Aluguel máximo", calcFound: "Cidades encontradas", calcCities: "cidades", calcNone: "Nenhuma cidade dentro do orçamento.",
         // Card metrics
         mPop: "Populacao", mForeign: "Estrangeiros", mRent: "Aluguel/m2", mIncome: "Renda/ano",
         // Modal metrics
@@ -3389,6 +3950,16 @@ const translations = {
         macroNW: "Northwest", macroNE: "Northeast", macroCN: "North-Center",
         sortLabel: "Sort by:",
         sortGrade: "Score", sortRent: "Rent", sortForeigners: "% Foreigners", sortPop: "Population",
+        sortIncome: "Income", sortCrime: "Safety",
+        budgetLabel: "Max 3BR rent:",
+        favOnly: "Only Favorites",
+        compareAdd: "Compare", compareLabel: "Compare:", compareBtn: "View Comparison", compareClear: "Clear",
+        compareTitle: "City Comparison", compareMax: "Maximum 3 cities", compareMin: "Select at least 2 cities", compareMetric: "Indicator",
+        sCrime: "Crime/100k", sAirport: "Airport",
+        tabCalc: "Calculator", tabMap: "Map",
+        calcTitle: "Viability Calculator", calcSubtitle: "Enter your budget and see which cities are viable.",
+        calcBudget: "Total monthly budget (€)", calcRentPct: "% for rent",
+        calcMaxRent: "Max rent", calcFound: "Cities found", calcCities: "cities", calcNone: "No city within budget.",
         mPop: "Population", mForeign: "Foreigners", mRent: "Rent/m2", mIncome: "Income/yr",
         mmPop: "Population", mmForeign: "Foreigners", mmRent: "Rent Range", mmGrade: "Family Score", mmIncome: "Avg Income/yr",
         sPhotos: "Photos", sScores: "Category Ratings", sClimate: "Climate", sEconomy: "Economy",
@@ -3424,6 +3995,16 @@ const translations = {
         macroNW: "Nordovest", macroNE: "Nordest", macroCN: "Centro-Nord",
         sortLabel: "Ordina:",
         sortGrade: "Punteggio", sortRent: "Affitto", sortForeigners: "% Stranieri", sortPop: "Popolazione",
+        sortIncome: "Reddito", sortCrime: "Sicurezza",
+        budgetLabel: "Affitto 3 cam. max:",
+        favOnly: "Solo Preferiti",
+        compareAdd: "Confronta", compareLabel: "Confronta:", compareBtn: "Vedi Confronto", compareClear: "Cancella",
+        compareTitle: "Confronto Citta", compareMax: "Massimo 3 citta", compareMin: "Seleziona almeno 2 citta", compareMetric: "Indicatore",
+        sCrime: "Criminalità/100k", sAirport: "Aeroporto",
+        tabCalc: "Calcolatore", tabMap: "Mappa",
+        calcTitle: "Calcolatore di Fattibilità", calcSubtitle: "Inserisci il tuo budget e vedi quali città sono fattibili.",
+        calcBudget: "Budget mensile totale (€)", calcRentPct: "% per affitto",
+        calcMaxRent: "Affitto massimo", calcFound: "Città trovate", calcCities: "città", calcNone: "Nessuna città nel budget.",
         mPop: "Popolazione", mForeign: "Stranieri", mRent: "Affitto/m2", mIncome: "Reddito/anno",
         mmPop: "Popolazione", mmForeign: "Stranieri", mmRent: "Fascia Affitto", mmGrade: "Punteggio Famiglia", mmIncome: "Reddito Medio/anno",
         sPhotos: "Foto", sScores: "Valutazione per Categoria", sClimate: "Clima", sEconomy: "Economia",
@@ -3559,6 +4140,217 @@ function closeModal() {
     document.body.style.overflow = "";
 }
 
+let budgetMax = 3000;
+function onBudgetChange(val) {
+    budgetMax = parseInt(val);
+    document.getElementById('budget-val').textContent = '€' + parseInt(val).toLocaleString('pt-BR');
+    filterCities();
+}
+
+let favOnly = false;
+function getFavs() { try { return JSON.parse(localStorage.getItem('italia_favs') || '[]'); } catch(e) { return []; } }
+function isFav(name) { return getFavs().includes(name); }
+function toggleFav(name, e) {
+    e.stopPropagation();
+    let favs = getFavs();
+    if (favs.includes(name)) favs = favs.filter(f => f !== name);
+    else favs.push(name);
+    localStorage.setItem('italia_favs', JSON.stringify(favs));
+    filterCities();
+}
+function toggleFavFilter() {
+    favOnly = !favOnly;
+    document.getElementById('fav-filter-btn').classList.toggle('active', favOnly);
+    filterCities();
+}
+
+let compareList = [];
+function toggleCompare(name, e) {
+    e.stopPropagation();
+    if (compareList.includes(name)) {
+        compareList = compareList.filter(n => n !== name);
+    } else {
+        if (compareList.length >= 3) { alert(t('compareMax')); return; }
+        compareList.push(name);
+    }
+    updateCompareBar();
+    filterCities();
+}
+function updateCompareBar() {
+    const bar = document.getElementById('compare-bar');
+    const chips = document.getElementById('compare-chips');
+    bar.classList.toggle('visible', compareList.length > 0);
+    chips.innerHTML = compareList.map(n => `<div class="compare-bar-chip">${n}<button onclick="toggleCompare('${n}',event)">×</button></div>`).join('');
+}
+function clearCompare() { compareList = []; updateCompareBar(); filterCities(); }
+function openCompareModal() {
+    if (compareList.length < 2) { alert(t('compareMin')); return; }
+    const cs = compareList.map(n => cities.find(c => c.name === n)).filter(Boolean);
+    const rows = [
+        { label: t('mmPop'), key: c => formatPop(c.population), best: null },
+        { label: t('mmForeign'), key: c => c.foreigners + '%', best: 'max', num: c => c.foreigners },
+        { label: t('mmRent'), key: c => '€' + c.rentRange + '/m²', best: null },
+        { label: '3BR ' + t('mRent'), key: c => '€' + (c.rentApt3br||'N/D'), best: 'min', num: c => c.rentApt3br },
+        { label: t('mmIncome'), key: c => '€' + ((c.avgIncome||0)/1000).toFixed(1) + 'k', best: 'max', num: c => c.avgIncome },
+        { label: t('sCrime'), key: c => (c.crimeIndex||0).toLocaleString(), best: 'min', num: c => c.crimeIndex },
+        { label: t('sAirport'), key: c => (c.airportKm||'?') + ' km', best: 'min', num: c => c.airportKm },
+        { label: t('mmGrade'), key: c => c.gradeLabel, best: null },
+        { label: t('rSchool'), key: c => c.scores.escola + '/10', best: 'max', num: c => c.scores.escola },
+        { label: t('rHealth'), key: c => c.scores.saude + '/10', best: 'max', num: c => c.scores.saude },
+        { label: t('rCost'), key: c => c.scores.custoVida + '/10', best: 'max', num: c => c.scores.custoVida },
+        { label: t('rQuality'), key: c => c.scores.qualidadeVida + '/10', best: 'max', num: c => c.scores.qualidadeVida },
+    ];
+    const thead = `<tr><th>${t('compareMetric')}</th>${cs.map(c=>`<th class="city-header">${c.name}</th>`).join('')}</tr>`;
+    const tbody = rows.map(row => {
+        let bestIdx = -1;
+        if (row.best && row.num) {
+            const vals = cs.map(c => row.num(c)||0);
+            bestIdx = row.best==='max' ? vals.indexOf(Math.max(...vals)) : vals.indexOf(Math.min(...vals));
+        }
+        return `<tr><td class="row-label">${row.label}</td>${cs.map((c,i)=>`<td class="${i===bestIdx?'compare-best':''}">${row.key(c)}</td>`).join('')}</tr>`;
+    }).join('');
+    document.getElementById('compare-table').innerHTML = thead + tbody;
+    document.getElementById('compare-modal').classList.add('open');
+}
+function closeCompareModal() { document.getElementById('compare-modal').classList.remove('open'); }
+
+function runCalc() {
+    const budget = parseInt(document.getElementById('calc-budget').value) || 4000;
+    const rentPct = parseInt(document.getElementById('calc-rent-pct').value) || 35;
+    const maxRent = Math.round(budget * rentPct / 100);
+    const viable = cities.filter(c => c.rentApt3br && c.rentApt3br <= maxRent)
+        .sort((a,b) => (gradeOrder[b.grade]||0) - (gradeOrder[a.grade]||0));
+    const el = document.getElementById('calc-result');
+    if (!viable.length) {
+        el.innerHTML = `<div style="color:var(--red);padding:20px;text-align:center;">${t('calcNone')}</div>`;
+        return;
+    }
+    el.innerHTML = `
+        <div style="margin-bottom:12px;font-size:13px;color:var(--text-dim);">
+            ${t('calcMaxRent')}: <strong style="color:var(--accent)">€${maxRent.toLocaleString()}</strong> &nbsp;|&nbsp;
+            ${t('calcFound')}: <strong style="color:var(--green)">${viable.length} ${t('calcCities')}</strong>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;max-height:420px;overflow-y:auto;">
+        ${viable.slice(0,20).map(c => `
+            <div onclick="openModal('${c.name}')" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+                <div>
+                    <div style="font-weight:700;font-size:14px;">${c.name}</div>
+                    <div style="font-size:12px;color:var(--text-dim);">${c.region}</div>
+                </div>
+                <div style="display:flex;gap:16px;align-items:center;">
+                    <div style="text-align:right;">
+                        <div style="font-size:13px;font-weight:600;color:var(--green)">€${c.rentApt3br}/mês</div>
+                        <div style="font-size:11px;color:var(--text-dim);">3 quartos</div>
+                    </div>
+                    <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;">${c.gradeLabel}</div>
+                </div>
+            </div>
+        `).join('')}
+        </div>
+    `;
+}
+
+// ── City coordinates ──────────────────────────────────────────────────────────
+const cityCoords = {
+  "Aosta":[45.7369,7.3207],"Torino":[45.0703,7.6869],"Novara":[45.4469,8.6219],
+  "Alba":[44.6981,8.0347],"Cuneo":[44.3841,7.5481],"Alessandria":[44.9122,8.6151],
+  "Genova":[44.4056,8.9463],"La Spezia":[44.1024,9.8243],"Savona":[44.3069,8.4812],
+  "Bergamo":[45.6950,9.6702],"Brescia":[45.5416,10.2118],"Monza":[45.5845,9.2744],
+  "Varese":[45.8206,8.8257],"Como":[45.8080,9.0852],"Lecco":[45.8566,9.3926],
+  "Pavia":[45.1847,9.1582],"Cremona":[45.1327,10.0227],"Mantova":[45.1564,10.7914],
+  "Desenzano del Garda":[45.4675,10.5348],"Trento":[46.0748,11.1217],
+  "Bolzano":[46.4983,11.3548],"Merano":[46.6712,11.1597],"Rovereto":[45.8912,11.0413],
+  "Riva del Garda":[45.8853,10.8406],"Verona":[45.4384,10.9916],"Padova":[45.4065,11.8768],
+  "Vicenza":[45.5455,11.5354],"Treviso":[45.6669,12.2421],"Peschiera del Garda":[45.4396,10.6897],
+  "Sirmione":[45.4955,10.6085],"Iseo":[45.6570,10.0511],"Trieste":[45.6495,13.7768],
+  "Udine":[46.0711,13.2347],"Pordenone":[45.9564,12.6615],"Gorizia":[45.9403,13.6206],
+  "Bologna":[44.4949,11.3426],"Parma":[44.8015,10.3279],"Modena":[44.6471,10.9252],
+  "Reggio Emilia":[44.6989,10.6297],"Piacenza":[45.0526,9.6930],"Ferrara":[44.8381,11.6197],
+  "Ravenna":[44.4184,12.2035],"Forli":[44.2227,12.0407],"Cesena":[44.1391,12.2435],
+  "Rimini":[44.0594,12.5683],"Asti":[44.9003,8.2064],"Moncalieri":[44.9994,7.6831],
+  "Collegno":[45.0769,7.5731],"Rivoli":[45.0712,7.5182],"Vercelli":[45.3198,8.4211],
+  "Nichelino":[44.9931,7.6447],"Settimo Torinese":[45.1424,7.7778],"Biella":[45.5630,8.0582],
+  "Grugliasco":[45.0617,7.5793],"Chieri":[44.9122,7.8231],"Pinerolo":[44.8864,7.3308],
+  "Casale Monferrato":[45.1339,8.4530],"Venaria Reale":[45.1228,7.6275],
+  "Sanremo":[43.8159,7.7759],"Imperia":[43.8851,8.0278],"Milano":[45.4654,9.1859],
+  "Busto Arsizio":[45.6124,8.8513],"Sesto San Giovanni":[45.5326,9.2290],
+  "Cinisello Balsamo":[45.5563,9.2156],"Vigevano":[45.3150,8.8595],"Legnano":[45.5926,8.9176],
+  "Gallarate":[45.6600,8.7897],"Rho":[45.5274,9.0417],"Paderno Dugnano":[45.5700,9.1640],
+  "Cologno Monzese":[45.5281,9.2767],"Lissone":[45.6108,9.2383],"Lodi":[45.3148,9.5026],
+  "Seregno":[45.6528,9.2030],"Desio":[45.6219,9.2126],"Rozzano":[45.3826,9.1524],
+  "Cantù":[45.7369,9.1277],"San Giuliano Milanese":[45.3968,9.2922],
+  "Cesano Maderno":[45.6268,9.1487],"Voghera":[44.9942,9.0094],"Saronno":[45.6258,9.0363],
+  "Pioltello":[45.4962,9.3295],"Segrate":[45.4875,9.2664],"Bollate":[45.5432,9.1161],
+  "Limbiate":[45.6070,9.1259],"Brugherio":[45.5518,9.2882],"Cernusco sul Naviglio":[45.5219,9.3289],
+  "Corsico":[45.4319,9.1155],"Abbiategrasso":[45.3987,8.9198],"San Donato Milanese":[45.4182,9.2568],
+  "Treviglio":[45.5213,9.5903],"Venezia / Mestre":[45.4408,12.3155],"Rovigo":[45.0712,11.7899],
+  "Chioggia":[45.2191,12.2792],"Bassano del Grappa":[45.7667,11.7343],
+  "San Donà di Piave":[45.6322,12.5645],"Schio":[45.7128,11.3584],"Mira":[45.4343,12.1286],
+  "Belluno":[46.1404,12.2157],"Conegliano":[45.8887,12.2983],"Castelfranco Veneto":[45.6715,11.9240],
+  "Villafranca di Verona":[45.3551,10.8474],"Montebelluna":[45.7750,12.0438],
+  "Monfalcone":[45.8019,13.5371],"Carpi":[44.7863,10.8826],"Imola":[44.3528,11.7142],
+  "Faenza":[44.2864,11.8832],"Sassuolo":[44.5394,10.7862],"Cento":[44.7257,11.2889],
+  "Casalecchio di Reno":[44.4714,11.2853],"Formigine":[44.5752,10.8476],
+  "Riccione":[44.0004,12.6558],"Castelfranco Emilia":[44.5979,11.0509],
+  "San Lazzaro di Savena":[44.4683,11.4086],"Lugo":[44.4216,11.9073],
+  "Valsamoggia":[44.4569,11.0453]
+};
+
+// ── Map ───────────────────────────────────────────────────────────────────────
+let mapInstance = null;
+function initMap() {
+    if (mapInstance) return;
+    setTimeout(() => {
+        mapInstance = L.map('city-map').setView([45.5, 10.5], 7);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO',
+            subdomains: 'abcd', maxZoom: 19
+        }).addTo(mapInstance);
+
+        const gradeColors = { A:'#4ade80', 'A-':'#86efac', 'B+':'#facc15', B:'#fb923c', C:'#f87171' };
+
+        cities.forEach(c => {
+            const coords = cityCoords[c.name];
+            if (!coords) return;
+            const color = gradeColors[c.grade] || '#888';
+            const marker = L.circleMarker(coords, {
+                radius: Math.max(6, Math.min(14, Math.log(c.population/1000)*2)),
+                fillColor: color, color: '#000', weight: 1,
+                opacity: 0.9, fillOpacity: 0.85
+            }).addTo(mapInstance);
+            marker.bindPopup(`
+                <div style="font-family:sans-serif;min-width:180px;">
+                    <strong style="font-size:14px;">${c.name}</strong>
+                    <div style="color:#666;font-size:12px;margin-bottom:6px;">${c.region}</div>
+                    <div style="display:flex;gap:12px;font-size:12px;">
+                        <span>Nota: <b style="color:${color}">${c.gradeLabel}</b></span>
+                        <span>Pop: <b>${formatPop(c.population)}</b></span>
+                    </div>
+                    <div style="font-size:12px;margin-top:4px;">Aluguel 3Q: <b>€${c.rentApt3br||'N/D'}</b></div>
+                    <div style="font-size:12px;">Renda: <b>€${c.avgIncome?(c.avgIncome/1000).toFixed(1)+'k':'N/D'}</b></div>
+                    <button onclick="closeAllModals();openModal('${c.name}')" style="margin-top:8px;padding:4px 10px;background:#6c8cff;color:white;border:none;border-radius:4px;cursor:pointer;font-size:11px;">Ver detalhes →</button>
+                </div>
+            `);
+        });
+
+        // Legend
+        const legend = L.control({ position: 'bottomright' });
+        legend.onAdd = () => {
+            const div = L.DomUtil.create('div');
+            div.style.cssText = 'background:rgba(15,17,23,0.9);padding:10px 14px;border-radius:8px;border:1px solid #2a2d3a;font-family:sans-serif;font-size:12px;color:#ccc;';
+            div.innerHTML = Object.entries(gradeColors).map(([g,col]) =>
+                `<div style="display:flex;align-items:center;gap:6px;margin:3px 0;"><span style="width:12px;height:12px;border-radius:50%;background:${col};display:inline-block;"></span>${g}</div>`
+            ).join('');
+            return div;
+        };
+        legend.addTo(mapInstance);
+    }, 100);
+}
+function closeAllModals() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
 function filterCities() {
     const search = document.getElementById("search").value.toLowerCase();
     const region = document.getElementById("region-filter").value;
@@ -3570,6 +4362,8 @@ function filterCities() {
         if (region && c.region !== region) return false;
         if (grade && c.grade !== grade) return false;
         if (macro && c.macro !== macro) return false;
+        if (budgetMax < 3000 && c.rentApt3br && c.rentApt3br > budgetMax) return false;
+        if (favOnly && !isFav(c.name)) return false;
         return true;
     });
 
@@ -3585,6 +4379,8 @@ function sortCities(list) {
             case "foreigners": return b.foreigners - a.foreigners;
             case "population": return b.population - a.population;
             case "name": return a.name.localeCompare(b.name);
+            case "income": return (b.avgIncome || 0) - (a.avgIncome || 0);
+            case "crime": return (a.crimeIndex || 0) - (b.crimeIndex || 0);
             default: return 0;
         }
     });
@@ -3772,6 +4568,27 @@ function closeLightbox(e) {
 renderCards(sortCities(cities));
 renderRegions();
 </script>
+
+<!-- Compare Bar -->
+<div class="compare-bar" id="compare-bar">
+    <span style="font-size:12px;color:var(--text-dim);font-weight:600;" data-i18n="compareLabel">Comparar:</span>
+    <div id="compare-chips"></div>
+    <button class="compare-go-btn" onclick="openCompareModal()" data-i18n="compareBtn">Ver Comparacao</button>
+    <button class="compare-clear-btn" onclick="clearCompare()" data-i18n="compareClear">Limpar</button>
+</div>
+
+<!-- Compare Modal -->
+<div class="compare-modal-overlay" id="compare-modal">
+    <div class="compare-modal">
+        <div style="padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <h2 style="font-size:18px;" data-i18n="compareTitle">Comparacao de Cidades</h2>
+            <button class="modal-close" onclick="closeCompareModal()">&times;</button>
+        </div>
+        <div style="overflow-x:auto;padding:16px;">
+            <table class="compare-table" id="compare-table"></table>
+        </div>
+    </div>
+</div>
 
 <!-- Lightbox -->
 <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
