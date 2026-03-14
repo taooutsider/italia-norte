@@ -623,6 +623,125 @@
         }
 
         .region-card .detail strong { color: var(--text); }
+
+        /* ── Photo Gallery ── */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .photo-item {
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.25s;
+            display: block;
+        }
+        .photo-item:hover img { transform: scale(1.07); }
+        .photo-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 90px;
+            color: var(--text-dim);
+            font-size: 13px;
+            grid-column: 1 / -1;
+        }
+        .photo-empty {
+            color: var(--text-dim);
+            font-size: 13px;
+            padding: 8px 0;
+            grid-column: 1 / -1;
+        }
+
+        /* ── Lightbox ── */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.93);
+            z-index: 500;
+            justify-content: center;
+            align-items: center;
+        }
+        .lightbox-overlay.open { display: flex; }
+        .lightbox-img {
+            max-width: 88vw;
+            max-height: 82vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+        }
+        .lightbox-caption {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.65);
+            font-size: 12px;
+            max-width: 600px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            transition: background 0.2s;
+        }
+        .lightbox-close:hover { background: rgba(255,255,255,0.22); }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            font-size: 22px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            user-select: none;
+        }
+        .lightbox-nav:hover { background: rgba(255,255,255,0.22); }
+        .lightbox-prev { left: 18px; }
+        .lightbox-next { right: 18px; }
+        .lightbox-counter {
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.5);
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
@@ -3064,7 +3183,15 @@ function openModal(name) {
 
     const s = c.scores;
     const body = document.getElementById("modal-body");
+    const galleryId = `gallery-${c.name.replace(/[^a-z0-9]/gi,'_')}`;
     body.innerHTML = `
+        <div class="modal-section">
+            <h3>📸 Fotos</h3>
+            <div class="photo-gallery" id="${galleryId}">
+                <div class="photo-loading">Carregando fotos...</div>
+            </div>
+        </div>
+
         <div class="modal-metrics-grid">
             <div class="modal-metric"><div class="val">${formatPop(c.population)}</div><div class="lbl">Populacao</div></div>
             <div class="modal-metric"><div class="val">${c.foreigners}%</div><div class="lbl">Estrangeiros</div></div>
@@ -3128,10 +3255,17 @@ function openModal(name) {
 
     document.getElementById("modal").classList.add("open");
     document.body.style.overflow = "hidden";
+
+    // Load photos async
+    loadCityPhotos(c.name).then(photos => {
+        const galleryEl = document.getElementById(galleryId);
+        if (galleryEl) renderGallery(galleryEl, photos, c.name);
+    });
 }
 
 function closeModal() {
     document.getElementById("modal").classList.remove("open");
+    document.getElementById("lightbox").classList.remove("open");
     document.body.style.overflow = "";
 }
 
@@ -3195,13 +3329,163 @@ function switchTab(tab) {
     document.getElementById("tab-" + tab).classList.add("active");
 }
 
-// ESC to close modal
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+// ESC to close modal/lightbox
+document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+        if (document.getElementById("lightbox").classList.contains("open")) closeLightbox();
+        else closeModal();
+    }
+    if (e.key === "ArrowLeft") lightboxNav(-1);
+    if (e.key === "ArrowRight") lightboxNav(1);
+});
+
+// ── Wikipedia name mapping ──────────────────────────────────────────────────
+const wikiNameMap = {
+    "Venezia / Mestre": "Venice",
+    "Torino": "Turin",
+    "Milano": "Milan",
+    "Genova": "Genoa",
+    "Padova": "Padua",
+    "Bolzano": "Bolzano",
+    "Reggio Emilia": "Reggio Emilia",
+    "La Spezia": "La Spezia",
+    "Desenzano del Garda": "Desenzano del Garda",
+    "Riva del Garda": "Riva del Garda",
+    "Peschiera del Garda": "Peschiera del Garda",
+    "Casale Monferrato": "Casale Monferrato",
+    "Venaria Reale": "Venaria Reale",
+    "Busto Arsizio": "Busto Arsizio",
+    "Settimo Torinese": "Settimo Torinese",
+    "Sesto San Giovanni": "Sesto San Giovanni",
+    "Cinisello Balsamo": "Cinisello Balsamo",
+    "Paderno Dugnano": "Paderno Dugnano",
+    "Cologno Monzese": "Cologno Monzese",
+    "San Giuliano Milanese": "San Giuliano Milanese",
+    "Cesano Maderno": "Cesano Maderno",
+    "San Donato Milanese": "San Donato Milanese",
+    "Bassano del Grappa": "Bassano del Grappa",
+    "San Donà di Piave": "San Donà di Piave",
+    "Villafranca di Verona": "Villafranca di Verona",
+    "Castelfranco Veneto": "Castelfranco Veneto",
+    "Castelfranco Emilia": "Castelfranco Emilia",
+    "Casalecchio di Reno": "Casalecchio di Reno",
+    "San Lazzaro di Savena": "San Lazzaro di Savena",
+    "Cernusco sul Naviglio": "Cernusco sul Naviglio",
+    "Abbiategrasso": "Abbiategrasso",
+    "Treviglio": "Treviglio",
+    "Vigevano": "Vigevano",
+    "Riccione": "Riccione",
+    "Valsamoggia": "Valsamoggia",
+    "Monfalcone": "Monfalcone"
+};
+
+// ── Photo cache ──────────────────────────────────────────────────────────────
+const photoCache = {};
+
+async function loadCityPhotos(cityName) {
+    if (photoCache[cityName]) return photoCache[cityName];
+
+    const wikiTitle = wikiNameMap[cityName] || cityName;
+
+    try {
+        // Step 1: get image list from Wikipedia article
+        const listRes = await fetch(
+            `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(wikiTitle)}&prop=images&imlimit=50&format=json&origin=*`
+        );
+        const listData = await listRes.json();
+        const pages = Object.values(listData.query.pages);
+        const images = pages[0].images || [];
+
+        const SKIP = /\.svg$|icon|flag|logo|map|coat|arms|stub|commons|wiki|edit|button|arrow|portal|sound|audio|\.ogg$|\.webm$|\.ogv$|\.tif$|signature|seal|emblem|badge|pictogram|symbol|banner_|header_/i;
+
+        const filtered = images
+            .filter(img => !SKIP.test(img.title))
+            .slice(0, 15);
+
+        if (!filtered.length) { photoCache[cityName] = []; return []; }
+
+        // Step 2: get image URLs
+        const titles = filtered.map(img => img.title).join('|');
+        const infoRes = await fetch(
+            `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(titles)}&prop=imageinfo&iiprop=url&iiurlwidth=700&format=json&origin=*`
+        );
+        const infoData = await infoRes.json();
+
+        const photos = Object.values(infoData.query.pages)
+            .map(p => ({
+                thumb: p.imageinfo?.[0]?.thumburl,
+                full:  p.imageinfo?.[0]?.url,
+                label: (p.title || '').replace('File:', '').replace(/\.[^.]+$/, '').replace(/_/g, ' ')
+            }))
+            .filter(p => p.thumb && /\.(jpe?g|png|webp)/i.test(p.thumb))
+            .slice(0, 10);
+
+        photoCache[cityName] = photos;
+        return photos;
+    } catch(e) {
+        return [];
+    }
+}
+
+// ── Gallery render ───────────────────────────────────────────────────────────
+let lightboxPhotos = [];
+let lightboxIndex  = 0;
+
+function renderGallery(galleryEl, photos, cityName) {
+    if (!photos.length) {
+        galleryEl.innerHTML = `<div class="photo-empty">Nenhuma foto disponível para ${cityName}.</div>`;
+        return;
+    }
+    galleryEl.innerHTML = photos.map((p, i) => `
+        <div class="photo-item" onclick="openLightbox(${i})">
+            <img src="${p.thumb}" alt="${p.label}" loading="lazy">
+        </div>
+    `).join('');
+    lightboxPhotos = photos;
+}
+
+// ── Lightbox ─────────────────────────────────────────────────────────────────
+function openLightbox(index) {
+    lightboxIndex = index;
+    updateLightbox();
+    document.getElementById("lightbox").classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+
+function updateLightbox() {
+    const p = lightboxPhotos[lightboxIndex];
+    document.getElementById("lightbox-img").src = p.full || p.thumb;
+    document.getElementById("lightbox-caption").textContent = p.label;
+    document.getElementById("lightbox-counter").textContent = `${lightboxIndex + 1} / ${lightboxPhotos.length}`;
+}
+
+function lightboxNav(dir, e) {
+    if (e) e.stopPropagation();
+    if (!lightboxPhotos.length) return;
+    lightboxIndex = (lightboxIndex + dir + lightboxPhotos.length) % lightboxPhotos.length;
+    updateLightbox();
+}
+
+function closeLightbox(e) {
+    if (e && e.target !== document.getElementById("lightbox") && !e.target.classList.contains("lightbox-close")) return;
+    document.getElementById("lightbox").classList.remove("open");
+    document.body.style.overflow = "hidden"; // modal still open
+}
 
 // INIT
 renderCards(sortCities(cities));
 renderRegions();
 </script>
+
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <button class="lightbox-nav lightbox-prev" onclick="lightboxNav(-1,event)">&#8249;</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    <button class="lightbox-nav lightbox-next" onclick="lightboxNav(1,event)">&#8250;</button>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
 
 </body>
 </html>
