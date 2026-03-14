@@ -742,49 +742,75 @@
             color: rgba(255,255,255,0.5);
             font-size: 12px;
         }
+
+        /* ── Language Switcher ── */
+        .lang-switcher {
+            display: flex;
+            gap: 4px;
+            margin-top: 10px;
+        }
+        .lang-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 6px;
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+        .lang-btn:hover { background: rgba(255,255,255,0.15); color: white; }
+        .lang-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
     </style>
 </head>
 <body>
 
 <div class="header">
     <div class="header-inner">
-        <h1><span class="flag">&#127470;&#127481;</span> Norte da Italia &mdash; Guia Estrategico</h1>
-        <p>Plataforma de decisao para familias &bull; 8 regioes &bull; Italia Settentrionale</p>
+        <h1><span class="flag">&#127470;&#127481;</span> <span data-i18n="title">Norte da Italia &mdash; Guia Estrategico</span></h1>
+        <p data-i18n="subtitle">Plataforma de decisao para familias &bull; 8 regioes &bull; Italia Settentrionale</p>
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="setLanguage('pt')">PT</button>
+            <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+            <button class="lang-btn" onclick="setLanguage('it')">IT</button>
+        </div>
     </div>
 </div>
 
 <div class="tab-nav">
-    <button class="tab-btn active" onclick="switchTab('cities')">Cidades</button>
-    <button class="tab-btn" onclick="switchTab('regions')">Regioes</button>
-    <button class="tab-btn" onclick="switchTab('checklist')">Checklist Mudanca</button>
-    <button class="tab-btn" onclick="switchTab('cronograma')">Cronograma</button>
+    <button class="tab-btn active" onclick="switchTab('cities')" data-i18n="tabCities">Cidades</button>
+    <button class="tab-btn" onclick="switchTab('regions')" data-i18n="tabRegions">Regioes</button>
+    <button class="tab-btn" onclick="switchTab('checklist')" data-i18n="tabChecklist">Checklist Mudanca</button>
+    <button class="tab-btn" onclick="switchTab('cronograma')" data-i18n="tabCronograma">Cronograma</button>
 </div>
 
 <!-- TAB: CITIES -->
 <div id="tab-cities" class="tab-content active">
 
 <div class="stats-bar">
-    <div class="stat-chip"><strong id="city-count">0</strong> &nbsp;cidades mapeadas</div>
-    <div class="stat-chip"><strong>8</strong> &nbsp;regioes</div>
-    <div class="stat-chip"><strong>~27M</strong> &nbsp;habitantes no Norte</div>
-    <div class="stat-chip"><strong>~70%</strong> &nbsp;da economia italiana</div>
+    <div class="stat-chip"><strong id="city-count">0</strong> &nbsp;<span data-i18n="statCities">cidades mapeadas</span></div>
+    <div class="stat-chip"><strong>8</strong> &nbsp;<span data-i18n="statRegions">regioes</span></div>
+    <div class="stat-chip"><strong>~27M</strong> &nbsp;<span data-i18n="statInhabitants">habitantes no Norte</span></div>
+    <div class="stat-chip"><strong>~70%</strong> &nbsp;<span data-i18n="statEconomy">da economia italiana</span></div>
 </div>
 
 <div class="family-banner">
     <div class="family-card">
-        <div class="info"><strong>Familia:</strong> 2 adultos + 3 criancas (4, 8, 12 anos)</div>
-        <div class="info"><strong>Mudanca:</strong> 27 de Julho 2026</div>
-        <div class="info"><strong>Destino base:</strong> Desenzano del Garda</div>
-        <div class="info"><strong>Filtro ativo:</strong> escola 4-13 anos + saude + mercados + transporte</div>
+        <div class="info"><strong data-i18n="famLabel">Familia:</strong> 2 adultos + 3 criancas (4, 8, 12 anos)</div>
+        <div class="info"><strong data-i18n="moveLabel">Mudanca:</strong> 27 de Julho 2026</div>
+        <div class="info"><strong data-i18n="destLabel">Destino base:</strong> Desenzano del Garda</div>
+        <div class="info"><strong data-i18n="filterLabel">Filtro ativo:</strong> escola 4-13 anos + saude + mercados + transporte</div>
     </div>
 </div>
 
 <div class="controls">
     <div class="search-box">
-        <input type="text" id="search" placeholder="Buscar cidade..." oninput="filterCities()">
+        <input type="text" id="search" placeholder="Buscar cidade..." oninput="filterCities()" data-i18n-placeholder="searchPlaceholder">
     </div>
     <select id="region-filter" onchange="filterCities()">
-        <option value="">Todas as regioes</option>
+        <option value="" data-i18n="allRegions">Todas as regioes</option>
         <option value="Valle d'Aosta">Valle d'Aosta</option>
         <option value="Piemonte">Piemonte</option>
         <option value="Liguria">Liguria</option>
@@ -795,27 +821,27 @@
         <option value="Emilia-Romagna">Emilia-Romagna</option>
     </select>
     <select id="grade-filter" onchange="filterCities()">
-        <option value="">Todos os niveis</option>
-        <option value="A">Nivel A</option>
-        <option value="A-">Nivel A-</option>
-        <option value="B+">Nivel B+</option>
-        <option value="B">Nivel B</option>
-        <option value="C">Nivel C</option>
+        <option value="" data-i18n="allLevels">Todos os niveis</option>
+        <option value="A" data-i18n="levelA">Nivel A</option>
+        <option value="A-" data-i18n="levelAminus">Nivel A-</option>
+        <option value="B+" data-i18n="levelBplus">Nivel B+</option>
+        <option value="B" data-i18n="levelB">Nivel B</option>
+        <option value="C" data-i18n="levelC">Nivel C</option>
     </select>
     <select id="macro-filter" onchange="filterCities()">
-        <option value="">Todas as macro regioes</option>
-        <option value="Noroeste">Noroeste</option>
-        <option value="Nordeste">Nordeste</option>
-        <option value="Centro-Norte">Centro-Norte</option>
+        <option value="" data-i18n="allMacro">Todas as macro regioes</option>
+        <option value="Noroeste" data-i18n="macroNW">Noroeste</option>
+        <option value="Nordeste" data-i18n="macroNE">Nordeste</option>
+        <option value="Centro-Norte" data-i18n="macroCN">Centro-Norte</option>
     </select>
 </div>
 
 <div class="sort-controls">
-    <span class="sort-label">Ordenar:</span>
-    <button class="sort-btn active" data-sort="grade" onclick="setSort('grade')">Nota</button>
-    <button class="sort-btn" data-sort="rent" onclick="setSort('rent')">Aluguel</button>
-    <button class="sort-btn" data-sort="foreigners" onclick="setSort('foreigners')">% Estrangeiros</button>
-    <button class="sort-btn" data-sort="population" onclick="setSort('population')">Populacao</button>
+    <span class="sort-label" data-i18n="sortLabel">Ordenar:</span>
+    <button class="sort-btn active" data-sort="grade" onclick="setSort('grade')" data-i18n="sortGrade">Nota</button>
+    <button class="sort-btn" data-sort="rent" onclick="setSort('rent')" data-i18n="sortRent">Aluguel</button>
+    <button class="sort-btn" data-sort="foreigners" onclick="setSort('foreigners')" data-i18n="sortForeigners">% Estrangeiros</button>
+    <button class="sort-btn" data-sort="population" onclick="setSort('population')" data-i18n="sortPop">Populacao</button>
     <button class="sort-btn" data-sort="name" onclick="setSort('name')">A-Z</button>
 </div>
 
@@ -3248,7 +3274,7 @@ function renderCards(list) {
     document.getElementById("city-count").textContent = list.length;
 
     if (list.length === 0) {
-        grid.innerHTML = '<div class="no-results"><h3>Nenhuma cidade encontrada</h3><p>Tente ajustar os filtros.</p></div>';
+        grid.innerHTML = `<div class="no-results"><h3>${t('noResults')}</h3><p>${t('noResultsSub')}</p></div>`;
         return;
     }
 
@@ -3264,19 +3290,19 @@ function renderCards(list) {
             <div class="card-metrics">
                 <div class="metric">
                     <div class="metric-value">${formatPop(c.population)}</div>
-                    <div class="metric-label">Populacao</div>
+                    <div class="metric-label">${t('mPop')}</div>
                 </div>
                 <div class="metric">
                     <div class="metric-value">${c.foreigners}%</div>
-                    <div class="metric-label">Estrangeiros</div>
+                    <div class="metric-label">${t('mForeign')}</div>
                 </div>
                 <div class="metric">
                     <div class="metric-value">&euro;${c.rentAvg}</div>
-                    <div class="metric-label">Aluguel/m2</div>
+                    <div class="metric-label">${t('mRent')}</div>
                 </div>
                 <div class="metric">
                     <div class="metric-value">&euro;${c.avgIncome ? (c.avgIncome/1000).toFixed(1)+'k' : 'N/D'}</div>
-                    <div class="metric-label">Renda/ano</div>
+                    <div class="metric-label">${t('mIncome')}</div>
                 </div>
             </div>
             <div class="card-tags">
@@ -3293,6 +3319,150 @@ function getRatingColor(score) {
     return "var(--red)";
 }
 
+// ── i18n ─────────────────────────────────────────────────────────────────────
+let currentLang = 'pt';
+
+const translations = {
+    pt: {
+        title: "Norte da Italia \u2014 Guia Estrategico",
+        subtitle: "Plataforma de decisao para familias \u2022 8 regioes \u2022 Italia Settentrionale",
+        tabCities: "Cidades",
+        tabRegions: "Regioes",
+        tabChecklist: "Checklist Mudanca",
+        tabCronograma: "Cronograma",
+        statCities: "cidades mapeadas",
+        statRegions: "regioes",
+        statInhabitants: "habitantes no Norte",
+        statEconomy: "da economia italiana",
+        famLabel: "Familia:",
+        moveLabel: "Mudanca:",
+        destLabel: "Destino base:",
+        filterLabel: "Filtro ativo:",
+        searchPlaceholder: "Buscar cidade...",
+        allRegions: "Todas as regioes",
+        allLevels: "Todos os niveis",
+        levelA: "Nivel A", levelAminus: "Nivel A-", levelBplus: "Nivel B+", levelB: "Nivel B", levelC: "Nivel C",
+        allMacro: "Todas as macro regioes",
+        macroNW: "Noroeste", macroNE: "Nordeste", macroCN: "Centro-Norte",
+        sortLabel: "Ordenar:",
+        sortGrade: "Nota", sortRent: "Aluguel", sortForeigners: "% Estrangeiros", sortPop: "Populacao",
+        // Card metrics
+        mPop: "Populacao", mForeign: "Estrangeiros", mRent: "Aluguel/m2", mIncome: "Renda/ano",
+        // Modal metrics
+        mmPop: "Populacao", mmForeign: "Estrangeiros", mmRent: "Faixa Aluguel", mmGrade: "Nota Familia", mmIncome: "Renda Media/ano",
+        // Modal sections
+        sPhotos: "Fotos", sScores: "Avaliacao por Categoria", sClimate: "Clima", sEconomy: "Economia",
+        sHealth: "Saude", sSchools: "Escolas", sMarkets: "Mercados e Comercio", sTransport: "Transporte",
+        sAccept: "Aceitacao de Estrangeiros", sNeigh: "Bairros Recomendados",
+        // Ratings
+        rSchool: "Escola", rHealth: "Saude", rMarkets: "Mercados", rTransport: "Transporte",
+        rForeign: "Estrangeiros", rCost: "Custo Vida", rQuality: "Qualidade",
+        // Photo
+        photoLoading: "Carregando fotos...", photoEmpty: "Nenhuma foto disponivel.",
+        // Region card
+        rcCapital: "Capital", rcPop: "Populacao", rcForeign: "Estrangeiros",
+        // No results
+        noResults: "Nenhuma cidade encontrada", noResultsSub: "Tente outros filtros.",
+        // Lang note
+        langNote: "Descricoes das cidades em portugues"
+    },
+    en: {
+        title: "Northern Italy \u2014 Strategic Guide",
+        subtitle: "Decision platform for families \u2022 8 regions \u2022 Italia Settentrionale",
+        tabCities: "Cities",
+        tabRegions: "Regions",
+        tabChecklist: "Moving Checklist",
+        tabCronograma: "Timeline",
+        statCities: "cities mapped",
+        statRegions: "regions",
+        statInhabitants: "inhabitants in the North",
+        statEconomy: "of the Italian economy",
+        famLabel: "Family:",
+        moveLabel: "Moving date:",
+        destLabel: "Home base:",
+        filterLabel: "Active filter:",
+        searchPlaceholder: "Search city...",
+        allRegions: "All regions",
+        allLevels: "All levels",
+        levelA: "Level A", levelAminus: "Level A-", levelBplus: "Level B+", levelB: "Level B", levelC: "Level C",
+        allMacro: "All macro regions",
+        macroNW: "Northwest", macroNE: "Northeast", macroCN: "North-Center",
+        sortLabel: "Sort by:",
+        sortGrade: "Score", sortRent: "Rent", sortForeigners: "% Foreigners", sortPop: "Population",
+        mPop: "Population", mForeign: "Foreigners", mRent: "Rent/m2", mIncome: "Income/yr",
+        mmPop: "Population", mmForeign: "Foreigners", mmRent: "Rent Range", mmGrade: "Family Score", mmIncome: "Avg Income/yr",
+        sPhotos: "Photos", sScores: "Category Ratings", sClimate: "Climate", sEconomy: "Economy",
+        sHealth: "Healthcare", sSchools: "Schools", sMarkets: "Markets & Commerce", sTransport: "Transport",
+        sAccept: "Foreigner Acceptance", sNeigh: "Recommended Neighborhoods",
+        rSchool: "School", rHealth: "Healthcare", rMarkets: "Markets", rTransport: "Transport",
+        rForeign: "Foreigners", rCost: "Cost of Living", rQuality: "Quality",
+        photoLoading: "Loading photos...", photoEmpty: "No photos available.",
+        rcCapital: "Capital", rcPop: "Population", rcForeign: "Foreigners",
+        noResults: "No cities found", noResultsSub: "Try different filters.",
+        langNote: "City descriptions in Portuguese"
+    },
+    it: {
+        title: "Nord Italia \u2014 Guida Strategica",
+        subtitle: "Piattaforma decisionale per famiglie \u2022 8 regioni \u2022 Italia Settentrionale",
+        tabCities: "Citta",
+        tabRegions: "Regioni",
+        tabChecklist: "Checklist Trasloco",
+        tabCronograma: "Cronoprogramma",
+        statCities: "citta mappate",
+        statRegions: "regioni",
+        statInhabitants: "abitanti nel Nord",
+        statEconomy: "dell'economia italiana",
+        famLabel: "Famiglia:",
+        moveLabel: "Trasloco:",
+        destLabel: "Base:",
+        filterLabel: "Filtro attivo:",
+        searchPlaceholder: "Cerca citta...",
+        allRegions: "Tutte le regioni",
+        allLevels: "Tutti i livelli",
+        levelA: "Livello A", levelAminus: "Livello A-", levelBplus: "Livello B+", levelB: "Livello B", levelC: "Livello C",
+        allMacro: "Tutte le macro regioni",
+        macroNW: "Nordovest", macroNE: "Nordest", macroCN: "Centro-Nord",
+        sortLabel: "Ordina:",
+        sortGrade: "Punteggio", sortRent: "Affitto", sortForeigners: "% Stranieri", sortPop: "Popolazione",
+        mPop: "Popolazione", mForeign: "Stranieri", mRent: "Affitto/m2", mIncome: "Reddito/anno",
+        mmPop: "Popolazione", mmForeign: "Stranieri", mmRent: "Fascia Affitto", mmGrade: "Punteggio Famiglia", mmIncome: "Reddito Medio/anno",
+        sPhotos: "Foto", sScores: "Valutazione per Categoria", sClimate: "Clima", sEconomy: "Economia",
+        sHealth: "Sanita", sSchools: "Scuole", sMarkets: "Mercati e Commercio", sTransport: "Trasporti",
+        sAccept: "Accoglienza Stranieri", sNeigh: "Quartieri Consigliati",
+        rSchool: "Scuola", rHealth: "Sanita", rMarkets: "Mercati", rTransport: "Trasporti",
+        rForeign: "Stranieri", rCost: "Costo Vita", rQuality: "Qualita",
+        photoLoading: "Caricamento foto...", photoEmpty: "Nessuna foto disponibile.",
+        rcCapital: "Capoluogo", rcPop: "Popolazione", rcForeign: "Stranieri",
+        noResults: "Nessuna citta trovata", noResultsSub: "Prova altri filtri.",
+        langNote: "Descrizioni delle citta in portoghese"
+    }
+};
+
+function t(key) {
+    return (translations[currentLang] && translations[currentLang][key]) || translations['pt'][key] || key;
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    // Update lang buttons
+    document.querySelectorAll('.lang-btn').forEach(b => {
+        b.classList.toggle('active', b.textContent.toLowerCase() === lang);
+    });
+    // Update data-i18n elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = t(key);
+    });
+    // Update placeholder
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        el.placeholder = t(key);
+    });
+    // Re-render dynamic content
+    filterCities();
+    renderRegions();
+}
+
 function openModal(name) {
     const c = cities.find(x => x.name === name);
     if (!c) return;
@@ -3305,25 +3475,25 @@ function openModal(name) {
     const galleryId = `gallery-${c.name.replace(/[^a-z0-9]/gi,'_')}`;
     body.innerHTML = `
         <div class="modal-section">
-            <h3>📸 Fotos</h3>
+            <h3>📸 ${t('sPhotos')}</h3>
             <div class="photo-gallery" id="${galleryId}">
-                <div class="photo-loading">Carregando fotos...</div>
+                <div class="photo-loading">${t('photoLoading')}</div>
             </div>
         </div>
 
         <div class="modal-metrics-grid">
-            <div class="modal-metric"><div class="val">${formatPop(c.population)}</div><div class="lbl">Populacao</div></div>
-            <div class="modal-metric"><div class="val">${c.foreigners}%</div><div class="lbl">Estrangeiros</div></div>
-            <div class="modal-metric"><div class="val">&euro;${c.rentRange}/m&sup2;</div><div class="lbl">Faixa Aluguel</div></div>
-            <div class="modal-metric"><div class="val" style="color:${getRatingColor(gradeOrder[c.grade]*2)}">${c.gradeLabel}</div><div class="lbl">Nota Familia</div></div>
-            <div class="modal-metric"><div class="val">&euro;${c.avgIncome ? (c.avgIncome/1000).toFixed(1)+'k' : 'N/D'}</div><div class="lbl">Renda Media/ano</div></div>
+            <div class="modal-metric"><div class="val">${formatPop(c.population)}</div><div class="lbl">${t('mmPop')}</div></div>
+            <div class="modal-metric"><div class="val">${c.foreigners}%</div><div class="lbl">${t('mmForeign')}</div></div>
+            <div class="modal-metric"><div class="val">&euro;${c.rentRange}/m&sup2;</div><div class="lbl">${t('mmRent')}</div></div>
+            <div class="modal-metric"><div class="val" style="color:${getRatingColor(gradeOrder[c.grade]*2)}">${c.gradeLabel}</div><div class="lbl">${t('mmGrade')}</div></div>
+            <div class="modal-metric"><div class="val">&euro;${c.avgIncome ? (c.avgIncome/1000).toFixed(1)+'k' : 'N/D'}</div><div class="lbl">${t('mmIncome')}</div></div>
         </div>
 
         <div class="modal-section">
-            <h3>Avaliacao por Categoria</h3>
+            <h3>${t('sScores')}</h3>
             ${["escola", "saude", "mercados", "transporte", "estrangeiros", "custoVida", "qualidadeVida"].map(k => `
                 <div class="rating-bar">
-                    <span class="label">${{escola:"Escola",saude:"Saude",mercados:"Mercados",transporte:"Transporte",estrangeiros:"Estrangeiros",custoVida:"Custo Vida",qualidadeVida:"Qualidade"}[k]}</span>
+                    <span class="label">${{escola:t('rSchool'),saude:t('rHealth'),mercados:t('rMarkets'),transporte:t('rTransport'),estrangeiros:t('rForeign'),custoVida:t('rCost'),qualidadeVida:t('rQuality')}[k]}</span>
                     <div class="rating-track"><div class="rating-fill" style="width:${s[k]*10}%;background:${getRatingColor(s[k])}"></div></div>
                     <span class="score" style="color:${getRatingColor(s[k])}">${s[k]}</span>
                 </div>
@@ -3331,44 +3501,44 @@ function openModal(name) {
         </div>
 
         <div class="modal-section">
-            <h3>Clima</h3>
+            <h3>${t('sClimate')}</h3>
             <p>${c.climate}</p>
         </div>
 
         <div class="modal-section">
-            <h3>Economia</h3>
+            <h3>${t('sEconomy')}</h3>
             <p>${c.economy}</p>
         </div>
 
         <div class="modal-section">
-            <h3>Saude</h3>
+            <h3>${t('sHealth')}</h3>
             <p>${c.healthcare}</p>
         </div>
 
         <div class="modal-section">
-            <h3>Escolas</h3>
+            <h3>${t('sSchools')}</h3>
             <p>${c.schools}</p>
             <p style="color:var(--text-dim);font-size:13px;margin-top:4px;">${c.schoolTypes}</p>
         </div>
 
         <div class="modal-section">
-            <h3>Mercados e Comercio</h3>
+            <h3>${t('sMarkets')}</h3>
             <p>${c.markets}</p>
         </div>
 
         <div class="modal-section">
-            <h3>Transporte</h3>
+            <h3>${t('sTransport')}</h3>
             <p>${c.transport}</p>
         </div>
 
         <div class="modal-section">
-            <h3>Aceitacao de Estrangeiros</h3>
+            <h3>${t('sAccept')}</h3>
             <p>${c.acceptance}</p>
             <p style="color:var(--text-dim);font-size:13px;margin-top:4px;">${c.racismNote}</p>
         </div>
 
         <div class="modal-section">
-            <h3>Bairros Recomendados</h3>
+            <h3>${t('sNeigh')}</h3>
             <p>${c.neighborhoods}</p>
         </div>
     `;
@@ -3431,10 +3601,10 @@ function renderRegions() {
     grid.innerHTML = regionsData.map(r => `
         <div class="region-card">
             <h3>${r.name}</h3>
-            <div class="sub">Capital: ${r.capital} &bull; ${r.macro}</div>
+            <div class="sub">${t('rcCapital')}: ${r.capital} &bull; ${r.macro}</div>
             <div class="detail">
-                <strong>Populacao:</strong> ${r.pop}<br>
-                <strong>Estrangeiros:</strong> ${r.foreigners}<br>
+                <strong>${t('rcPop')}:</strong> ${r.pop}<br>
+                <strong>${t('rcForeign')}:</strong> ${r.foreigners}<br>
                 <strong>Saude:</strong> ${r.healthRank}<br><br>
                 ${r.desc}
             </div>
@@ -3559,7 +3729,7 @@ let lightboxIndex  = 0;
 
 function renderGallery(galleryEl, photos, cityName) {
     if (!photos.length) {
-        galleryEl.innerHTML = `<div class="photo-empty">Nenhuma foto disponível para ${cityName}.</div>`;
+        galleryEl.innerHTML = `<div class="photo-empty">${t('photoEmpty')}</div>`;
         return;
     }
     galleryEl.innerHTML = photos.map((p, i) => `
