@@ -38,9 +38,6 @@
             background: linear-gradient(135deg, #1a1d27 0%, #232736 100%);
             border-bottom: 1px solid var(--border);
             padding: 24px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
         .header-inner {
@@ -296,7 +293,7 @@
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.7);
-            z-index: 200;
+            z-index: 1000;
             justify-content: center;
             align-items: flex-start;
             padding: 40px 20px;
@@ -563,13 +560,20 @@
 
         /* Tab navigation */
         .tab-nav {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 16px 24px 0;
+            max-width: 100%;
+            margin: 0;
+            padding: 0 24px;
             display: flex;
             gap: 4px;
             border-bottom: 1px solid var(--border);
+            background: var(--surface);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            overflow-x: auto;
+            scrollbar-width: none;
         }
+        .tab-nav::-webkit-scrollbar { display: none; }
 
         .tab-btn {
             background: transparent;
@@ -670,7 +674,7 @@
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.93);
-            z-index: 500;
+            z-index: 1200;
             justify-content: center;
             align-items: center;
         }
@@ -878,7 +882,7 @@
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.7);
-            z-index: 300;
+            z-index: 1100;
             justify-content: center;
             align-items: flex-start;
             padding: 40px 20px;
@@ -932,7 +936,8 @@
 </head>
 <body>
 
-<div class="header">
+<div id="sticky-top" style="position:sticky;top:0;z-index:100;background:var(--surface);">
+<div class="header" style="position:static;">
     <div class="header-inner">
         <h1><span class="flag">&#127470;&#127481;</span> <span data-i18n="title">Norte da Italia &mdash; Guia Estrategico</span></h1>
         <p data-i18n="subtitle">Plataforma de decisao para familias &bull; 8 regioes &bull; Italia Settentrionale</p>
@@ -952,6 +957,7 @@
     <button class="tab-btn" onclick="switchTab('calculator')" data-i18n="tabCalc">Calculadora</button>
     <button class="tab-btn" onclick="switchTab('map');initMap()" data-i18n="tabMap">Mapa</button>
 </div>
+</div><!-- /sticky-top -->
 
 <!-- TAB: CITIES -->
 <div id="tab-cities" class="tab-content active">
@@ -4302,8 +4308,8 @@ function initMap() {
     if (mapInstance) return;
     setTimeout(() => {
         mapInstance = L.map('city-map').setView([45.5, 10.5], 7);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap &copy; CARTO',
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
             subdomains: 'abcd', maxZoom: 19
         }).addTo(mapInstance);
 
