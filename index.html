@@ -3396,10 +3396,16 @@ async function loadCityPhotos(cityName) {
         const pages = Object.values(listData.query.pages);
         const images = pages[0].images || [];
 
-        const SKIP = /\.svg$|icon|flag|logo|map|coat|arms|stub|commons|wiki|edit|button|arrow|portal|sound|audio|\.ogg$|\.webm$|\.ogv$|\.tif$|signature|seal|emblem|badge|pictogram|symbol|banner_|header_/i;
+        const SKIP = /\.svg$|icon|flag|logo|map|mappa|coat|arms|stub|commons|wiki|edit|button|arrow|portal|sound|audio|\.ogg$|\.webm$|\.ogv$|\.tif$|signature|seal|emblem|badge|pictogram|symbol|banner_|header_|stemma|blason|heraldic|wappen|blazon|locator|posizione|position|province|blank|outline|location_|_location|comuni|comune|relief|topograph|satellit|satellite|schema|diagram|chart|graph|plan_|_plan/i;
 
         const filtered = images
-            .filter(img => !SKIP.test(img.title))
+            .filter(img => {
+                if (SKIP.test(img.title)) return false;
+                // Skip all-caps filenames (coats of arms, logos, symbols)
+                const fname = img.title.replace(/^File:/i, '').replace(/\.[^.]+$/, '');
+                if (/^[A-Z0-9_\-\s]+$/.test(fname)) return false;
+                return true;
+            })
             .slice(0, 15);
 
         if (!filtered.length) { photoCache[cityName] = []; return []; }
