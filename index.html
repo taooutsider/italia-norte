@@ -1,0 +1,3207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norte da Italia - Guia Estrategico para Familias</title>
+    <style>
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface2: #232736;
+            --border: #2e3348;
+            --text: #e4e6ef;
+            --text-dim: #8b8fa3;
+            --accent: #6c8cff;
+            --accent-dim: #4a62b3;
+            --green: #4ade80;
+            --yellow: #fbbf24;
+            --orange: #fb923c;
+            --red: #f87171;
+            --cyan: #22d3ee;
+            --purple: #a78bfa;
+            --pink: #f472b6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1d27 0%, #232736 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 24px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header h1 .flag { font-size: 28px; }
+
+        .header p {
+            color: var(--text-dim);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .stat-chip {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        .stat-chip strong {
+            color: var(--accent);
+            font-size: 15px;
+        }
+
+        /* Controls */
+        .controls {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 16px 10px 40px;
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input:focus { border-color: var(--accent); }
+
+        .search-box::before {
+            content: "\1F50D";
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+        }
+
+        select, .filter-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: var(--text);
+            font-size: 13px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        select:focus, .filter-btn:hover {
+            border-color: var(--accent);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+        }
+
+        /* Sort controls */
+        .sort-controls {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px 12px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .sort-label {
+            font-size: 12px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sort-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 10px;
+            color: var(--text-dim);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sort-btn:hover { border-color: var(--accent); color: var(--text); }
+        .sort-btn.active { background: var(--accent-dim); border-color: var(--accent); color: white; }
+
+        /* Grid */
+        .grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 12px 24px 48px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            gap: 16px;
+        }
+
+        /* Card */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-dim);
+        }
+
+        .card-header {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .card-region {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+
+        .card-grade {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .grade-A { background: rgba(74,222,128,0.15); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+        .grade-A-minus { background: rgba(74,222,128,0.1); color: #86efac; border: 1px solid rgba(74,222,128,0.2); }
+        .grade-B-plus { background: rgba(251,191,36,0.12); color: var(--yellow); border: 1px solid rgba(251,191,36,0.25); }
+        .grade-B { background: rgba(251,191,36,0.08); color: #fcd34d; border: 1px solid rgba(251,191,36,0.2); }
+        .grade-C { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
+
+        .card-metrics {
+            padding: 12px 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .metric-label {
+            font-size: 10px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-tags {
+            padding: 8px 20px 12px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: var(--surface2);
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+        }
+
+        .tag-highlight {
+            background: rgba(108,140,255,0.1);
+            color: var(--accent);
+            border-color: rgba(108,140,255,0.25);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 200;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.open { display: flex; }
+
+        .modal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .modal-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .modal-header .region-badge {
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        .modal-close {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-dim);
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover { background: var(--border); color: var(--text); }
+
+        .modal-body { padding: 24px 28px; }
+
+        .modal-section {
+            margin-bottom: 24px;
+        }
+
+        .modal-section h3 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-section p, .modal-section li {
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .modal-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-section li {
+            padding: 4px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .modal-section li::before {
+            content: "\2022";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .modal-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .modal-metric {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .modal-metric .val {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-metric .lbl {
+            font-size: 11px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Rating bar */
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 4px 0;
+        }
+
+        .rating-bar .label {
+            font-size: 12px;
+            color: var(--text-dim);
+            width: 100px;
+            flex-shrink: 0;
+        }
+
+        .rating-track {
+            flex: 1;
+            height: 6px;
+            background: var(--surface2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .rating-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+
+        .rating-bar .score {
+            font-size: 12px;
+            font-weight: 700;
+            width: 28px;
+            text-align: right;
+        }
+
+        /* No results */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-dim);
+        }
+
+        .no-results h3 { font-size: 18px; margin-bottom: 8px; color: var(--text); }
+
+        /* Family info section */
+        .family-banner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px 8px;
+        }
+
+        .family-card {
+            background: linear-gradient(135deg, rgba(108,140,255,0.08) 0%, rgba(167,139,250,0.08) 100%);
+            border: 1px solid rgba(108,140,255,0.2);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .family-card .info {
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        .family-card .info strong { color: var(--text); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+            .card-metrics { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .header-inner { padding: 0 16px; }
+            .controls { padding: 12px 16px; }
+            .grid { padding: 12px 16px 48px; }
+            .stats-bar { padding: 12px 16px; }
+            .family-banner { padding: 0 16px 8px; }
+        }
+
+        /* Checklist section */
+        .checklist-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px 24px;
+        }
+
+        .checklist-toggle {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            color: var(--text);
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.2s;
+        }
+
+        .checklist-toggle:hover { border-color: var(--accent-dim); }
+
+        .checklist-content {
+            display: none;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            padding: 20px;
+        }
+
+        .checklist-content.open { display: block; }
+
+        .checklist-content h4 {
+            color: var(--accent);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 16px 0 8px;
+        }
+
+        .checklist-content h4:first-child { margin-top: 0; }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 4px 0;
+            font-size: 14px;
+        }
+
+        .check-item input[type="checkbox"] {
+            margin-top: 4px;
+            accent-color: var(--accent);
+        }
+
+        /* Tab navigation */
+        .tab-nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 24px 0;
+            display: flex;
+            gap: 4px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 20px;
+            color: var(--text-dim);
+            font-size: 14px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover { color: var(--text); }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Region overview */
+        .regions-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 16px;
+        }
+
+        .region-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .region-card h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .region-card .sub {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+        }
+
+        .region-card .detail {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .region-card .detail strong { color: var(--text); }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-inner">
+        <h1><span class="flag">&#127470;&#127481;</span> Norte da Italia &mdash; Guia Estrategico</h1>
+        <p>Plataforma de decisao para familias &bull; 8 regioes &bull; Italia Settentrionale</p>
+    </div>
+</div>
+
+<div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('cities')">Cidades</button>
+    <button class="tab-btn" onclick="switchTab('regions')">Regioes</button>
+    <button class="tab-btn" onclick="switchTab('checklist')">Checklist Mudanca</button>
+    <button class="tab-btn" onclick="switchTab('cronograma')">Cronograma</button>
+</div>
+
+<!-- TAB: CITIES -->
+<div id="tab-cities" class="tab-content active">
+
+<div class="stats-bar">
+    <div class="stat-chip"><strong id="city-count">0</strong> &nbsp;cidades mapeadas</div>
+    <div class="stat-chip"><strong>8</strong> &nbsp;regioes</div>
+    <div class="stat-chip"><strong>~27M</strong> &nbsp;habitantes no Norte</div>
+    <div class="stat-chip"><strong>~70%</strong> &nbsp;da economia italiana</div>
+</div>
+
+<div class="family-banner">
+    <div class="family-card">
+        <div class="info"><strong>Familia:</strong> 2 adultos + 3 criancas (4, 8, 12 anos)</div>
+        <div class="info"><strong>Mudanca:</strong> 27 de Julho 2026</div>
+        <div class="info"><strong>Destino base:</strong> Desenzano del Garda</div>
+        <div class="info"><strong>Filtro ativo:</strong> escola 4-13 anos + saude + mercados + transporte</div>
+    </div>
+</div>
+
+<div class="controls">
+    <div class="search-box">
+        <input type="text" id="search" placeholder="Buscar cidade..." oninput="filterCities()">
+    </div>
+    <select id="region-filter" onchange="filterCities()">
+        <option value="">Todas as regioes</option>
+        <option value="Valle d'Aosta">Valle d'Aosta</option>
+        <option value="Piemonte">Piemonte</option>
+        <option value="Liguria">Liguria</option>
+        <option value="Lombardia">Lombardia</option>
+        <option value="Trentino-Alto Adige">Trentino-Alto Adige</option>
+        <option value="Veneto">Veneto</option>
+        <option value="Friuli-Venezia Giulia">Friuli-Venezia Giulia</option>
+        <option value="Emilia-Romagna">Emilia-Romagna</option>
+    </select>
+    <select id="grade-filter" onchange="filterCities()">
+        <option value="">Todos os niveis</option>
+        <option value="A">Nivel A</option>
+        <option value="A-">Nivel A-</option>
+        <option value="B+">Nivel B+</option>
+        <option value="B">Nivel B</option>
+        <option value="C">Nivel C</option>
+    </select>
+    <select id="macro-filter" onchange="filterCities()">
+        <option value="">Todas as macro regioes</option>
+        <option value="Noroeste">Noroeste</option>
+        <option value="Nordeste">Nordeste</option>
+        <option value="Centro-Norte">Centro-Norte</option>
+    </select>
+</div>
+
+<div class="sort-controls">
+    <span class="sort-label">Ordenar:</span>
+    <button class="sort-btn active" data-sort="grade" onclick="setSort('grade')">Nota</button>
+    <button class="sort-btn" data-sort="rent" onclick="setSort('rent')">Aluguel</button>
+    <button class="sort-btn" data-sort="foreigners" onclick="setSort('foreigners')">% Estrangeiros</button>
+    <button class="sort-btn" data-sort="population" onclick="setSort('population')">Populacao</button>
+    <button class="sort-btn" data-sort="name" onclick="setSort('name')">A-Z</button>
+</div>
+
+<div class="grid" id="city-grid"></div>
+
+</div>
+
+<!-- TAB: REGIONS -->
+<div id="tab-regions" class="tab-content">
+    <div class="regions-grid" id="regions-grid"></div>
+</div>
+
+<!-- TAB: CHECKLIST -->
+<div id="tab-checklist" class="tab-content">
+    <div style="max-width:800px;margin:0 auto;padding:24px;">
+        <h2 style="margin-bottom:24px;font-size:20px;">Checklist de Documentos e Providencias</h2>
+
+        <div style="margin-bottom:24px;">
+            <h3 style="color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);">Documentos Pessoais (todos)</h3>
+            <div class="check-item"><input type="checkbox"><span>Passaportes italianos validos</span></div>
+            <div class="check-item"><input type="checkbox"><span>Certidao de nascimento de todos</span></div>
+            <div class="check-item"><input type="checkbox"><span>Certidao de casamento</span></div>
+            <div class="check-item"><input type="checkbox"><span>RG e CPF</span></div>
+            <div class="check-item"><input type="checkbox"><span>Traducao juramentada das certidoes para italiano</span></div>
+            <div class="check-item"><input type="checkbox"><span>Apostila de Haia nas certidoes</span></div>
+        </div>
+
+        <div style="margin-bottom:24px;">
+            <h3 style="color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);">Documentos das Criancas</h3>
+            <div class="check-item"><input type="checkbox"><span>Certidao de nascimento (traduzida + apostilada)</span></div>
+            <div class="check-item"><input type="checkbox"><span>Historico escolar das criancas maiores</span></div>
+            <div class="check-item"><input type="checkbox"><span>Declaracao de escolaridade da escola atual</span></div>
+            <div class="check-item"><input type="checkbox"><span>Traducao juramentada do historico escolar</span></div>
+            <div class="check-item"><input type="checkbox"><span>Carteira de vacinacao completa</span></div>
+            <div class="check-item"><input type="checkbox"><span>Traducao da carteira de vacinacao</span></div>
+        </div>
+
+        <div style="margin-bottom:24px;">
+            <h3 style="color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);">Documentos Financeiros</h3>
+            <div class="check-item"><input type="checkbox"><span>Extratos bancarios ultimos 6 meses</span></div>
+            <div class="check-item"><input type="checkbox"><span>Declaracao de imposto de renda</span></div>
+            <div class="check-item"><input type="checkbox"><span>Contratos de trabalho ou empresa</span></div>
+            <div class="check-item"><input type="checkbox"><span>Comprovante de renda</span></div>
+            <div class="check-item"><input type="checkbox"><span>Carta do contador</span></div>
+            <div class="check-item"><input type="checkbox"><span>Carta de referencia bancaria</span></div>
+        </div>
+
+        <div style="margin-bottom:24px;">
+            <h3 style="color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);">Documentos Complementares</h3>
+            <div class="check-item"><input type="checkbox"><span>Carteira de motorista brasileira</span></div>
+            <div class="check-item"><input type="checkbox"><span>Certidao negativa criminal</span></div>
+            <div class="check-item"><input type="checkbox"><span>Receitas medicas das criancas</span></div>
+            <div class="check-item"><input type="checkbox"><span>Exames medicos recentes</span></div>
+            <div class="check-item"><input type="checkbox"><span>Receitas traduzidas (medicacao continua)</span></div>
+        </div>
+
+        <div style="margin-bottom:24px;">
+            <h3 style="color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);">Levar 3 Versoes de Cada Documento</h3>
+            <div class="check-item"><input type="checkbox"><span>Original</span></div>
+            <div class="check-item"><input type="checkbox"><span>Copia simples</span></div>
+            <div class="check-item"><input type="checkbox"><span>Versao digital (escanear tudo)</span></div>
+        </div>
+
+        <div style="margin-bottom:24px;">
+            <h3 style="color:var(--green);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);">Ao Chegar na Italia (sequencia)</h3>
+            <div class="check-item"><input type="checkbox"><span>1. Codice Fiscale (Agenzia delle Entrate)</span></div>
+            <div class="check-item"><input type="checkbox"><span>2. Alugar imovel (contrato)</span></div>
+            <div class="check-item"><input type="checkbox"><span>3. Registrar residencia no Comune</span></div>
+            <div class="check-item"><input type="checkbox"><span>4. Inscricao no SSN (Servizio Sanitario Nazionale)</span></div>
+            <div class="check-item"><input type="checkbox"><span>5. Matricular criancas na escola</span></div>
+            <div class="check-item"><input type="checkbox"><span>6. Abrir conta bancaria</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- TAB: CRONOGRAMA -->
+<div id="tab-cronograma" class="tab-content">
+    <div style="max-width:800px;margin:0 auto;padding:24px;">
+        <h2 style="margin-bottom:24px;font-size:20px;">Cronograma ate Julho 2026</h2>
+
+        <div style="margin-bottom:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
+            <h3 style="color:var(--accent);font-size:14px;margin-bottom:12px;">Marco - Abril</h3>
+            <ul style="list-style:none;padding:0;">
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">&bull;</span> Reunir certidoes atualizadas</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">&bull;</span> Solicitar historicos escolares</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">&bull;</span> Atualizar vacinas das criancas</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">&bull;</span> Iniciar traducoes juramentadas</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">&bull;</span> Organizar documentacao financeira</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">&bull;</span> Apostilar certidoes (Haia)</li>
+            </ul>
+        </div>
+
+        <div style="margin-bottom:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
+            <h3 style="color:var(--yellow);font-size:14px;margin-bottom:12px;">Maio</h3>
+            <ul style="list-style:none;padding:0;">
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--yellow);">&bull;</span> Pesquisar escolas na cidade escolhida</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--yellow);">&bull;</span> Pesquisar bairros para aluguel</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--yellow);">&bull;</span> Iniciar contato com proprietarios/imobiliarias</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--yellow);">&bull;</span> Organizar mudanca</li>
+            </ul>
+        </div>
+
+        <div style="margin-bottom:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
+            <h3 style="color:var(--orange);font-size:14px;margin-bottom:12px;">Junho</h3>
+            <ul style="list-style:none;padding:0;">
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--orange);">&bull;</span> Comprar passagens (ja compradas: 27/07)</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--orange);">&bull;</span> Digitalizar TODOS os documentos</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--orange);">&bull;</span> Fazer pastas organizadas (fisica e digital)</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--orange);">&bull;</span> Confirmar aluguel ou hospedagem inicial</li>
+            </ul>
+        </div>
+
+        <div style="margin-bottom:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
+            <h3 style="color:var(--green);font-size:14px;margin-bottom:12px;">Julho - Ao Chegar</h3>
+            <ul style="list-style:none;padding:0;">
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">&bull;</span> Codice Fiscale (1a semana)</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">&bull;</span> Contrato de aluguel (1a-2a semana)</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">&bull;</span> Registrar residencia no Comune</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">&bull;</span> Inscricao no SSN (saude)</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">&bull;</span> Matricula escolar (antes de setembro)</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">&bull;</span> Abertura conta bancaria</li>
+            </ul>
+        </div>
+
+        <div style="background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);border-radius:12px;padding:20px;">
+            <h3 style="color:var(--red);font-size:14px;margin-bottom:12px;">Erros Classicos a Evitar</h3>
+            <ul style="list-style:none;padding:0;">
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--red);">&bull;</span> Chegar sem historico escolar traduzido</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--red);">&bull;</span> Chegar sem vacinacao traduzida</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--red);">&bull;</span> Chegar sem prova de renda (trava aluguel)</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--red);">&bull;</span> Nao apostilar certidoes antes de sair</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--red);">&bull;</span> Deposito aluguel: quase sempre 3 meses</li>
+                <li style="padding:4px 0;font-size:14px;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--red);">&bull;</span> Residencia demora semanas (policia verifica endereco)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+        <div class="modal-header">
+            <div>
+                <h2 id="modal-title"></h2>
+                <div class="region-badge" id="modal-region"></div>
+            </div>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
+    </div>
+</div>
+
+<script>
+const cities = [
+    // VALLE D'AOSTA
+    {
+        name: "Aosta", region: "Valle d'Aosta", macro: "Noroeste",
+        population: 33600, foreigners: 9.0, rentAvg: 8.5,
+        grade: "B", gradeLabel: "B",
+        climate: "Alpino. Verao 18-28C. Inverno -5 a 5C. Neve no inverno.",
+        economy: "Turismo de montanha, esportes de inverno, agricultura.",
+        healthcare: "Ospedale Regionale U. Parini. Unico hospital grande da regiao.",
+        schools: "Rede publica completa. Estrutura suficiente para educacao basica e secundaria. Unica cidade do vale com oferta escolar robusta.",
+        schoolTypes: "Scuola dell'infanzia, primaria e secondaria di primo grado disponiveis.",
+        markets: "Conad, Carrefour, pequenos mercados locais.",
+        transport: "Rodovia A5 (Turim-Monte Bianco). Trem para Turim ~2h. Proximidade com Franca e Suica.",
+        acceptance: "Comunidade pequena. 9% estrangeiros. Ambiente tranquilo mas menos cosmopolita.",
+        racismNote: "Sem historico relevante. Comunidade pequena e acolhedora.",
+        neighborhoods: "Centro historico e arredores residenciais.",
+        rentRange: "7-10",
+        tags: ["montana", "alpina", "pequena", "tranquila"],
+        scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 5, custoVida: 7, qualidadeVida: 7 }
+    },
+    // PIEMONTE
+    {
+        name: "Torino", region: "Piemonte", macro: "Noroeste",
+        population: 848000, foreigners: 15.3, rentAvg: 11.0,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Verao 25-33C. Inverno -2 a 7C. Nevoeiro frequente.",
+        economy: "Automotivo (Fiat/Stellantis), aeroespacial, tecnologia, universidades, cultura.",
+        healthcare: "Molinette, Regina Margherita (pediatrico), CTO. Estrutura hospitalar de grande porte.",
+        schools: "Rede publica ampla e diversificada. Universita di Torino, Politecnico di Torino. Muitas opcoes de liceu.",
+        schoolTypes: "Todas as faixas cobertas com alta oferta.",
+        markets: "Esselunga, Conad, Carrefour, Lidl, Aldi, mercados regionais.",
+        transport: "Aeroporto internacional Caselle. Metro. Trem alta velocidade para Milao (~45min). Rodovias A4, A5, A6, A21.",
+        acceptance: "Cidade grande e diversa. 15.3% estrangeiros. Longa tradicao de imigracao interna e externa.",
+        racismNote: "Episodios isolados como em qualquer cidade grande italiana. Nada estrutural.",
+        neighborhoods: "San Salvario (multicultural), Crocetta (familiar), Lingotto, Cenisia, Santa Rita.",
+        rentRange: "9-14",
+        tags: ["metropole", "industria", "universidade", "cultura", "diversa"],
+        scores: { escola: 9, saude: 9, mercados: 9, transporte: 9, estrangeiros: 8, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Novara", region: "Piemonte", macro: "Noroeste",
+        population: 104000, foreigners: 15.3, rentAvg: 8.5,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Verao 25-32C. Inverno -1 a 7C.",
+        economy: "Industria, servicos, agricultura (arroz). Posicao logistica Piemonte-Lombardia.",
+        healthcare: "Ospedale Maggiore della Carita. Hospital de bom porte.",
+        schools: "Rede publica boa. Liceus e escolas tecnicas.",
+        schoolTypes: "Oferta completa para todas as idades.",
+        markets: "Esselunga, Conad, Lidl, Carrefour.",
+        transport: "Trem direto para Milao (~35min) e Turim (~1h20). Rodovia A4. Posicao estrategica.",
+        acceptance: "15.3% estrangeiros. Boa integracao por perfil industrial.",
+        racismNote: "Sem registros relevantes.",
+        neighborhoods: "Centro, zona residencial sul e leste.",
+        rentRange: "7-10",
+        tags: ["logistica", "pratica", "economica", "entre-Milao-Turim"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 8, custoVida: 8, qualidadeVida: 7 }
+    },
+    {
+        name: "Alba", region: "Piemonte", macro: "Noroeste",
+        population: 31100, foreigners: 11.9, rentAvg: 10.0,
+        grade: "A-", gradeLabel: "A-",
+        climate: "Continental temperado. Verao 24-31C. Inverno 0-8C.",
+        economy: "Ferrero (Nutella), vinhos Barolo/Barbaresco, agroind. de alta qualidade.",
+        healthcare: "Ospedale Michele e Pietro Ferrero (Verduno). Hospital moderno proximo.",
+        schools: "Rede publica boa para o porte. Escolas tecnicas fortes.",
+        schoolTypes: "Scuola infanzia, primaria e secondaria disponiveis.",
+        markets: "Conad, Coop, mercados regionais, feiras locais.",
+        transport: "1h de Turim. Rodovias regionais. Transporte mais limitado que cidades maiores.",
+        acceptance: "11.9% estrangeiros. Cidade rica e organizada. Aceitacao boa.",
+        racismNote: "Casos raros. Perfil de cidade pequena rica.",
+        neighborhoods: "Centro, San Cassiano (aluguel mais barato ~8.9/m2).",
+        rentRange: "9-11",
+        tags: ["vinho", "gastronomia", "organizada", "pequena", "rica"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 5, estrangeiros: 6, custoVida: 7, qualidadeVida: 8 }
+    },
+    {
+        name: "Cuneo", region: "Piemonte", macro: "Noroeste",
+        population: 56000, foreigners: 11.4, rentAvg: 7.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental com influencia alpina. Invernos frios.",
+        economy: "Agricultura, industria alimenticia, servicos.",
+        healthcare: "Ospedale Santa Croce e Carle. Bom hospital regional.",
+        schools: "Rede publica suficiente. Escolas tecnicas e liceus.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl, mercados locais.",
+        transport: "Ligacao Turim ~1h20. Rodovias provinciais. Menos conectada que Novara.",
+        acceptance: "11.4% estrangeiros. Perfil provincial, menos cosmopolita.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro e areas residenciais.",
+        rentRange: "6-9",
+        tags: ["economica", "provincial", "tranquila"],
+        scores: { escola: 6, saude: 7, mercados: 7, transporte: 5, estrangeiros: 6, custoVida: 9, qualidadeVida: 7 }
+    },
+    {
+        name: "Alessandria", region: "Piemonte", macro: "Noroeste",
+        population: 92000, foreigners: 13.0, rentAvg: 6.5,
+        grade: "B", gradeLabel: "B",
+        climate: "Continental. Verao quente. Inverno frio com nevoeiro.",
+        economy: "Industria, comercio, servicos. Posicao entre Turim, Milao e Genova.",
+        healthcare: "Ospedale SS. Antonio e Biagio. Hospital de porte medio.",
+        schools: "Rede publica adequada.",
+        schoolTypes: "Cobertura basica e secundaria.",
+        markets: "Conad, Lidl, Coop.",
+        transport: "No eixo ferroviario Turim-Genova-Milao. Rodovias A21, A26.",
+        acceptance: "13% estrangeiros. Boa integracao.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Pista, Cristo.",
+        rentRange: "5-8",
+        tags: ["economica", "logistica", "funcional"],
+        scores: { escola: 6, saude: 6, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 9, qualidadeVida: 6 }
+    },
+    // LIGURIA
+    {
+        name: "Genova", region: "Liguria", macro: "Noroeste",
+        population: 562000, foreigners: 11.3, rentAvg: 10.0,
+        grade: "A", gradeLabel: "A",
+        climate: "Mediterraneo. Verao 24-30C. Inverno 5-12C. Cidade costeira.",
+        economy: "Porto (maior da Italia), logistica, industria naval, servicos, universidade.",
+        healthcare: "Ospedale San Martino. Hospital universitario de grande porte. Gaslini (pediatrico de excelencia).",
+        schools: "Rede ampla. Universita di Genova. Muitos liceus.",
+        schoolTypes: "Oferta completa e diversificada.",
+        markets: "Esselunga, Coop, Conad, Carrefour, Lidl.",
+        transport: "Aeroporto. Porto grande. Trem para Milao ~1h30. Metro. Rodovias A7, A10, A12.",
+        acceptance: "11.3% estrangeiros. Longa tradicao portuaria e multicultural.",
+        racismNote: "Alguns episodios ligados a crise migratoria. Bairros especificos mais tensos. Nada sistemico.",
+        neighborhoods: "Albaro (familiar), Castelletto, Nervi, Quarto. Centro historico mais complexo. Principe/Carmine ~9.35/m2.",
+        rentRange: "8-14",
+        tags: ["porto", "grande", "multicultural", "litoral", "universidade"],
+        scores: { escola: 8, saude: 9, mercados: 9, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "La Spezia", region: "Liguria", macro: "Noroeste",
+        population: 94000, foreigners: 14.3, rentAvg: 10.0,
+        grade: "A-", gradeLabel: "A-",
+        climate: "Mediterraneo. Verao 24-30C. Inverno 5-12C.",
+        economy: "Porto militar, naval, turismo (Cinque Terre), servicos.",
+        healthcare: "Ospedale Sant'Andrea. Hospital de bom porte.",
+        schools: "Rede publica boa para o porte.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Coop, Conad, Lidl.",
+        transport: "Trem para Genova e Pisa. Porto. Rodovia A12.",
+        acceptance: "14.3% estrangeiros. Perfil portuario aberto.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, areas residenciais proximas ao mar.",
+        rentRange: "8-12",
+        tags: ["porto", "litoral", "Cinque Terre", "aberta"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 8, custoVida: 7, qualidadeVida: 8 }
+    },
+    {
+        name: "Savona", region: "Liguria", macro: "Noroeste",
+        population: 59000, foreigners: 11.1, rentAvg: 9.0,
+        grade: "B", gradeLabel: "B",
+        climate: "Mediterraneo costeiro.",
+        economy: "Porto, turismo, industria.",
+        healthcare: "Ospedale San Paolo. Porte medio.",
+        schools: "Rede suficiente.",
+        schoolTypes: "Basica e secundaria.",
+        markets: "Coop, Conad, Lidl.",
+        transport: "Trem costeiro. Rodovia A6, A10.",
+        acceptance: "11.1% estrangeiros. Moderada.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro e zona costeira.",
+        rentRange: "8-11",
+        tags: ["litoral", "funcional"],
+        scores: { escola: 6, saude: 6, mercados: 7, transporte: 6, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
+    },
+    // LOMBARDIA
+    {
+        name: "Bergamo", region: "Lombardia", macro: "Noroeste",
+        population: 120000, foreigners: 19.2, rentAvg: 13.0,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Verao 25-33C. Inverno -1 a 7C.",
+        economy: "Industria, logistica, servicos. Aeroporto Orio al Serio (3o da Italia).",
+        healthcare: "Ospedale Papa Giovanni XXIII. Um dos mais modernos da Italia.",
+        schools: "Rede robusta. Universita degli Studi di Bergamo. Muitos liceus.",
+        schoolTypes: "Oferta completa e diversificada para todas as idades.",
+        markets: "Esselunga, Conad, Lidl, Aldi, Carrefour.",
+        transport: "Aeroporto internacional. Trem Milao ~50min. Rede ATB cobre 29 municipios. Rodovia A4.",
+        acceptance: "19.2% estrangeiros. Uma das mais multiculturais da Italia.",
+        racismNote: "Casos isolados. Nada estrutural. Massa critica de imigrantes dilui estranhamento.",
+        neighborhoods: "Citta Bassa (vida pratica), Longuelo, Colognola (residenciais). Citta Alta (historica, turistica).",
+        rentRange: "10-15",
+        tags: ["aeroporto", "multicultural", "industria", "Milao-proximo"],
+        scores: { escola: 9, saude: 9, mercados: 9, transporte: 9, estrangeiros: 9, custoVida: 6, qualidadeVida: 8 }
+    },
+    {
+        name: "Brescia", region: "Lombardia", macro: "Noroeste",
+        population: 199000, foreigners: 18.9, rentAvg: 12.0,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Verao 26-33C. Inverno -1 a 7C.",
+        economy: "Industria pesada, manufatura, metalurgia, automotivo.",
+        healthcare: "Spedali Civili di Brescia. Hospital universitario grande.",
+        schools: "Rede ampla. Universita degli Studi di Brescia.",
+        schoolTypes: "Oferta completa.",
+        markets: "Esselunga, Conad, Iperal, Lidl, Aldi.",
+        transport: "Trem alta velocidade. Metro. 1h Milao, 45min Verona. Rodovias A4, A21.",
+        acceptance: "18.9% estrangeiros. Uma das mais multiculturais da Italia.",
+        racismNote: "Alguns conflitos isolados. Nada sistemico.",
+        neighborhoods: "Centro, San Polo, Lamarmora, Don Bosco (residenciais).",
+        rentRange: "9-14",
+        tags: ["multicultural", "industria", "metro", "funcional"],
+        scores: { escola: 9, saude: 9, mercados: 9, transporte: 9, estrangeiros: 9, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Monza", region: "Lombardia", macro: "Noroeste",
+        population: 124000, foreigners: 12.1, rentAvg: 14.0,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Similar a Milao.",
+        economy: "Servicos, industria, proximidade total com Milao.",
+        healthcare: "Ospedale San Gerardo. Hospital universitario.",
+        schools: "Rede boa. Proximidade com universidades de Milao.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Carrefour, Lidl, Conad.",
+        transport: "Metro Milao (extensao). Trem rapido para Milano Centrale. Rodovia A4.",
+        acceptance: "12.1% estrangeiros. Boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, San Rocco, San Biagio.",
+        rentRange: "11-17",
+        tags: ["Milao-satelite", "residencial", "metro"],
+        scores: { escola: 8, saude: 8, mercados: 9, transporte: 9, estrangeiros: 7, custoVida: 5, qualidadeVida: 8 }
+    },
+    {
+        name: "Varese", region: "Lombardia", macro: "Noroeste",
+        population: 80000, foreigners: 12.9, rentAvg: 10.0,
+        grade: "A-", gradeLabel: "A-",
+        climate: "Continental pre-alpino. Invernos frios, veroes moderados.",
+        economy: "Industria, servicos, proximidade Suica.",
+        healthcare: "Ospedale di Circolo. Bom porte.",
+        schools: "Rede boa. Universita dell'Insubria.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Conad, Lidl, Aldi.",
+        transport: "Trem para Milao ~1h. Proximidade Suica (Lugano ~30min). Rodovias.",
+        acceptance: "12.9% estrangeiros. Boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Masnago, Biumo (residenciais).",
+        rentRange: "8-12",
+        tags: ["Suica-proxima", "residencial", "organizada"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 8 }
+    },
+    {
+        name: "Como", region: "Lombardia", macro: "Noroeste",
+        population: 83000, foreigners: 14.3, rentAvg: 15.0,
+        grade: "A-", gradeLabel: "A-",
+        climate: "Continental lacustre. Verao 24-31C. Inverno 0-8C.",
+        economy: "Turismo (Lago di Como), servicos, fronteira Suica, seda.",
+        healthcare: "Ospedale Sant'Anna. Hospital moderno.",
+        schools: "Boas escolas publicas. Politecnico di Milano (campus Como). Universita Insubria.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Conad, Carrefour, Aldi.",
+        transport: "Trem para Milao ~40min. Proximidade Suica. Ferry pelo lago.",
+        acceptance: "14.3% estrangeiros. Muito boa por perfil internacional.",
+        racismNote: "Poucos registros. Ambiente internacional reduz tensoes.",
+        neighborhoods: "Borghi (familiar), Albate, Rebbio. Centro = turismo forte.",
+        rentRange: "14-18",
+        tags: ["lago", "internacional", "cara", "Suica"],
+        scores: { escola: 8, saude: 8, mercados: 8, transporte: 8, estrangeiros: 8, custoVida: 4, qualidadeVida: 9 }
+    },
+    {
+        name: "Lecco", region: "Lombardia", macro: "Noroeste",
+        population: 48000, foreigners: 16.1, rentAvg: 11.0,
+        grade: "A-", gradeLabel: "A-",
+        climate: "Continental lacustre-alpino. Lago suaviza extremos.",
+        economy: "Metalurgia, mecanica industrial, textil, turismo moderado.",
+        healthcare: "Ospedale Alessandro Manzoni. Sistema lombardo eficiente.",
+        schools: "Rede boa. Campus do Politecnico di Milano em Lecco.",
+        schoolTypes: "Liceu cientifico, classico e escolas tecnicas.",
+        markets: "Esselunga, Conad, Lidl, Aldi, Iperal.",
+        transport: "Trem para Milao ~40min. Trem para Bergamo ~40min. Ferry no lago.",
+        acceptance: "16.1% estrangeiros. Boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Pescarenico, Bonacina, areas residenciais.",
+        rentRange: "9-13",
+        tags: ["lago", "industria", "Politecnico", "alpina"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 8, custoVida: 7, qualidadeVida: 8 }
+    },
+    {
+        name: "Pavia", region: "Lombardia", macro: "Noroeste",
+        population: 73000, foreigners: 13.5, rentAvg: 10.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Nevoeiro frequente no inverno.",
+        economy: "Universidade (uma das mais antigas da Italia), farmaceutica, pesquisa.",
+        healthcare: "Policlinico San Matteo. Hospital universitario de excelencia.",
+        schools: "Rede boa. Universita degli Studi di Pavia (fundada 1361).",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Conad, Lidl.",
+        transport: "Trem para Milao ~35min. Rodovia A7.",
+        acceptance: "13.5% estrangeiros. Boa por perfil universitario.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Borgo Ticino.",
+        rentRange: "8-12",
+        tags: ["universidade", "pesquisa", "historica"],
+        scores: { escola: 8, saude: 9, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Cremona", region: "Lombardia", macro: "Noroeste",
+        population: 72000, foreigners: 14.5, rentAvg: 7.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Nevoeiro no inverno. Verao quente.",
+        economy: "Agroalimentar, industria, artesanato (violinos).",
+        healthcare: "Ospedale Maggiore di Cremona.",
+        schools: "Rede suficiente.",
+        schoolTypes: "Cobertura basica e secundaria.",
+        markets: "Conad, Lidl, Coop.",
+        transport: "Trem para Milao ~1h10. Rodovias.",
+        acceptance: "14.5% estrangeiros. Boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro e areas residenciais.",
+        rentRange: "6-9",
+        tags: ["economica", "tradicional", "violinos"],
+        scores: { escola: 6, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 9, qualidadeVida: 7 }
+    },
+    {
+        name: "Mantova", region: "Lombardia", macro: "Noroeste",
+        population: 49000, foreigners: 14.0, rentAvg: 8.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao quente e umido. Inverno frio.",
+        economy: "Industria, agroalimentar, turismo cultural (UNESCO).",
+        healthcare: "Ospedale Carlo Poma. Bom porte.",
+        schools: "Rede suficiente.",
+        schoolTypes: "Cobertura basica e secundaria.",
+        markets: "Conad, Lidl, Esselunga.",
+        transport: "Trem para Verona ~40min. Trem para Milao ~1h40. Rodovias.",
+        acceptance: "14% estrangeiros. Boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro historico, Te, Valletta Valsecchi.",
+        rentRange: "7-10",
+        tags: ["UNESCO", "cultura", "economica"],
+        scores: { escola: 6, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 8, qualidadeVida: 8 }
+    },
+    {
+        name: "Desenzano del Garda", region: "Lombardia", macro: "Noroeste",
+        population: 29300, foreigners: 12.1, rentAvg: 14.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental temperado pelo lago. Verao 25-32C. Inverno 0-8C.",
+        economy: "Turismo, servicos, hotelaria.",
+        healthcare: "Ospedale di Desenzano. Hospitais grandes em Brescia (30min).",
+        schools: "IC Desenzano 1 e 2. Boas para o porte.",
+        schoolTypes: "Scuola infanzia, primaria e secondaria disponiveis.",
+        markets: "Esselunga, Conad, Lidl, Aldi.",
+        transport: "Estacao ferroviaria importante. Trem Milao ~1h20, Verona ~20min. A4.",
+        acceptance: "12.1% estrangeiros. Boa. Muitos europeus residentes.",
+        racismNote: "Praticamente inexistente.",
+        neighborhoods: "Rivoltella (melhor custo-beneficio familiar), Centro (caro), San Martino della Battaglia (tranquilo).",
+        rentRange: "11-16",
+        tags: ["lago", "turismo", "qualidade-vida", "Garda"],
+        scores: { escola: 7, saude: 6, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 5, qualidadeVida: 9 }
+    },
+    // TRENTINO-ALTO ADIGE
+    {
+        name: "Trento", region: "Trentino-Alto Adige", macro: "Nordeste",
+        population: 118000, foreigners: 11.4, rentAvg: 12.0,
+        grade: "A-", gradeLabel: "A-",
+        climate: "Continental alpino. Verao 20-30C. Inverno -3 a 6C.",
+        economy: "Pesquisa, tecnologia, turismo, agricultura de qualidade.",
+        healthcare: "Ospedale Santa Chiara. Sistema de saude regional lider na Italia (1o em ranking 2025).",
+        schools: "Rede publica excelente. Universita di Trento (top ranking italiano).",
+        schoolTypes: "Cobertura completa de alta qualidade.",
+        markets: "Coop, Conad, Lidl, Eurospin.",
+        transport: "Trem para Verona ~1h. Trem para Bologna. Rodovia A22 (Brennero). Aeroporto Verona ~1h.",
+        acceptance: "11.4% estrangeiros. Boa, mas cultura local mais contida.",
+        racismNote: "Sem historico relevante. Ambiente organizado.",
+        neighborhoods: "Gardolo, Mattarello, centro residencial.",
+        rentRange: "10-14",
+        tags: ["alpina", "universidade", "saude-top", "organizada"],
+        scores: { escola: 9, saude: 10, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 6, qualidadeVida: 9 }
+    },
+    {
+        name: "Bolzano", region: "Trentino-Alto Adige", macro: "Nordeste",
+        population: 108000, foreigners: 14.5, rentAvg: 14.0,
+        grade: "A-", gradeLabel: "A-",
+        climate: "Alpino. Verao 18-30C. Inverno -5 a 5C.",
+        economy: "Turismo, agricultura (macas, vinho), tecnologia, servicos.",
+        healthcare: "Ospedale di Bolzano. Sistema regional excelente.",
+        schools: "Rede publica excelente. Escolas bilingues italiano/alemao. Universita di Bolzano.",
+        schoolTypes: "Cobertura completa. Atencao: escolas bilingues.",
+        markets: "Eurospar, Despar, Lidl, MPreis.",
+        transport: "Trem para Verona ~2h. Rodovia A22 (Brennero). Proximidade Austria.",
+        acceptance: "14.5% estrangeiros. Cultura local austro-germanica pode parecer mais fechada para brasileiros.",
+        racismNote: "Sem historico grave. Adaptacao cultural pode ser mais lenta pela barreira linguistica alemao/italiano.",
+        neighborhoods: "Don Bosco, Europa-Novacella, Oltrisarco.",
+        rentRange: "12-17",
+        tags: ["alpina", "bilingue", "Austria-proxima", "organizada"],
+        scores: { escola: 9, saude: 10, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 5, qualidadeVida: 9 }
+    },
+    {
+        name: "Merano", region: "Trentino-Alto Adige", macro: "Nordeste",
+        population: 42000, foreigners: 17.7, rentAvg: 14.0,
+        grade: "A-", gradeLabel: "A-",
+        climate: "Alpino temperado. Microclima agradavel para regiao.",
+        economy: "Turismo termal, agricultura, servicos.",
+        healthcare: "Ospedale di Merano. Bom porte para a regiao.",
+        schools: "Rede boa. Escolas bilingues.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Eurospar, Despar, Lidl.",
+        transport: "Trem para Bolzano ~40min. Mais limitado que capitais provinciais.",
+        acceptance: "17.7% estrangeiros. Surpreendentemente diversa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Maia Alta, Maia Bassa, centro residencial.",
+        rentRange: "12-16",
+        tags: ["termas", "alpina", "diversa", "bilingue"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 5, estrangeiros: 8, custoVida: 5, qualidadeVida: 9 }
+    },
+    {
+        name: "Rovereto", region: "Trentino-Alto Adige", macro: "Nordeste",
+        population: 40000, foreigners: 11.2, rentAvg: 10.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Alpino. Similar a Trento.",
+        economy: "Industria, pesquisa, turismo.",
+        healthcare: "Ospedale Santa Maria del Carmine.",
+        schools: "Rede publica boa.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Coop, Conad, Lidl.",
+        transport: "Trem para Trento ~15min. Trem para Verona ~50min. A22.",
+        acceptance: "11.2% estrangeiros. Boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro e areas residenciais.",
+        rentRange: "8-12",
+        tags: ["museus", "alpina", "tranquila"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 7, qualidadeVida: 8 }
+    },
+    {
+        name: "Riva del Garda", region: "Trentino-Alto Adige", macro: "Nordeste",
+        population: 17800, foreigners: 11.2, rentAvg: 13.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Alpino-lacustre. Microclima agradavel do lago.",
+        economy: "Turismo, esportes outdoor.",
+        healthcare: "Hospital regional em Rovereto (~30min).",
+        schools: "Boas escolas publicas para o porte.",
+        schoolTypes: "Cobertura basica.",
+        markets: "Coop, Conad, Lidl.",
+        transport: "Longe da malha ferroviaria principal. Mais isolada.",
+        acceptance: "11.2% estrangeiros. Boa.",
+        racismNote: "Inexistente.",
+        neighborhoods: "Cidade compacta, poucas divisoes.",
+        rentRange: "11-16",
+        tags: ["lago", "outdoor", "bonita", "isolada"],
+        scores: { escola: 6, saude: 5, mercados: 6, transporte: 4, estrangeiros: 6, custoVida: 5, qualidadeVida: 9 }
+    },
+    // VENETO
+    {
+        name: "Verona", region: "Veneto", macro: "Nordeste",
+        population: 258000, foreigners: 14.4, rentAvg: 12.0,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Verao 25-34C. Inverno -1 a 7C.",
+        economy: "Vinho, marmore, turismo, servicos, feiras internacionais (Vinitaly).",
+        healthcare: "Ospedale Civile Maggiore (Borgo Trento). Hospital universitario grande.",
+        schools: "Rede ampla e diversificada. Universita di Verona.",
+        schoolTypes: "Oferta completa para todas as idades.",
+        markets: "Esselunga, Conad, Lidl, Aldi, Famila.",
+        transport: "Aeroporto Villafranca. Trem alta velocidade (Milao, Veneza, Roma). A4, A22. Hub logistico.",
+        acceptance: "14.4% estrangeiros. Boa.",
+        racismNote: "Casos isolados. Nada estrutural.",
+        neighborhoods: "Borgo Roma, San Zeno, Borgo Trento (familiar), Borgo Milano.",
+        rentRange: "10-14",
+        tags: ["hub-logistico", "aeroporto", "cultura", "Garda-proximo"],
+        scores: { escola: 9, saude: 9, mercados: 9, transporte: 9, estrangeiros: 8, custoVida: 6, qualidadeVida: 8 }
+    },
+    {
+        name: "Padova", region: "Veneto", macro: "Nordeste",
+        population: 211000, foreigners: 16.4, rentAvg: 11.0,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Verao quente. Inverno frio com nevoeiro.",
+        economy: "Universidade (1222), industria, servicos, pesquisa.",
+        healthcare: "Azienda Ospedaliera di Padova. Hospital universitario grande.",
+        schools: "Rede ampla. Universita degli Studi di Padova (uma das melhores da Italia).",
+        schoolTypes: "Oferta completa e diversificada.",
+        markets: "Alì, Conad, Lidl, Despar, Interspar.",
+        transport: "Trem para Veneza ~30min, Milao ~2h, Bologna ~1h30. Tramvia. Rodovias.",
+        acceptance: "16.4% estrangeiros. Muito boa. Cidade universitaria aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Arcella, Mandria, Guizza, Ponte di Brenta.",
+        rentRange: "9-13",
+        tags: ["universidade", "aberta", "diversa", "pesquisa"],
+        scores: { escola: 9, saude: 9, mercados: 8, transporte: 8, estrangeiros: 9, custoVida: 7, qualidadeVida: 8 }
+    },
+    {
+        name: "Vicenza", region: "Veneto", macro: "Nordeste",
+        population: 112000, foreigners: 15.6, rentAvg: 9.5,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Similar a Verona.",
+        economy: "Industria (ouro, mecanica), servicos. Distrito industrial forte.",
+        healthcare: "Ospedale San Bortolo. Hospital grande.",
+        schools: "Rede boa.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Famila, Alì, Conad, Lidl.",
+        transport: "Trem para Verona ~30min, Padova ~20min, Veneza ~50min. A4.",
+        acceptance: "15.6% estrangeiros. Muito boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Bertesinella, Laghetto.",
+        rentRange: "8-11",
+        tags: ["industria", "ouro", "funcional", "economica"],
+        scores: { escola: 8, saude: 8, mercados: 8, transporte: 8, estrangeiros: 8, custoVida: 8, qualidadeVida: 7 }
+    },
+    {
+        name: "Treviso", region: "Veneto", macro: "Nordeste",
+        population: 84000, foreigners: 14.1, rentAvg: 10.5,
+        grade: "A-", gradeLabel: "A-",
+        climate: "Continental. Verao quente. Inverno frio.",
+        economy: "Moda (Benetton, Geox), industria, Prosecco.",
+        healthcare: "Ospedale Ca' Foncello. Bom porte.",
+        schools: "Rede boa.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Alì, Conad, Lidl, Despar.",
+        transport: "Aeroporto Treviso (Ryanair). Trem para Veneza ~30min. Rodovias.",
+        acceptance: "14.1% estrangeiros. Boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Santa Bona, San Zeno.",
+        rentRange: "9-12",
+        tags: ["moda", "Prosecco", "aeroporto-low-cost"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 8 }
+    },
+    {
+        name: "Peschiera del Garda", region: "Veneto", macro: "Nordeste",
+        population: 11000, foreigners: 10.0, rentAvg: 14.5,
+        grade: "C", gradeLabel: "C",
+        climate: "Continental temperado pelo lago.",
+        economy: "Turismo, Gardaland proximo.",
+        healthcare: "Hospital pequeno local. Depende de Verona.",
+        schools: "Servicos escolares basicos e transporte escolar.",
+        schoolTypes: "Basica. Limitada.",
+        markets: "Lidl, Conad, pequenos mercados.",
+        transport: "Estacao ferroviaria estrategica (A4 + eixo Milao-Veneza).",
+        acceptance: "~10% estrangeiros. Boa no cotidiano.",
+        racismNote: "Praticamente inexistente.",
+        neighborhoods: "Cidade compacta.",
+        rentRange: "11-17",
+        tags: ["lago", "turistica", "pequena", "cara"],
+        scores: { escola: 5, saude: 4, mercados: 5, transporte: 7, estrangeiros: 6, custoVida: 4, qualidadeVida: 7 }
+    },
+    {
+        name: "Sirmione", region: "Lombardia", macro: "Noroeste",
+        population: 8300, foreigners: 14.0, rentAvg: 15.5,
+        grade: "C", gradeLabel: "C",
+        climate: "Temperado lacustre.",
+        economy: "Turismo termal internacional.",
+        healthcare: "Depende de Desenzano.",
+        schools: "3 escolas de infancia, oferta limitada.",
+        schoolTypes: "Basica. Muito limitada.",
+        markets: "Supermercados pequenos.",
+        transport: "Sem estacao ferroviaria. Depende de Desenzano/Peschiera.",
+        acceptance: "14% estrangeiros. Boa por turismo.",
+        racismNote: "Inexistente.",
+        neighborhoods: "Colombare (residencial), peninsula (turismo).",
+        rentRange: "13-18",
+        tags: ["termas", "turismo", "cara", "limitada"],
+        scores: { escola: 4, saude: 3, mercados: 4, transporte: 3, estrangeiros: 7, custoVida: 3, qualidadeVida: 8 }
+    },
+    {
+        name: "Iseo", region: "Lombardia", macro: "Noroeste",
+        population: 9000, foreigners: 8.2, rentAvg: 12.4,
+        grade: "B", gradeLabel: "B",
+        climate: "Continental lacustre.",
+        economy: "Turismo local, vinho Franciacorta.",
+        healthcare: "Ospedale di Iseo. Escala pequena.",
+        schools: "IC local. Escola primaria estatal.",
+        schoolTypes: "Basica.",
+        markets: "Conad, pequenos mercados.",
+        transport: "Trem regional Brescia (linha S31). Mais limitado.",
+        acceptance: "8.2% estrangeiros. Menos diversa.",
+        racismNote: "Praticamente inexistente.",
+        neighborhoods: "Cidade compacta.",
+        rentRange: "10-14",
+        tags: ["lago", "Franciacorta", "pequena", "tranquila"],
+        scores: { escola: 5, saude: 5, mercados: 5, transporte: 5, estrangeiros: 4, custoVida: 6, qualidadeVida: 7 }
+    },
+    // FRIULI-VENEZIA GIULIA
+    {
+        name: "Trieste", region: "Friuli-Venezia Giulia", macro: "Nordeste",
+        population: 204000, foreigners: 12.0, rentAvg: 9.5,
+        grade: "A", gradeLabel: "A",
+        climate: "Mediterraneo-continental. Bora (vento forte). Verao 23-29C. Inverno 2-8C.",
+        economy: "Porto, seguros (Generali), universidade, pesquisa (SISSA, ICTP).",
+        healthcare: "Ospedale di Cattinara e Ospedale Maggiore. Boa estrutura. Regiao bem avaliada em saude.",
+        schools: "Rede ampla. Universita di Trieste. SISSA.",
+        schoolTypes: "Oferta completa.",
+        markets: "Despar, Conad, Lidl, Eurospin.",
+        transport: "Porto. Trem para Veneza ~2h. Aeroporto FVG. Fronteira Eslovenia.",
+        acceptance: "12% estrangeiros. Cidade de fronteira, multicultural historicamente.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Roiano, Barcola, San Giovanni (residenciais familiares).",
+        rentRange: "7-12",
+        tags: ["porto", "fronteira", "pesquisa", "subestimada"],
+        scores: { escola: 8, saude: 8, mercados: 8, transporte: 7, estrangeiros: 7, custoVida: 8, qualidadeVida: 8 }
+    },
+    {
+        name: "Udine", region: "Friuli-Venezia Giulia", macro: "Nordeste",
+        population: 99000, foreigners: 14.8, rentAvg: 8.0,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Verao quente. Inverno frio.",
+        economy: "Industria, servicos, agroalimentar.",
+        healthcare: "Ospedale Santa Maria della Misericordia. Bom porte.",
+        schools: "Rede boa. Universita di Udine.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Despar, Coop, Conad, Lidl.",
+        transport: "Trem para Trieste ~1h, Veneza ~2h. Rodovias A4, A23. Aeroporto FVG proximo.",
+        acceptance: "14.8% estrangeiros. Muito boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Rizzi, Cussignacco.",
+        rentRange: "6-10",
+        tags: ["economica", "funcional", "diversa"],
+        scores: { escola: 7, saude: 8, mercados: 8, transporte: 7, estrangeiros: 8, custoVida: 9, qualidadeVida: 7 }
+    },
+    {
+        name: "Pordenone", region: "Friuli-Venezia Giulia", macro: "Nordeste",
+        population: 51000, foreigners: 15.1, rentAvg: 7.5,
+        grade: "A-", gradeLabel: "A-",
+        climate: "Continental pre-alpino.",
+        economy: "Industria (Electrolux), servicos.",
+        healthcare: "Ospedale Santa Maria degli Angeli.",
+        schools: "Rede boa para o porte.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Despar, Conad, Lidl.",
+        transport: "Trem para Veneza ~1h. Rodovias.",
+        acceptance: "15.1% estrangeiros. Muito boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Torre, Villanova.",
+        rentRange: "6-9",
+        tags: ["industria", "economica", "diversa"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 8, custoVida: 9, qualidadeVida: 7 }
+    },
+    {
+        name: "Gorizia", region: "Friuli-Venezia Giulia", macro: "Nordeste",
+        population: 34000, foreigners: 11.8, rentAvg: 6.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental.",
+        economy: "Servicos, fronteira Eslovenia.",
+        healthcare: "Ospedale di Gorizia.",
+        schools: "Rede suficiente.",
+        schoolTypes: "Cobertura basica.",
+        markets: "Despar, Conad.",
+        transport: "Trem para Trieste ~1h. Fronteira Eslovenia.",
+        acceptance: "11.8% estrangeiros. Boa por cultura de fronteira.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro e areas de fronteira.",
+        rentRange: "5-8",
+        tags: ["fronteira", "economica", "compacta"],
+        scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 6, custoVida: 9, qualidadeVida: 6 }
+    },
+    // EMILIA-ROMAGNA
+    {
+        name: "Bologna", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 392000, foreigners: 15.1, rentAvg: 15.0,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Verao 27-35C (quente). Inverno 0-7C.",
+        economy: "Universidade (mais antiga do mundo, 1088), industria, servicos, cultura, gastronomia.",
+        healthcare: "Policlinico Sant'Orsola-Malpighi. Hospital universitario de excelencia.",
+        schools: "Rede muito ampla. Universita di Bologna. Enorme oferta escolar.",
+        schoolTypes: "Oferta completa e de alto nivel.",
+        markets: "Coop, Conad, Esselunga, Lidl, Aldi.",
+        transport: "Aeroporto Marconi. Trem alta velocidade (Roma, Milao, Florenca). A1, A14. Hub central da Italia.",
+        acceptance: "15.1% estrangeiros. Muito boa. Cidade aberta e universitaria.",
+        racismNote: "Episodios isolados. Cultura urbana tende a ser mais progressista.",
+        neighborhoods: "Bolognina (multicultural), Saragozza, San Donato, Savena.",
+        rentRange: "12-18",
+        tags: ["universidade", "gastronomia", "hub-central", "aberta", "cara"],
+        scores: { escola: 10, saude: 10, mercados: 9, transporte: 10, estrangeiros: 8, custoVida: 4, qualidadeVida: 8 }
+    },
+    {
+        name: "Parma", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 199000, foreigners: 17.1, rentAvg: 10.5,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Verao quente. Inverno frio.",
+        economy: "Agroalimentar (Parmigiano, Prosciutto di Parma), industria, servicos.",
+        healthcare: "Ospedale Maggiore di Parma. Hospital universitario.",
+        schools: "Rede muito boa. Universita di Parma.",
+        schoolTypes: "Oferta completa e diversificada.",
+        markets: "Coop, Conad, Esselunga, Lidl.",
+        transport: "Trem alta velocidade. Milao ~1h. Bologna ~1h. A1.",
+        acceptance: "17.1% estrangeiros. Muito alta. Uma das melhores da Italia.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Oltretorrente, Cittadella, San Leonardo.",
+        rentRange: "8-13",
+        tags: ["gastronomia", "diversa", "equilibrada", "familiar"],
+        scores: { escola: 9, saude: 9, mercados: 9, transporte: 8, estrangeiros: 9, custoVida: 7, qualidadeVida: 9 }
+    },
+    {
+        name: "Modena", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 188000, foreigners: 15.4, rentAvg: 10.5,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Verao quente. Inverno frio.",
+        economy: "Automotivo (Ferrari, Maserati, Pagani), ceramica, agroalimentar (aceto balsamico).",
+        healthcare: "Ospedale di Baggiovara + Policlinico. Bom porte.",
+        schools: "Rede muito boa. UNIMORE.",
+        schoolTypes: "Oferta completa.",
+        markets: "Coop, Conad, Esselunga, Lidl.",
+        transport: "Trem para Bologna ~25min. Trem para Milao ~1h30. A1.",
+        acceptance: "15.4% estrangeiros. Muito boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Buon Pastore, San Faustino, Modena Est.",
+        rentRange: "8-13",
+        tags: ["Ferrari", "gastronomia", "industria", "funcional"],
+        scores: { escola: 8, saude: 8, mercados: 9, transporte: 8, estrangeiros: 8, custoVida: 7, qualidadeVida: 8 }
+    },
+    {
+        name: "Reggio Emilia", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 172000, foreigners: 16.7, rentAvg: 9.5,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Verao quente. Inverno frio.",
+        economy: "Mecatronica, agroalimentar, cooperativas. Famosa por educacao infantil (Reggio Approach).",
+        healthcare: "Arcispedale Santa Maria Nuova. Hospital forte.",
+        schools: "Rede excelente. Metodo Reggio Emilia para educacao infantil e reconhecido mundialmente.",
+        schoolTypes: "Oferta completa. Referencia mundial em educacao infantil.",
+        markets: "Coop, Conad, Lidl, Esselunga.",
+        transport: "Estacao AV Mediopadana (alta velocidade). Trem para Milao ~1h. Bologna ~40min. A1.",
+        acceptance: "16.7% estrangeiros. Muito alta. Uma das melhores da Italia.",
+        racismNote: "Sem historico relevante. Cultura cooperativa favorece integracao.",
+        neighborhoods: "Centro, Canalina, Rivalta, Mancasale.",
+        rentRange: "7-12",
+        tags: ["educacao-infantil", "cooperativas", "diversa", "alta-velocidade"],
+        scores: { escola: 10, saude: 8, mercados: 8, transporte: 9, estrangeiros: 9, custoVida: 8, qualidadeVida: 8 }
+    },
+    {
+        name: "Piacenza", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 104000, foreigners: 17.0, rentAvg: 8.0,
+        grade: "A-", gradeLabel: "A-",
+        climate: "Continental. Verao quente e umido. Inverno frio.",
+        economy: "Logistica, industria, agroalimentar.",
+        healthcare: "Ospedale Guglielmo da Saliceto.",
+        schools: "Rede boa. Campus Politecnico di Milano em Piacenza.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Coop, Conad, Lidl, Esselunga.",
+        transport: "Trem para Milao ~1h. Bologna ~1h30. A1, A21.",
+        acceptance: "17% estrangeiros. Muito alta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Besurica, Farnesiana.",
+        rentRange: "6-10",
+        tags: ["logistica", "economica", "diversa", "Milao-proximo"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 9, custoVida: 9, qualidadeVida: 7 }
+    },
+    {
+        name: "Ferrara", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 132000, foreigners: 11.5, rentAvg: 8.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Nevoeiro. Verao quente.",
+        economy: "Universidade, cultura (UNESCO), servicos.",
+        healthcare: "Ospedale di Cona. Moderno e recente.",
+        schools: "Rede boa. Universita di Ferrara.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Coop, Conad, Lidl.",
+        transport: "Trem para Bologna ~30min. A13.",
+        acceptance: "11.5% estrangeiros. Boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro historico, zona universitaria.",
+        rentRange: "6-10",
+        tags: ["UNESCO", "universidade", "economica", "bicicletas"],
+        scores: { escola: 8, saude: 8, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 8, qualidadeVida: 8 }
+    },
+    {
+        name: "Ravenna", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 160000, foreigners: 12.0, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental-costeiro. Verao quente.",
+        economy: "Porto, turismo cultural (mosaicos UNESCO), industria quimica.",
+        healthcare: "Ospedale Santa Maria delle Croci.",
+        schools: "Rede boa.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Coop, Conad, Lidl.",
+        transport: "Porto. Trem para Bologna ~1h. Rodovias.",
+        acceptance: "12% estrangeiros. Boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, zona mare, area residencial.",
+        rentRange: "7-11",
+        tags: ["UNESCO", "mosaicos", "porto", "praia"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 8, qualidadeVida: 8 }
+    },
+    {
+        name: "Forli", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 118000, foreigners: 12.5, rentAvg: 8.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao quente.",
+        economy: "Industria, servicos, agricultura.",
+        healthcare: "Ospedale Morgagni-Pierantoni.",
+        schools: "Rede boa. Campus Universita di Bologna.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Coop, Conad, Lidl.",
+        transport: "Aeroporto Forli. Trem para Bologna ~1h. A14.",
+        acceptance: "12.5% estrangeiros. Boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Villafranca, Cava.",
+        rentRange: "6-10",
+        tags: ["economica", "funcional"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 8, qualidadeVida: 7 }
+    },
+    {
+        name: "Cesena", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 97000, foreigners: 11.5, rentAvg: 8.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao quente.",
+        economy: "Agroalimentar, servicos.",
+        healthcare: "Ospedale Bufalini. Bom porte.",
+        schools: "Rede boa. Campus Universita di Bologna.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Coop, Conad, Lidl.",
+        transport: "Trem para Bologna. A14.",
+        acceptance: "11.5% estrangeiros. Boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, zona universitaria.",
+        rentRange: "7-10",
+        tags: ["universidade", "agroalimentar"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 6, custoVida: 8, qualidadeVida: 7 }
+    },
+    {
+        name: "Rimini", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 150000, foreigners: 13.0, rentAvg: 11.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Mediterraneo-continental. Verao quente e turistico.",
+        economy: "Turismo balneario, feiras, servicos.",
+        healthcare: "Ospedale Infermi di Rimini.",
+        schools: "Rede boa.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Coop, Conad, Lidl, Aldi.",
+        transport: "Aeroporto Fellini. Trem para Bologna ~1h. A14.",
+        acceptance: "13% estrangeiros. Boa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Marina Centro, Viserba, Miramare, centro storico.",
+        rentRange: "9-14",
+        tags: ["praia", "feiras", "turismo", "sazonal"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 7, custoVida: 6, qualidadeVida: 7 }
+    },
+    // PIEMONTE - novas cidades
+    {
+        name: "Asti", region: "Piemonte", macro: "Noroeste",
+        population: 73440, foreigners: 11.5, rentAvg: 7.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-32C. Inverno -1 a 7C.",
+        economy: "Vinho (Asti Spumante, Moscato), agricultura, industria alimenticia.",
+        healthcare: "Ospedale Cardinal Massaia. Bom hospital regional.",
+        schools: "Rede publica adequada. Liceus e institutos tecnicos.",
+        schoolTypes: "Cobertura completa para todas as idades.",
+        markets: "Conad, Coop, Lidl, mercados locais.",
+        transport: "Trem para Turim ~50min, Milao ~2h. Rodovias regionais A21/A26.",
+        acceptance: "11.5% estrangeiros. Cidade tradicional e receptiva.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico, Borgo San Pietro, San Secondo.",
+        rentRange: "6-8",
+        tags: ["vinho", "tradicional", "economica"],
+        scores: { escola: 6, saude: 7, mercados: 7, transporte: 6, estrangeiros: 6, custoVida: 8, qualidadeVida: 7 }
+    },
+    {
+        name: "Moncalieri", region: "Piemonte", macro: "Noroeste",
+        population: 55439, foreigners: 12.0, rentAvg: 9.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-33C. Inverno -1 a 7C.",
+        economy: "Industria, servicos. Cidade dormitorio de Turim com boa autonomia.",
+        healthcare: "Ospedale Santa Croce. Proxima aos grandes hospitais de Turim.",
+        schools: "Rede escolar boa. Ligacao rapida a Turim para opcoes avancadas.",
+        schoolTypes: "Scuola infanzia, primaria, secondaria disponiveis.",
+        markets: "Esselunga, Coop, Lidl, centros comerciais.",
+        transport: "Trem e metro para Turim ~15-20min. Rodovia A6.",
+        acceptance: "12% estrangeiros. Muito integrada com Turim.",
+        racismNote: "Perfil grande cidade. Sem registros especificos.",
+        neighborhoods: "Centro, Borgo San Pietro, Revigliasco.",
+        rentRange: "8-11",
+        tags: ["grande-Turim", "familiar", "bem-conectada"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Collegno", region: "Piemonte", macro: "Noroeste",
+        population: 47814, foreigners: 13.5, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-32C. Inverno -1 a 7C.",
+        economy: "Industria, servicos. Cinturao industrial oeste de Turim.",
+        healthcare: "Accesso aos hospitais de Turim via metro.",
+        schools: "Boas escolas municipais. Metro para Turim amplia opcoes.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Coop, Lidl, Esselunga proximo.",
+        transport: "Metro para Turim ~15min. Rodovia A32.",
+        acceptance: "13.5% estrangeiros. Diversa, ligada a Turim.",
+        racismNote: "Sem historico especifico.",
+        neighborhoods: "Centro, Leumann, Le Vallette.",
+        rentRange: "8-10",
+        tags: ["grande-Turim", "industrial", "metro"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 6 }
+    },
+    {
+        name: "Rivoli", region: "Piemonte", macro: "Noroeste",
+        population: 46560, foreigners: 14.0, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-32C. Inverno -1 a 7C.",
+        economy: "Industria automotiva (Stellantis indireta), servicos.",
+        healthcare: "Ospedale degli Infermi di Rivoli. Hospital proprio.",
+        schools: "Rede escolar boa. Opcoes ampliadas via Turim.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Coop, Lidl, centros comerciais.",
+        transport: "Metro (estacao) para Turim ~20min. Rodovia A32.",
+        acceptance: "14% estrangeiros. Cidade aberta e diversa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, San Martino, Cascine Vica.",
+        rentRange: "8-10",
+        tags: ["grande-Turim", "familiar", "metro"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Vercelli", region: "Piemonte", macro: "Noroeste",
+        population: 45951, foreigners: 12.0, rentAvg: 7.0,
+        grade: "B", gradeLabel: "B",
+        climate: "Continental. Verao quente. Inverno frio com nevoeiro.",
+        economy: "Agricultura (maior produtor de arroz da Europa), industria textil.",
+        healthcare: "Ospedale S. Andrea. Hospital regional adequado.",
+        schools: "Rede publica suficiente para o porte.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Lidl, mercados locais.",
+        transport: "Trem para Milao ~1h e Turim ~50min. A26.",
+        acceptance: "12% estrangeiros. Cidade provincial, menos cosmopolita.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico, Isola.",
+        rentRange: "5-8",
+        tags: ["arroz", "provincial", "economica"],
+        scores: { escola: 6, saude: 6, mercados: 6, transporte: 6, estrangeiros: 6, custoVida: 9, qualidadeVida: 6 }
+    },
+    {
+        name: "Nichelino", region: "Piemonte", macro: "Noroeste",
+        population: 45830, foreigners: 15.0, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-32C. Inverno -1 a 7C.",
+        economy: "Industria, servicos. Sul de Turim.",
+        healthcare: "Proxima ao polo hospitalar de Turim.",
+        schools: "Boas escolas. Ligacao a Turim amplia opcoes.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Coop, Lidl, Esselunga proximo.",
+        transport: "Metro para Turim ~15min. Rodovias A6/A21.",
+        acceptance: "15% estrangeiros. Diversa e aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Borgo Stupinigi.",
+        rentRange: "8-10",
+        tags: ["grande-Turim", "metro", "diversa"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 6 }
+    },
+    {
+        name: "Settimo Torinese", region: "Piemonte", macro: "Noroeste",
+        population: 45586, foreigners: 14.0, rentAvg: 8.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-32C. Inverno -1 a 7C.",
+        economy: "Polo industrial norte de Turim. Industria quimica, plasticos.",
+        healthcare: "Accesso rapido hospitais de Turim.",
+        schools: "Rede escolar adequada. Metro a Turim amplia opcoes.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Coop, Lidl, Carrefour.",
+        transport: "Metro para Turim ~15min. A4 e A5.",
+        acceptance: "14% estrangeiros. Perfil industrial, diversa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Borgata Paradiso.",
+        rentRange: "7-10",
+        tags: ["grande-Turim", "industrial", "metro"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 8, qualidadeVida: 6 }
+    },
+    {
+        name: "Biella", region: "Piemonte", macro: "Noroeste",
+        population: 43181, foreigners: 9.5, rentAvg: 6.5,
+        grade: "B", gradeLabel: "B",
+        climate: "Continental montanhoso. Invernos frios e nevosos.",
+        economy: "Industria textil (la de alta qualidade, marcas luxo).",
+        healthcare: "Ospedale degli Infermi. Hospital regional adequado.",
+        schools: "Rede publica suficiente. Instituto textil especializado.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Turim ~1h. Rodovias regionais. Mais isolada.",
+        acceptance: "9.5% estrangeiros. Cidade industrial fechada, menos cosmopolita.",
+        racismNote: "Casos isolados historicos na industria textil.",
+        neighborhoods: "Centro, Piano biellese.",
+        rentRange: "5-7",
+        tags: ["textil", "montanha", "economica", "industrial"],
+        scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 5, custoVida: 9, qualidadeVida: 6 }
+    },
+    {
+        name: "Grugliasco", region: "Piemonte", macro: "Noroeste",
+        population: 36505, foreigners: 13.5, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-32C. Inverno -1 a 7C.",
+        economy: "Servicos, industria. Cinturao oeste de Turim.",
+        healthcare: "Citta della Salute e della Scienza proximo (Turim).",
+        schools: "Boas escolas. Metro a Turim amplia opcoes.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Lidl, Coop, Carrefour.",
+        transport: "Metro para Turim ~12min.",
+        acceptance: "13.5% estrangeiros. Cidade universitaria (Polo Vet).",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Borgo.",
+        rentRange: "8-10",
+        tags: ["grande-Turim", "universitaria", "metro"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Chieri", region: "Piemonte", macro: "Noroeste",
+        population: 35819, foreigners: 10.5, rentAvg: 8.5,
+        grade: "B", gradeLabel: "B",
+        climate: "Continental. Verao 24-31C. Inverno -1 a 7C.",
+        economy: "Industria textil, servicos, agricola.",
+        healthcare: "Accesso ao polo hospitalar de Turim (~20km).",
+        schools: "Rede escolar boa para o porte.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, mercados locais.",
+        transport: "Onibus para Turim ~30min. Ligacao rodoviaria boa.",
+        acceptance: "10.5% estrangeiros. Cidade tranquila e organizada.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico medieval, Borgo San Pietro.",
+        rentRange: "7-10",
+        tags: ["tranquila", "grande-Turim", "historica"],
+        scores: { escola: 7, saude: 6, mercados: 6, transporte: 6, estrangeiros: 6, custoVida: 8, qualidadeVida: 7 }
+    },
+    {
+        name: "Pinerolo", region: "Piemonte", macro: "Noroeste",
+        population: 35439, foreigners: 9.5, rentAvg: 7.5,
+        grade: "B", gradeLabel: "B",
+        climate: "Continental alpino. Inverno frio. Proximo a montanhas.",
+        economy: "Servicos, agricultura, turismo de montanha.",
+        healthcare: "Ospedale E. Agnelli. Hospital regional adequado.",
+        schools: "Rede publica suficiente.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, mercados locais.",
+        transport: "Trem para Turim ~50min. Rodovias regionais.",
+        acceptance: "9.5% estrangeiros. Cidade tranquila, menos cosmopolita.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Abbadia Alpina.",
+        rentRange: "6-8",
+        tags: ["montana", "tranquila", "economica"],
+        scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 5, custoVida: 8, qualidadeVida: 7 }
+    },
+    {
+        name: "Casale Monferrato", region: "Piemonte", macro: "Noroeste",
+        population: 32428, foreigners: 11.0, rentAvg: 6.5,
+        grade: "B", gradeLabel: "B",
+        climate: "Continental. Verao quente. Inverno frio.",
+        economy: "Cemento, agricultura, vinho (Grignolino, Barbera).",
+        healthcare: "Ospedale SS. Antonio e Biagio localmente adequado.",
+        schools: "Rede publica suficiente.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, mercados locais.",
+        transport: "Trem para Alessandria ~30min, Turim ~1h20. A26.",
+        acceptance: "11% estrangeiros. Cidade historica do Monferrato.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico, riva del Po.",
+        rentRange: "5-7",
+        tags: ["historica", "vinho", "economica"],
+        scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 6, custoVida: 9, qualidadeVida: 6 }
+    },
+    {
+        name: "Venaria Reale", region: "Piemonte", macro: "Noroeste",
+        population: 32035, foreigners: 12.0, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-32C. Inverno -1 a 7C.",
+        economy: "Turismo (Reggia di Venaria), servicos, industria leve.",
+        healthcare: "Accesso ao sistema hospitalar de Turim.",
+        schools: "Boas escolas municipais.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Coop, Lidl, Carrefour.",
+        transport: "Onibus e trem para Turim ~20min.",
+        acceptance: "12% estrangeiros. Cidade turistica e organizada.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, zona Reggia.",
+        rentRange: "8-10",
+        tags: ["grande-Turim", "turismo", "historica"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 7, qualidadeVida: 8 }
+    },
+    // LIGURIA - novas cidades
+    {
+        name: "Sanremo", region: "Liguria", macro: "Noroeste",
+        population: 53059, foreigners: 10.5, rentAvg: 10.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Mediterraneo. Verao 25-30C. Inverno 8-14C. Sol o ano todo.",
+        economy: "Turismo, Festival de Musica, flores (capital das flores), comercio.",
+        healthcare: "Ospedale Borea. Hospital regional adequado.",
+        schools: "Rede publica boa para o porte.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, mercados locais.",
+        transport: "Trem para Genova ~1h30, Nice (Franca) ~40min. A10.",
+        acceptance: "10.5% estrangeiros. Cidade turistica internacional, boa aceitacao.",
+        racismNote: "Ambiente turistico, sem registros relevantes.",
+        neighborhoods: "Centro, La Pigna (medieval), Borgo Foce.",
+        rentRange: "8-12",
+        tags: ["praia", "mediterraneo", "festival", "flores", "turismo"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 6, qualidadeVida: 8 }
+    },
+    {
+        name: "Imperia", region: "Liguria", macro: "Noroeste",
+        population: 42580, foreigners: 8.5, rentAvg: 9.0,
+        grade: "B", gradeLabel: "B",
+        climate: "Mediterraneo. Verao 25-30C. Inverno 7-13C. Muito sol.",
+        economy: "Olivicultura (azeite DOP), turismo, porto, comercio.",
+        healthcare: "Ospedale di Imperia. Hospital regional.",
+        schools: "Rede publica adequada.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, mercados locais.",
+        transport: "Trem para Genova ~2h, Nice ~1h. A10.",
+        acceptance: "8.5% estrangeiros. Cidade menor, tranquila.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Porto Maurizio, Oneglia (as duas partes da cidade).",
+        rentRange: "7-11",
+        tags: ["praia", "mediterraneo", "azeite", "tranquila"],
+        scores: { escola: 6, saude: 6, mercados: 6, transporte: 6, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
+    },
+    // LOMBARDIA - novas cidades
+    {
+        name: "Milano", region: "Lombardia", macro: "Noroeste",
+        population: 1365698, foreigners: 19.2, rentAvg: 22.0,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental. Verao 27-34C (abafado). Inverno 0-7C. Nevoeiro.",
+        economy: "Capital financeira italiana. Moda, design, financa, tecnologia, media.",
+        healthcare: "Ospedale Niguarda, Policlinico, Humanitas, San Raffaele, Gaslini kids. Melhor sistema da Italia.",
+        schools: "Melhor oferta da Italia. Escolas internacionais, bilinguais. Universidades de elite (Bocconi, Polimi).",
+        schoolTypes: "Oferta completa e diversificada, incluindo escolas internacionais.",
+        markets: "Esselunga, Carrefour, Coop, Lidl, Aldi, Pam, supermercados premium.",
+        transport: "Linate + Malpensa (aeroportos). 4 linhas de metro. Trem alta velocidade para toda Italia. M1/M2/M3/M4.",
+        acceptance: "19.2% estrangeiros. A mais cosmopolita da Italia. Expats de todo o mundo.",
+        racismNote: "Cidade mais diversa da Italia. Episodios raros, ambiente geral muito aberto.",
+        neighborhoods: "Navigli (jovem), Brera (elite), Isola (hipster), Nolo, Lambrate, Porta Romana.",
+        rentRange: "18-30",
+        tags: ["metropole", "financas", "moda", "design", "expats", "cosmopolita"],
+        scores: { escola: 10, saude: 10, mercados: 10, transporte: 10, estrangeiros: 10, custoVida: 2, qualidadeVida: 8 }
+    },
+    {
+        name: "Busto Arsizio", region: "Lombardia", macro: "Noroeste",
+        population: 84005, foreigners: 13.5, rentAvg: 10.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-33C. Inverno 0-7C.",
+        economy: "Industria textil, mecanica, logistica. Area Malpensa.",
+        healthcare: "Ospedale di Busto Arsizio. Hospital bem equipado.",
+        schools: "Boa rede publica. Proxima a Varese e Milao.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Coop, Lidl, Carrefour.",
+        transport: "Trem para Milao ~40min. Malpensa ~15min. A8.",
+        acceptance: "13.5% estrangeiros. Cidade industrial aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, San Michele.",
+        rentRange: "8-12",
+        tags: ["grande-Milao", "industrial", "malpensa"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Sesto San Giovanni", region: "Lombardia", macro: "Noroeste",
+        population: 78792, foreigners: 16.0, rentAvg: 11.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-34C. Inverno 0-7C.",
+        economy: "Ex-polo siderurgico, hoje servicos, tecnologia, universidades.",
+        healthcare: "Ospedale MultiMedica. Accesso facil ao sistema de Milao.",
+        schools: "Boas escolas. Metro para Milao amplia opcoes.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Coop, Lidl.",
+        transport: "Metro M1 para Milao ~15min. Trem.",
+        acceptance: "16% estrangeiros. Cidade em transformacao, aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Pelucca, Monza ovest.",
+        rentRange: "9-13",
+        tags: ["grande-Milao", "metro", "renovada"],
+        scores: { escola: 7, saude: 8, mercados: 8, transporte: 9, estrangeiros: 8, custoVida: 6, qualidadeVida: 7 }
+    },
+    {
+        name: "Cinisello Balsamo", region: "Lombardia", macro: "Noroeste",
+        population: 74702, foreigners: 17.0, rentAvg: 10.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-34C. Inverno 0-7C.",
+        economy: "Servicos, industria leve. Norte de Milao.",
+        healthcare: "Accesso facil ao sistema hospitalar de Milao.",
+        schools: "Boa rede municipal. Metro a Milao.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Lidl, Coop.",
+        transport: "Metro M1 para Milao ~15min.",
+        acceptance: "17% estrangeiros. Diversa, proxima a Milao.",
+        racismNote: "Sem historico especifico.",
+        neighborhoods: "Centro, Balsamo.",
+        rentRange: "9-12",
+        tags: ["grande-Milao", "metro", "diversa"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 9, estrangeiros: 8, custoVida: 6, qualidadeVida: 7 }
+    },
+    {
+        name: "Vigevano", region: "Lombardia", macro: "Noroeste",
+        population: 62771, foreigners: 13.5, rentAvg: 8.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-33C. Inverno 0-7C.",
+        economy: "Calcados (capital italiana do calcado), industria textil.",
+        healthcare: "Ospedale Civile di Vigevano. Hospital regional adequado.",
+        schools: "Rede publica boa. Instituto tecnico especificos.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Milao ~50min. A7.",
+        acceptance: "13.5% estrangeiros. Cidade historica aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Piazza Ducale (centro), Sforzesca.",
+        rentRange: "7-10",
+        tags: ["calcados", "historica", "economica"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Legnano", region: "Lombardia", macro: "Noroeste",
+        population: 60679, foreigners: 14.0, rentAvg: 10.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-33C. Inverno 0-7C.",
+        economy: "Industria meccanica, textil. Area nord-ovest Milano.",
+        healthcare: "Ospedale Civile di Legnano. Bem equipado.",
+        schools: "Boa rede publica. Trem rapido a Milao.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Conad, Lidl.",
+        transport: "Trem para Milao ~30min. A8.",
+        acceptance: "14% estrangeiros. Cidade industrial aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, San Magno.",
+        rentRange: "8-12",
+        tags: ["grande-Milao", "industrial", "conectada"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Gallarate", region: "Lombardia", macro: "Noroeste",
+        population: 52902, foreigners: 13.0, rentAvg: 9.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-32C. Inverno 0-7C.",
+        economy: "Logistica, industria. Area aeroportuaria Malpensa.",
+        healthcare: "Ospedale di Gallarate. Hospital adequado.",
+        schools: "Boa rede. Proxima a Varese e Milao.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Coop, Lidl.",
+        transport: "Malpensa ~10min. Trem para Milao ~30min. A8/A26.",
+        acceptance: "13% estrangeiros. Area internacional Malpensa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Madonna in Campagna.",
+        rentRange: "8-11",
+        tags: ["grande-Milao", "malpensa", "logistica"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Rho", region: "Lombardia", macro: "Noroeste",
+        population: 50879, foreigners: 15.0, rentAvg: 10.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-33C. Inverno 0-7C.",
+        economy: "Fiera di Milano (polo feiral), logistica, industria.",
+        healthcare: "Accesso facil ao polo hospitalar de Milao.",
+        schools: "Boas escolas. Metro para Milao rapido.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Conad, Lidl.",
+        transport: "Metro M1 para Milao ~20min. A8.",
+        acceptance: "15% estrangeiros. Area feira internacional, muito aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Mazzo, Passirana.",
+        rentRange: "9-12",
+        tags: ["grande-Milao", "fiera", "metro", "logistica"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 9, estrangeiros: 8, custoVida: 6, qualidadeVida: 7 }
+    },
+    {
+        name: "Paderno Dugnano", region: "Lombardia", macro: "Noroeste",
+        population: 47594, foreigners: 14.5, rentAvg: 10.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-34C. Inverno 0-7C.",
+        economy: "Industria meccanica e chimica. Norte de Milao.",
+        healthcare: "Accesso ao sistema de Milao.",
+        schools: "Boa rede municipal.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Lidl.",
+        transport: "Trem para Milao ~20min.",
+        acceptance: "14.5% estrangeiros. Diversa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Inzago, Niguarda norte.",
+        rentRange: "8-11",
+        tags: ["grande-Milao", "industrial"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 6 }
+    },
+    {
+        name: "Cologno Monzese", region: "Lombardia", macro: "Noroeste",
+        population: 46994, foreigners: 14.0, rentAvg: 10.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-34C. Inverno 0-7C.",
+        economy: "Media (Mediaset, RTI), servicos, industria.",
+        healthcare: "Accesso ao sistema de Milao e Monza.",
+        schools: "Boas escolas. Metro a Milao rapido.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Coop, Lidl.",
+        transport: "Metro M2 para Milao ~10min.",
+        acceptance: "14% estrangeiros. Area media e tecnologia.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Muggiano.",
+        rentRange: "9-12",
+        tags: ["grande-Milao", "metro", "media"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 9, estrangeiros: 7, custoVida: 6, qualidadeVida: 7 }
+    },
+    {
+        name: "Lissone", region: "Lombardia", macro: "Noroeste",
+        population: 46821, foreigners: 11.5, rentAvg: 10.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-32C. Inverno 0-7C.",
+        economy: "Moveis e design (capital do movel). Area Monza-Brianza.",
+        healthcare: "Accesso ao sistema de Monza e Milao.",
+        schools: "Boa rede. Instituto tecnico de design.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Esselunga, Lidl.",
+        transport: "Trem para Milao ~25min.",
+        acceptance: "11.5% estrangeiros. Cidade de artesanato e design.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, San Giorgio.",
+        rentRange: "8-12",
+        tags: ["grande-Milao", "design", "moveis", "brianza"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Lodi", region: "Lombardia", macro: "Noroeste",
+        population: 45357, foreigners: 14.5, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-33C. Inverno 0-7C.",
+        economy: "Agroindustria, formaggi (Grana Padano), servicos bancarios.",
+        healthcare: "Ospedale di Lodi. Hospital adequado.",
+        schools: "Boa rede publica.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Esselunga, Lidl.",
+        transport: "Trem para Milao ~20min. A1.",
+        acceptance: "14.5% estrangeiros. Cidade historica aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico, Castello.",
+        rentRange: "7-11",
+        tags: ["grande-Milao", "historica", "queijo"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Seregno", region: "Lombardia", macro: "Noroeste",
+        population: 44982, foreigners: 12.5, rentAvg: 10.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-32C. Inverno 0-7C.",
+        economy: "Industria meccanica, moveis. Brianza.",
+        healthcare: "Accesso ao sistema de Monza e Milao.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Esselunga, Lidl.",
+        transport: "Trem para Milao ~30min.",
+        acceptance: "12.5% estrangeiros. Brianza industrial, aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, San Salvatore.",
+        rentRange: "8-12",
+        tags: ["grande-Milao", "brianza", "industrial"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Desio", region: "Lombardia", macro: "Noroeste",
+        population: 41662, foreigners: 13.5, rentAvg: 10.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-32C. Inverno 0-7C.",
+        economy: "Industria, servicos. Brianza.",
+        healthcare: "Ospedale di Desio. Hospital proprio.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Esselunga, Lidl.",
+        transport: "Trem para Milao ~25min.",
+        acceptance: "13.5% estrangeiros. Area Brianza aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro.",
+        rentRange: "8-12",
+        tags: ["grande-Milao", "brianza"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Rozzano", region: "Lombardia", macro: "Noroeste",
+        population: 41559, foreigners: 16.0, rentAvg: 11.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-34C. Inverno 0-7C.",
+        economy: "Farmaceutica (Humanitas), servicos, industria. Sul de Milao.",
+        healthcare: "Humanitas Research Hospital (referencia internacional). Excelente.",
+        schools: "Boas escolas. Metro para Milao rapido.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Il Centro (shopping), Lidl.",
+        transport: "Metro M2 para Milao ~10min.",
+        acceptance: "16% estrangeiros. Area hospitalar internacional.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Milanofiori.",
+        rentRange: "9-13",
+        tags: ["grande-Milao", "metro", "hospitalar", "farmaceutica"],
+        scores: { escola: 7, saude: 9, mercados: 8, transporte: 9, estrangeiros: 8, custoVida: 6, qualidadeVida: 7 }
+    },
+    {
+        name: "Cantù", region: "Lombardia", macro: "Noroeste",
+        population: 40237, foreigners: 11.5, rentAvg: 9.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-31C. Inverno 0-7C.",
+        economy: "Moveis de alta qualidade (Polo del mobile). Industria.",
+        healthcare: "Accesso ao sistema de Como e Milao.",
+        schools: "Boa rede. Instituto tecnico do movel.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Milao ~40min. A9.",
+        acceptance: "11.5% estrangeiros. Capital italiana do movel.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, San Rocco.",
+        rentRange: "8-11",
+        tags: ["moveis", "design", "grande-Milao"],
+        scores: { escola: 7, saude: 6, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "San Giuliano Milanese", region: "Lombardia", macro: "Noroeste",
+        population: 39910, foreigners: 15.5, rentAvg: 10.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-34C. Inverno 0-7C.",
+        economy: "Logistica, industria. Piaforma Peschiera Borromeo. Sul de Milao.",
+        healthcare: "Accesso ao sistema de Milao.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Lidl.",
+        transport: "Metro M3 para Milao ~15min. A1.",
+        acceptance: "15.5% estrangeiros. Diversa.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Sesto Ulteriano.",
+        rentRange: "9-12",
+        tags: ["grande-Milao", "metro", "logistica"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 8, custoVida: 6, qualidadeVida: 7 }
+    },
+    {
+        name: "Cesano Maderno", region: "Lombardia", macro: "Noroeste",
+        population: 39763, foreigners: 13.0, rentAvg: 9.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-32C. Inverno 0-7C.",
+        economy: "Industria, servicos. Brianza.",
+        healthcare: "Accesso ao sistema de Monza.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Esselunga, Lidl.",
+        transport: "Trem para Milao ~25min.",
+        acceptance: "13% estrangeiros. Brianza industrial.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Binzago, Moron.",
+        rentRange: "8-11",
+        tags: ["grande-Milao", "brianza"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Voghera", region: "Lombardia", macro: "Noroeste",
+        population: 39515, foreigners: 12.5, rentAvg: 7.5,
+        grade: "B", gradeLabel: "B",
+        climate: "Continental. Verao 26-33C. Inverno 0-7C.",
+        economy: "Industria, comercio, servicos. Oltrepo Pavese.",
+        healthcare: "Ospedale Civile di Voghera. Adequado.",
+        schools: "Rede publica suficiente.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Pavia ~30min, Milao ~1h10. A7.",
+        acceptance: "12.5% estrangeiros. Cidade provincia, aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico.",
+        rentRange: "6-9",
+        tags: ["economica", "provincial"],
+        scores: { escola: 6, saude: 6, mercados: 7, transporte: 6, estrangeiros: 6, custoVida: 8, qualidadeVida: 6 }
+    },
+    {
+        name: "Saronno", region: "Lombardia", macro: "Noroeste",
+        population: 38732, foreigners: 12.0, rentAvg: 10.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-32C. Inverno 0-7C.",
+        economy: "Farmaceutica (Amaretto di Saronno), industria.",
+        healthcare: "Ospedale di Saronno. Hospital adequado.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Conad, Lidl.",
+        transport: "Trem para Milao ~30min. Cruzamento de linhas ferroviarias.",
+        acceptance: "12% estrangeiros. Cidade aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, San Giuseppe.",
+        rentRange: "8-12",
+        tags: ["grande-Milao", "farmaceutica", "conectada"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Pioltello", region: "Lombardia", macro: "Noroeste",
+        population: 37184, foreigners: 18.0, rentAvg: 10.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-34C. Inverno 0-7C.",
+        economy: "Logistica, servicos. Leste de Milao.",
+        healthcare: "Accesso ao sistema de Milao.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Lidl.",
+        transport: "Trem para Milao ~15min. A4.",
+        acceptance: "18% estrangeiros. Muito diversa.",
+        racismNote: "Comunidade diversa, ambiente inclusivo.",
+        neighborhoods: "Seggiano, Limito.",
+        rentRange: "9-12",
+        tags: ["grande-Milao", "diversa", "logistica"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 8, custoVida: 6, qualidadeVida: 6 }
+    },
+    {
+        name: "Segrate", region: "Lombardia", macro: "Noroeste",
+        population: 37078, foreigners: 13.0, rentAvg: 12.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-34C. Inverno 0-7C.",
+        economy: "Editorial (Mondadori, Penguin), tecnologia, Linate aeroporto.",
+        healthcare: "Accesso ao sistema de Milao.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Carrefour.",
+        transport: "Linate ~5min. Metro para Milao ~10min.",
+        acceptance: "13% estrangeiros. Perfil executivo.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Milano 2, Centro.",
+        rentRange: "10-14",
+        tags: ["grande-Milao", "linate", "editorial", "premium"],
+        scores: { escola: 7, saude: 7, mercados: 8, transporte: 9, estrangeiros: 7, custoVida: 5, qualidadeVida: 8 }
+    },
+    {
+        name: "Bollate", region: "Lombardia", macro: "Noroeste",
+        population: 36365, foreigners: 14.0, rentAvg: 10.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-33C. Inverno 0-7C.",
+        economy: "Industria, servicos. Norte-oeste de Milao.",
+        healthcare: "Accesso ao sistema de Milao.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Lidl.",
+        transport: "Trem para Milao ~20min.",
+        acceptance: "14% estrangeiros. Cidade aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Ospiate.",
+        rentRange: "8-12",
+        tags: ["grande-Milao"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Limbiate", region: "Lombardia", macro: "Noroeste",
+        population: 35484, foreigners: 13.0, rentAvg: 9.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-32C. Inverno 0-7C.",
+        economy: "Industria, servicos. Brianza.",
+        healthcare: "Accesso ao sistema de Monza.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Lidl.",
+        transport: "Trem para Milao ~30min.",
+        acceptance: "13% estrangeiros. Brianza.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro.",
+        rentRange: "8-11",
+        tags: ["grande-Milao", "brianza"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Brugherio", region: "Lombardia", macro: "Noroeste",
+        population: 35367, foreigners: 13.0, rentAvg: 10.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-32C. Inverno 0-7C.",
+        economy: "Industria, tecnologia. Brianza.",
+        healthcare: "Accesso ao sistema de Monza e Milao.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Conad.",
+        transport: "Trem para Milao ~15min.",
+        acceptance: "13% estrangeiros. Brianza organizada.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro.",
+        rentRange: "8-12",
+        tags: ["grande-Milao", "brianza"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Cernusco sul Naviglio", region: "Lombardia", macro: "Noroeste",
+        population: 34786, foreigners: 13.0, rentAvg: 11.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-33C. Inverno 0-7C.",
+        economy: "Farmaceutica, tecnologia, servicos. Leste de Milao.",
+        healthcare: "Accesso ao sistema de Milao. Cliniche private.",
+        schools: "Excelentes escolas. Perfil residencial alto.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Carrefour.",
+        transport: "Metro M2 para Milao ~15min.",
+        acceptance: "13% estrangeiros. Residencial premium.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro.",
+        rentRange: "9-13",
+        tags: ["grande-Milao", "metro", "residencial", "premium"],
+        scores: { escola: 8, saude: 8, mercados: 8, transporte: 9, estrangeiros: 7, custoVida: 5, qualidadeVida: 8 }
+    },
+    {
+        name: "Corsico", region: "Lombardia", macro: "Noroeste",
+        population: 34694, foreigners: 15.0, rentAvg: 10.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-34C. Inverno 0-7C.",
+        economy: "Industria, servicos. Sul-oeste de Milao.",
+        healthcare: "Accesso ao sistema de Milao.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Lidl.",
+        transport: "Metro M2 para Milao ~10min.",
+        acceptance: "15% estrangeiros. Muito proxima de Milao.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro.",
+        rentRange: "9-12",
+        tags: ["grande-Milao", "metro"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 9, estrangeiros: 8, custoVida: 6, qualidadeVida: 7 }
+    },
+    {
+        name: "Abbiategrasso", region: "Lombardia", macro: "Noroeste",
+        population: 32658, foreigners: 13.5, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-33C. Inverno 0-7C.",
+        economy: "Agricultura (riso), industria alimenticia.",
+        healthcare: "Ospedale di Abbiategrasso. Hospital adequado.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Milao ~35min. A7.",
+        acceptance: "13.5% estrangeiros. Cidade historica aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico, Castellazzo.",
+        rentRange: "7-10",
+        tags: ["grande-Milao", "historica", "arroz"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "San Donato Milanese", region: "Lombardia", macro: "Noroeste",
+        population: 32161, foreigners: 14.0, rentAvg: 11.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-34C. Inverno 0-7C.",
+        economy: "Energia (ENI sede). Servicos, industria.",
+        healthcare: "Policlinico San Donato (referencia cardiologica). Excelente.",
+        schools: "Boas escolas. Metro para Milao.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Esselunga, Carrefour.",
+        transport: "Metro M3 para Milao ~10min.",
+        acceptance: "14% estrangeiros. Perfil multinacional (ENI).",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, San Donato.",
+        rentRange: "9-13",
+        tags: ["grande-Milao", "metro", "energia", "saude-premium"],
+        scores: { escola: 7, saude: 9, mercados: 8, transporte: 9, estrangeiros: 7, custoVida: 5, qualidadeVida: 8 }
+    },
+    {
+        name: "Treviglio", region: "Lombardia", macro: "Noroeste",
+        population: 31417, foreigners: 14.5, rentAvg: 9.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-33C. Inverno 0-7C.",
+        economy: "Industria meccanica, agro, servicos. Bergamo-Brescia.",
+        healthcare: "Ospedale di Treviglio. Hospital regional bom.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Esselunga, Lidl.",
+        transport: "Trem para Milao ~35min, Bergamo ~20min. A35.",
+        acceptance: "14.5% estrangeiros. Cidade industrial aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico.",
+        rentRange: "8-11",
+        tags: ["grande-Milao", "industrial", "bergamo"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    // VENETO - novas cidades
+    {
+        name: "Venezia / Mestre", region: "Veneto", macro: "Nordeste",
+        population: 249490, foreigners: 12.5, rentAvg: 13.0,
+        grade: "A", gradeLabel: "A",
+        climate: "Continental-umido. Verao 26-32C. Inverno 2-8C. Acqua alta no centro.",
+        economy: "Turismo mundial, porto, industria (Marghera), comercio, cultura.",
+        healthcare: "Ospedale dell'Angelo (Mestre), SS Giovanni e Paolo (Venezia). Excellent.",
+        schools: "Ca' Foscari, Universita IUAV. Rede publica completa. Mestre mais pratico.",
+        schoolTypes: "Cobertura completa em Mestre. Venezia insulare e mais complicada.",
+        markets: "Esselunga (Mestre), Coop, Lidl, mercados. Venezia cara para compras.",
+        transport: "Aeroporto Marco Polo. Trem Mestre-Venezia ~10min. A4/A27. Vaporetti.",
+        acceptance: "12.5% estrangeiros. Muito turistica. Mestre mais tranquila para familias.",
+        racismNote: "Episodios em Mestre. Venezia tem excesso de turismo como maior problema.",
+        neighborhoods: "Mestre (residencial, pratico), Venezia insulare (historica, cara), Lido.",
+        rentRange: "10-18",
+        tags: ["metropole", "turismo", "porto", "cultura", "UNESCO", "mestre"],
+        scores: { escola: 9, saude: 9, mercados: 8, transporte: 9, estrangeiros: 8, custoVida: 4, qualidadeVida: 8 }
+    },
+    {
+        name: "Rovigo", region: "Veneto", macro: "Nordeste",
+        population: 49922, foreigners: 11.5, rentAvg: 7.5,
+        grade: "B", gradeLabel: "B",
+        climate: "Continental. Verao 26-32C. Inverno 1-8C.",
+        economy: "Agricultura (Polesine), agroindustria, servicos.",
+        healthcare: "Ospedale AULSS 5. Hospital provincial adequado.",
+        schools: "Rede publica suficiente.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Padova ~40min, Ferrara ~30min. A13.",
+        acceptance: "11.5% estrangeiros. Cidade entre Veneto e Emilia.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Commenda.",
+        rentRange: "6-9",
+        tags: ["economica", "provincial", "agricola"],
+        scores: { escola: 6, saude: 6, mercados: 6, transporte: 6, estrangeiros: 6, custoVida: 8, qualidadeVida: 6 }
+    },
+    {
+        name: "Chioggia", region: "Veneto", macro: "Nordeste",
+        population: 47265, foreigners: 7.5, rentAvg: 8.0,
+        grade: "B", gradeLabel: "B",
+        climate: "Mediterraneo-continental. Verao 26-31C. Inverno 3-8C.",
+        economy: "Pesca (porto pesqueiro importante), turismo balnear.",
+        healthcare: "Ospedale di Chioggia. Hospital adequado.",
+        schools: "Rede publica suficiente.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, mercados de peixe.",
+        transport: "Onibus para Venezia ~1h. Estrada Romea SS309.",
+        acceptance: "7.5% estrangeiros. Cidade tipica veneziana, menos cosmopolita.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico (Piccola Venezia), Sottomarina (praia).",
+        rentRange: "6-10",
+        tags: ["pesca", "praia", "veneziana", "tipica"],
+        scores: { escola: 6, saude: 6, mercados: 7, transporte: 5, estrangeiros: 5, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Bassano del Grappa", region: "Veneto", macro: "Nordeste",
+        population: 42299, foreigners: 12.0, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental prealpino. Verao 24-31C. Inverno 0-8C.",
+        economy: "Ceramica, grappa, industria, turismo cultural.",
+        healthcare: "Ospedale di Bassano del Grappa. Hospital regional bom.",
+        schools: "Boa rede publica.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Venezia ~1h15, Vicenza ~30min.",
+        acceptance: "12% estrangeiros. Cidade historica aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico, Ponte Vecchio.",
+        rentRange: "7-11",
+        tags: ["historica", "ceramica", "grappa", "prealpina"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 7, qualidadeVida: 8 }
+    },
+    {
+        name: "San Donà di Piave", region: "Veneto", macro: "Nordeste",
+        population: 41902, foreigners: 11.5, rentAvg: 8.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental-umido. Verao 26-32C. Inverno 1-8C.",
+        economy: "Comercio, servicos, industria. Area veneziana.",
+        healthcare: "Ospedale di San Dona di Piave. Adequado.",
+        schools: "Boa rede publica.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Venezia ~45min. A4.",
+        acceptance: "11.5% estrangeiros. Cidade pratica.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro.",
+        rentRange: "7-10",
+        tags: ["grande-Venezia", "pratica"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Schio", region: "Veneto", macro: "Nordeste",
+        population: 38875, foreigners: 12.5, rentAvg: 8.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental prealpino. Verao 24-30C. Inverno 0-7C.",
+        economy: "Industria textil (Marzotto), meccanica. Pedemontana Veneta.",
+        healthcare: "Ospedale di Schio. Hospital adequado.",
+        schools: "Boa rede publica. Institutos tecnicos fortes.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Vicenza ~30min.",
+        acceptance: "12.5% estrangeiros. Cidade industrial aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Magrè.",
+        rentRange: "6-9",
+        tags: ["industrial", "textil", "economica", "prealpina"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 8, qualidadeVida: 7 }
+    },
+    {
+        name: "Mira", region: "Veneto", macro: "Nordeste",
+        population: 37596, foreigners: 10.5, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental-umido. Verao 25-32C. Inverno 1-8C.",
+        economy: "Industria, servicos. Area periurbana Venezia.",
+        healthcare: "Accesso ao sistema de Venezia e Padova.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Onibus para Venezia ~30min. Autoestrada A4.",
+        acceptance: "10.5% estrangeiros. Area veneziana tranquila.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Mira Porte, Oriago.",
+        rentRange: "7-11",
+        tags: ["grande-Venezia", "tranquila"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Belluno", region: "Veneto", macro: "Nordeste",
+        population: 35543, foreigners: 8.5, rentAvg: 8.0,
+        grade: "B", gradeLabel: "B",
+        climate: "Alpino. Verao 22-28C. Inverno -2 a 6C. Neve no inverno.",
+        economy: "Oculos (Luxottica/EssilorLuxottica), turismo Dolomitas.",
+        healthcare: "Ospedale San Martino di Belluno. Hospital provincial.",
+        schools: "Rede publica boa para o porte. Instituto tecnico do oculos.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Venezia ~2h. SS51. Mais isolada.",
+        acceptance: "8.5% estrangeiros. Cidade alpina, menos cosmopolita.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico, Borgo Piave.",
+        rentRange: "6-9",
+        tags: ["montana", "oculos", "dolomitas", "alpina"],
+        scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 5, custoVida: 7, qualidadeVida: 8 }
+    },
+    {
+        name: "Conegliano", region: "Veneto", macro: "Nordeste",
+        population: 34578, foreigners: 11.0, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 24-31C. Inverno 0-8C.",
+        economy: "Vinho Prosecco DOCG, agroalimentar, industria.",
+        healthcare: "Ospedale di Conegliano. Hospital regional adequado.",
+        schools: "Boa rede publica. Instituto do vinho.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Venezia ~1h, Treviso ~25min. A27.",
+        acceptance: "11% estrangeiros. Cidade do Prosecco, aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico, Collalbrigo.",
+        rentRange: "7-10",
+        tags: ["prosecco", "vinho", "historia", "grande-Venezia"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 7, qualidadeVida: 8 }
+    },
+    {
+        name: "Castelfranco Veneto", region: "Veneto", macro: "Nordeste",
+        population: 33205, foreigners: 12.0, rentAvg: 9.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-32C. Inverno 0-7C.",
+        economy: "Industria meccanica, commercio. Area Treviso-Padova.",
+        healthcare: "Ospedale di Castelfranco Veneto. Adequado.",
+        schools: "Boa rede publica.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Venezia ~50min, Padova ~30min.",
+        acceptance: "12% estrangeiros. Ciudad historica aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro murado (castelo medieval).",
+        rentRange: "7-11",
+        tags: ["historica", "medieval", "grande-Venezia"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Villafranca di Verona", region: "Veneto", macro: "Nordeste",
+        population: 32836, foreigners: 10.5, rentAvg: 9.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-33C. Inverno 0-8C.",
+        economy: "Agroindustria, comercio. Area veronese.",
+        healthcare: "Accesso ao sistema de Verona.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop.",
+        transport: "Trem para Verona ~10min. Aeroporto Catullo ~5min. A4.",
+        acceptance: "10.5% estrangeiros. Proxima ao aeroporto de Verona.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Alpo.",
+        rentRange: "8-11",
+        tags: ["grande-Verona", "aeroporto", "pratica"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 8, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Montebelluna", region: "Veneto", macro: "Nordeste",
+        population: 31142, foreigners: 11.5, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental prealpino. Verao 24-31C. Inverno 0-7C.",
+        economy: "Calcado esportivo (Asolo/Dolomite/Lowa), industria.",
+        healthcare: "Ospedale di Montebelluna. Adequado.",
+        schools: "Boa rede publica.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Treviso ~30min, Venezia ~1h.",
+        acceptance: "11.5% estrangeiros. Capital do calcado esportivo.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro.",
+        rentRange: "7-10",
+        tags: ["calcado-esportivo", "industrial", "prealpina"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
+    },
+    // FRIULI-VENEZIA GIULIA - novas cidades
+    {
+        name: "Monfalcone", region: "Friuli-Venezia Giulia", macro: "Nordeste",
+        population: 30360, foreigners: 18.5, rentAvg: 8.0,
+        grade: "B", gradeLabel: "B",
+        climate: "Mediterraneo-continental. Verao 25-32C. Inverno 3-9C. Bora.",
+        economy: "Estaleiros Fincantieri (construcao naval), industria pesada.",
+        healthcare: "Ospedale di Monfalcone. Hospital provincial.",
+        schools: "Rede publica adequada.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Trieste ~30min, Udine ~40min. A4.",
+        acceptance: "18.5% estrangeiros (muitos canteiro naval). Cidade industrial diversa.",
+        racismNote: "Tensoes locais por alta concentracao estrangeiros no estaleiro.",
+        neighborhoods: "Centro, Porto.",
+        rentRange: "6-9",
+        tags: ["naval", "industrial", "diversa"],
+        scores: { escola: 6, saude: 6, mercados: 6, transporte: 6, estrangeiros: 7, custoVida: 8, qualidadeVida: 6 }
+    },
+    // EMILIA-ROMAGNA - novas cidades
+    {
+        name: "Carpi", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 73297, foreigners: 14.5, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-33C. Inverno 0-7C.",
+        economy: "Moda (capital italiana da moda low-cost), industria textil.",
+        healthcare: "Ospedale di Carpi. Hospital regional adequado.",
+        schools: "Boa rede publica. Institutos tecnicos de moda.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Modena ~15min. A22.",
+        acceptance: "14.5% estrangeiros. Cidade da moda, aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico (Piazza dei Martiri).",
+        rentRange: "7-11",
+        tags: ["moda", "textil", "grande-Modena"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Imola", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 69403, foreigners: 15.0, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-33C. Inverno 0-7C.",
+        economy: "Ceramica, meccanica, Formula 1 (Autodromo Dino Ferrari), agroindustria.",
+        healthcare: "Ospedale di Imola. Hospital regional bem equipado.",
+        schools: "Boa rede publica.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Bologna ~30min. A14.",
+        acceptance: "15% estrangeiros. Cidade dinamica, aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico, Pedagna.",
+        rentRange: "7-11",
+        tags: ["formula1", "ceramica", "grande-Bologna"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Faenza", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 58732, foreigners: 12.5, rentAvg: 8.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-33C. Inverno 0-7C.",
+        economy: "Ceramica (faianca), agroindustria, industria.",
+        healthcare: "Ospedale di Faenza. Hospital regional adequado.",
+        schools: "Boa rede publica. Instituto ceramica.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Bologna ~45min, Ravenna ~25min. A14.",
+        acceptance: "12.5% estrangeiros. Cidade historica aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico.",
+        rentRange: "7-10",
+        tags: ["ceramica", "historica", "gastronomia"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Sassuolo", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 41116, foreigners: 17.0, rentAvg: 8.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 26-33C. Inverno 0-7C.",
+        economy: "Ceramica industrial (capital mundial do azulejo), industria.",
+        healthcare: "Accesso ao sistema de Modena.",
+        schools: "Boa rede publica.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Modena ~25min.",
+        acceptance: "17% estrangeiros. Muito diversa por industria ceramica.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro.",
+        rentRange: "7-10",
+        tags: ["azulejo", "ceramica", "industrial", "diversa"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 8, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Cento", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 35474, foreigners: 13.0, rentAvg: 8.0,
+        grade: "B", gradeLabel: "B",
+        climate: "Continental. Verao 27-33C. Inverno 0-6C.",
+        economy: "Industria meccanica, agroindustria.",
+        healthcare: "Ospedale SS. Salvatore. Hospital adequado.",
+        schools: "Rede publica suficiente.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop.",
+        transport: "Onibus para Ferrara ~30min, Bologna ~50min.",
+        acceptance: "13% estrangeiros. Cidade entre Ferrara e Bologna.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico.",
+        rentRange: "6-9",
+        tags: ["economica", "industrial"],
+        scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 6, custoVida: 8, qualidadeVida: 6 }
+    },
+    {
+        name: "Casalecchio di Reno", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 35344, foreigners: 13.5, rentAvg: 11.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-33C. Inverno 0-7C.",
+        economy: "Servicos, industria. Immediati Bologna.",
+        healthcare: "Accesso imediato ao sistema de Bologna.",
+        schools: "Excelentes escolas. Bus rapido a Bologna.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Esselunga, Lidl.",
+        transport: "Bus para Bologna centro ~15min. A1.",
+        acceptance: "13.5% estrangeiros. Zona residencial de Bologna.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Ceretolo.",
+        rentRange: "9-13",
+        tags: ["grande-Bologna", "residencial", "pratica"],
+        scores: { escola: 8, saude: 8, mercados: 8, transporte: 8, estrangeiros: 7, custoVida: 6, qualidadeVida: 8 }
+    },
+    {
+        name: "Formigine", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 34464, foreigners: 13.5, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-33C. Inverno 0-7C.",
+        economy: "Industria meccanica, ceramica. Motor Valley.",
+        healthcare: "Accesso ao sistema de Modena.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Onibus para Modena ~20min.",
+        acceptance: "13.5% estrangeiros. Area Motor Valley.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Magreta.",
+        rentRange: "7-10",
+        tags: ["motor-valley", "grande-Modena", "industrial"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 6, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "Riccione", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 34340, foreigners: 8.5, rentAvg: 11.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Mediterraneo-continental. Verao 27-32C. Inverno 5-12C.",
+        economy: "Turismo balnear, discotecas (capital europeia da discoteca), comercio.",
+        healthcare: "Accesso ao Ospedale di Rimini.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, Lidl.",
+        transport: "Trem para Rimini ~10min, Bologna ~1h20. A14.",
+        acceptance: "8.5% estrangeiros. Turismo europeu massivo.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Viale Ceccarini, lungomare.",
+        rentRange: "8-14",
+        tags: ["praia", "turismo", "discoteca", "sazonal"],
+        scores: { escola: 7, saude: 7, mercados: 7, transporte: 7, estrangeiros: 6, custoVida: 5, qualidadeVida: 7 }
+    },
+    {
+        name: "Castelfranco Emilia", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 33354, foreigners: 14.0, rentAvg: 8.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-33C. Inverno 0-7C.",
+        economy: "Agroindustria, tortellini (origem da receita), industria.",
+        healthcare: "Accesso ao sistema de Modena e Bologna.",
+        schools: "Boa rede escolar.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop.",
+        transport: "Trem para Modena ~15min, Bologna ~25min. A1.",
+        acceptance: "14% estrangeiros. Via Emilia, aberta.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico (castello).",
+        rentRange: "7-10",
+        tags: ["tortellini", "historica", "via-emilia"],
+        scores: { escola: 7, saude: 7, mercados: 6, transporte: 7, estrangeiros: 7, custoVida: 7, qualidadeVida: 7 }
+    },
+    {
+        name: "San Lazzaro di Savena", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 32828, foreigners: 13.0, rentAvg: 11.5,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 27-33C. Inverno 0-7C.",
+        economy: "Tecnologia, farmaceutica, servicos. Bologna leste.",
+        healthcare: "Accesso imediato ao sistema de Bologna.",
+        schools: "Excelentes escolas. Ligacao direta a Bologna.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Esselunga.",
+        transport: "Bus para Bologna ~10min. A14.",
+        acceptance: "13% estrangeiros. Zona residencial alta de Bologna.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro, Idice.",
+        rentRange: "9-13",
+        tags: ["grande-Bologna", "residencial-premium", "tecnologia"],
+        scores: { escola: 8, saude: 8, mercados: 7, transporte: 8, estrangeiros: 7, custoVida: 5, qualidadeVida: 8 }
+    },
+    {
+        name: "Lugo", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 32126, foreigners: 12.5, rentAvg: 7.5,
+        grade: "B", gradeLabel: "B",
+        climate: "Continental. Verao 27-32C. Inverno 0-7C.",
+        economy: "Agroindustria, ceramica, servicos. Basso Ravennate.",
+        healthcare: "Ospedale di Lugo. Hospital provincial adequado.",
+        schools: "Rede publica suficiente.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop, mercados locais.",
+        transport: "Trem para Ravenna ~25min, Bologna ~1h. SS253.",
+        acceptance: "12.5% estrangeiros. Cidade da Romagna.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Centro storico, Pieve.",
+        rentRange: "6-9",
+        tags: ["economica", "romagna", "provincial"],
+        scores: { escola: 6, saude: 6, mercados: 6, transporte: 5, estrangeiros: 6, custoVida: 8, qualidadeVida: 6 }
+    },
+    {
+        name: "Valsamoggia", region: "Emilia-Romagna", macro: "Centro-Norte",
+        population: 32080, foreigners: 11.5, rentAvg: 9.0,
+        grade: "B+", gradeLabel: "B+",
+        climate: "Continental. Verao 25-32C. Inverno -1 a 7C. Colli Bolognesi.",
+        economy: "Agroindustria, vinho (Pignoletto), turismo collinare.",
+        healthcare: "Accesso ao sistema de Bologna.",
+        schools: "Boa rede escolar distribuida nas fracoes.",
+        schoolTypes: "Cobertura completa.",
+        markets: "Conad, Coop locais.",
+        transport: "Trem para Bologna ~25min. A1.",
+        acceptance: "11.5% estrangeiros. Zona residencial collinare de Bologna.",
+        racismNote: "Sem historico relevante.",
+        neighborhoods: "Bazzano, Monteveglio, Crespellano.",
+        rentRange: "7-11",
+        tags: ["grande-Bologna", "colinas", "vinho"],
+        scores: { escola: 7, saude: 6, mercados: 6, transporte: 6, estrangeiros: 6, custoVida: 7, qualidadeVida: 8 }
+    }
+
+];
+
+const regionsData = [
+    {
+        name: "Valle d'Aosta", capital: "Aosta", macro: "Noroeste",
+        pop: "~125 mil", foreigners: "9.2%",
+        desc: "Regiao alpina pequena, fronteira com Franca e Suica. Economia baseada em turismo de montanha e esportes de inverno. Menor regiao da Italia.",
+        healthRank: "Bem avaliada no ranking nacional de saude"
+    },
+    {
+        name: "Piemonte", capital: "Turim", macro: "Noroeste",
+        pop: "~4.3 milhoes", foreigners: "10.4%",
+        desc: "Uma das regioes industriais historicas do pais. Fortes setores automotivo, vinhos e agricultura de alto padrao. Fiat/Stellantis baseada em Turim.",
+        healthRank: "Bem avaliada no ranking nacional de saude"
+    },
+    {
+        name: "Liguria", capital: "Genova", macro: "Noroeste",
+        pop: "~1.5 milhoes", foreigners: "10.8%",
+        desc: "Faixa costeira do noroeste no Mediterraneo. Maior porto da Italia. Forte cultura nautica. Riviera italiana.",
+        healthRank: "Bem avaliada no ranking nacional de saude"
+    },
+    {
+        name: "Lombardia", capital: "Milao", macro: "Noroeste",
+        pop: "~10 milhoes", foreigners: "12.2%",
+        desc: "Regiao economicamente mais poderosa da Italia. Alta concentracao de industria, servicos financeiros e e-commerce. Inclui Lago di Garda e Lago di Como.",
+        healthRank: "Bem avaliada no ranking nacional de saude"
+    },
+    {
+        name: "Trentino-Alto Adige", capital: "Trento / Bolzano", macro: "Nordeste",
+        pop: "~1.1 milhoes", foreigners: "~10% (Bolzano 10.7%, Trento 8.8%)",
+        desc: "Regiao alpina autonoma com forte influencia austriaca. Economia forte em turismo e agricultura de alta qualidade. Lider em qualidade de saude (1o lugar ranking 2025).",
+        healthRank: "1o lugar no ranking italiano de saude 2025"
+    },
+    {
+        name: "Veneto", capital: "Veneza", macro: "Nordeste",
+        pop: "~4.9 milhoes", foreigners: "10.4%",
+        desc: "Uma das regioes mais ricas e industrializadas. Inclui polos industriais e turisticos. Vinitaly em Verona. Prosecco em Treviso.",
+        healthRank: "Boa avaliacao"
+    },
+    {
+        name: "Friuli-Venezia Giulia", capital: "Trieste", macro: "Nordeste",
+        pop: "~1.2 milhoes", foreigners: "10.2%",
+        desc: "Regiao de fronteira com Eslovenia e Austria. Importante hub logistico e portuario do Adriatico. Generali baseada em Trieste.",
+        healthRank: "Bem avaliada no ranking nacional de saude"
+    },
+    {
+        name: "Emilia-Romagna", capital: "Bolonha", macro: "Centro-Norte",
+        pop: "~4.5 milhoes", foreigners: "12.7%",
+        desc: "Regiao altamente produtiva. Famosa por industria, agricultura e setor automotivo (Ferrari, Lamborghini, Ducati, Maserati, Pagani). Gastronomia capital da Italia. Maior % de estrangeiros do Norte.",
+        healthRank: "Boa avaliacao"
+    }
+];
+
+// STATE
+let currentSort = "grade";
+let sortDir = -1;
+
+const gradeOrder = { "A": 5, "A-": 4, "B+": 3, "B": 2, "C": 1 };
+
+function getGradeClass(g) {
+    if (g === "A") return "grade-A";
+    if (g === "A-") return "grade-A-minus";
+    if (g === "B+") return "grade-B-plus";
+    if (g === "B") return "grade-B";
+    return "grade-C";
+}
+
+function formatPop(n) {
+    if (n >= 1000000) return (n / 1000000).toFixed(1) + "M";
+    if (n >= 1000) return Math.round(n / 1000) + "k";
+    return n.toString();
+}
+
+function renderCards(list) {
+    const grid = document.getElementById("city-grid");
+    document.getElementById("city-count").textContent = list.length;
+
+    if (list.length === 0) {
+        grid.innerHTML = '<div class="no-results"><h3>Nenhuma cidade encontrada</h3><p>Tente ajustar os filtros.</p></div>';
+        return;
+    }
+
+    grid.innerHTML = list.map(c => `
+        <div class="card" onclick="openModal('${c.name}')">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">${c.name}</div>
+                    <div class="card-region">${c.region} &bull; ${c.macro}</div>
+                </div>
+                <div class="card-grade ${getGradeClass(c.grade)}">${c.gradeLabel}</div>
+            </div>
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value">${formatPop(c.population)}</div>
+                    <div class="metric-label">Populacao</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">${c.foreigners}%</div>
+                    <div class="metric-label">Estrangeiros</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">&euro;${c.rentAvg}</div>
+                    <div class="metric-label">Aluguel/m2</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                ${c.tags.slice(0, 4).map(t => `<span class="tag ${c.tags.indexOf(t) === 0 ? 'tag-highlight' : ''}">${t}</span>`).join("")}
+            </div>
+        </div>
+    `).join("");
+}
+
+function getRatingColor(score) {
+    if (score >= 8) return "var(--green)";
+    if (score >= 6) return "var(--yellow)";
+    if (score >= 4) return "var(--orange)";
+    return "var(--red)";
+}
+
+function openModal(name) {
+    const c = cities.find(x => x.name === name);
+    if (!c) return;
+
+    document.getElementById("modal-title").textContent = c.name;
+    document.getElementById("modal-region").textContent = `${c.region} \u2022 ${c.macro}`;
+
+    const s = c.scores;
+    const body = document.getElementById("modal-body");
+    body.innerHTML = `
+        <div class="modal-metrics-grid">
+            <div class="modal-metric"><div class="val">${formatPop(c.population)}</div><div class="lbl">Populacao</div></div>
+            <div class="modal-metric"><div class="val">${c.foreigners}%</div><div class="lbl">Estrangeiros</div></div>
+            <div class="modal-metric"><div class="val">&euro;${c.rentRange}/m&sup2;</div><div class="lbl">Faixa Aluguel</div></div>
+            <div class="modal-metric"><div class="val" style="color:${getRatingColor(gradeOrder[c.grade]*2)}">${c.gradeLabel}</div><div class="lbl">Nota Familia</div></div>
+        </div>
+
+        <div class="modal-section">
+            <h3>Avaliacao por Categoria</h3>
+            ${["escola", "saude", "mercados", "transporte", "estrangeiros", "custoVida", "qualidadeVida"].map(k => `
+                <div class="rating-bar">
+                    <span class="label">${{escola:"Escola",saude:"Saude",mercados:"Mercados",transporte:"Transporte",estrangeiros:"Estrangeiros",custoVida:"Custo Vida",qualidadeVida:"Qualidade"}[k]}</span>
+                    <div class="rating-track"><div class="rating-fill" style="width:${s[k]*10}%;background:${getRatingColor(s[k])}"></div></div>
+                    <span class="score" style="color:${getRatingColor(s[k])}">${s[k]}</span>
+                </div>
+            `).join("")}
+        </div>
+
+        <div class="modal-section">
+            <h3>Clima</h3>
+            <p>${c.climate}</p>
+        </div>
+
+        <div class="modal-section">
+            <h3>Economia</h3>
+            <p>${c.economy}</p>
+        </div>
+
+        <div class="modal-section">
+            <h3>Saude</h3>
+            <p>${c.healthcare}</p>
+        </div>
+
+        <div class="modal-section">
+            <h3>Escolas</h3>
+            <p>${c.schools}</p>
+            <p style="color:var(--text-dim);font-size:13px;margin-top:4px;">${c.schoolTypes}</p>
+        </div>
+
+        <div class="modal-section">
+            <h3>Mercados e Comercio</h3>
+            <p>${c.markets}</p>
+        </div>
+
+        <div class="modal-section">
+            <h3>Transporte</h3>
+            <p>${c.transport}</p>
+        </div>
+
+        <div class="modal-section">
+            <h3>Aceitacao de Estrangeiros</h3>
+            <p>${c.acceptance}</p>
+            <p style="color:var(--text-dim);font-size:13px;margin-top:4px;">${c.racismNote}</p>
+        </div>
+
+        <div class="modal-section">
+            <h3>Bairros Recomendados</h3>
+            <p>${c.neighborhoods}</p>
+        </div>
+    `;
+
+    document.getElementById("modal").classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+    document.getElementById("modal").classList.remove("open");
+    document.body.style.overflow = "";
+}
+
+function filterCities() {
+    const search = document.getElementById("search").value.toLowerCase();
+    const region = document.getElementById("region-filter").value;
+    const grade = document.getElementById("grade-filter").value;
+    const macro = document.getElementById("macro-filter").value;
+
+    let filtered = cities.filter(c => {
+        if (search && !c.name.toLowerCase().includes(search) && !c.region.toLowerCase().includes(search) && !c.tags.some(t => t.includes(search))) return false;
+        if (region && c.region !== region) return false;
+        if (grade && c.grade !== grade) return false;
+        if (macro && c.macro !== macro) return false;
+        return true;
+    });
+
+    filtered = sortCities(filtered);
+    renderCards(filtered);
+}
+
+function sortCities(list) {
+    return [...list].sort((a, b) => {
+        switch (currentSort) {
+            case "grade": return (gradeOrder[b.grade] - gradeOrder[a.grade]) || (b.foreigners - a.foreigners);
+            case "rent": return a.rentAvg - b.rentAvg;
+            case "foreigners": return b.foreigners - a.foreigners;
+            case "population": return b.population - a.population;
+            case "name": return a.name.localeCompare(b.name);
+            default: return 0;
+        }
+    });
+}
+
+function setSort(s) {
+    currentSort = s;
+    document.querySelectorAll(".sort-btn").forEach(b => b.classList.toggle("active", b.dataset.sort === s));
+    filterCities();
+}
+
+function renderRegions() {
+    const grid = document.getElementById("regions-grid");
+    grid.innerHTML = regionsData.map(r => `
+        <div class="region-card">
+            <h3>${r.name}</h3>
+            <div class="sub">Capital: ${r.capital} &bull; ${r.macro}</div>
+            <div class="detail">
+                <strong>Populacao:</strong> ${r.pop}<br>
+                <strong>Estrangeiros:</strong> ${r.foreigners}<br>
+                <strong>Saude:</strong> ${r.healthRank}<br><br>
+                ${r.desc}
+            </div>
+        </div>
+    `).join("");
+}
+
+function switchTab(tab) {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+    event.target.classList.add("active");
+    document.getElementById("tab-" + tab).classList.add("active");
+}
+
+// ESC to close modal
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+// INIT
+renderCards(sortCities(cities));
+renderRegions();
+</script>
+
+</body>
+</html>
