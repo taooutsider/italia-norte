@@ -484,6 +484,169 @@
 
         .family-card .info strong { color: var(--text); }
 
+        /* Profile Selector */
+        .profile-selector {
+            background: linear-gradient(135deg, rgba(108,140,255,0.08) 0%, rgba(167,139,250,0.08) 100%);
+            border: 1px solid rgba(108,140,255,0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .profile-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .profile-active-badge {
+            font-size: 11px;
+            padding: 1px 7px;
+            border-radius: 10px;
+            background: rgba(108,140,255,0.18);
+            color: var(--accent);
+            display: none;
+        }
+        .profile-toggle-btn {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 6px;
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+        .profile-toggle-btn:hover { background: var(--surface); color: var(--text); }
+        .profile-panel {
+            display: none;
+            padding: 4px 20px 16px;
+            border-top: 1px solid rgba(108,140,255,0.12);
+        }
+        .profile-panel.open { display: block; }
+        .profile-section { margin-top: 12px; }
+        .profile-section-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            margin-bottom: 7px;
+            font-weight: 600;
+        }
+        .profile-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+        .profile-chip {
+            font-size: 12px;
+            padding: 4px 11px;
+            border-radius: 20px;
+            background: var(--surface2);
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+        .profile-chip:hover { border-color: var(--accent-dim); color: var(--text); }
+        .profile-chip.active {
+            background: rgba(108,140,255,0.15);
+            color: var(--accent);
+            border-color: rgba(108,140,255,0.45);
+            font-weight: 600;
+        }
+        .profile-summary {
+            font-size: 12px;
+            color: var(--text-dim);
+            padding: 8px 20px;
+            border-top: 1px solid rgba(108,140,255,0.1);
+            background: rgba(0,0,0,0.1);
+            min-height: 34px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        /* Checklist Progress */
+        .checklist-progress-wrap {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 24px;
+        }
+        .checklist-progress-bar-bg {
+            height: 8px;
+            margin-top: 8px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
+        .checklist-progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--green));
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+        .checklist-phase { margin-bottom: 28px; }
+        .checklist-phase-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        .checklist-sub-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+            margin: 14px 0 6px;
+            font-weight: 600;
+        }
+        .check-item.done span { text-decoration: line-through; opacity: 0.5; }
+
+        /* Calculator rows */
+        .calc-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .calc-row:last-child { border-bottom: none; }
+        .calc-lbl { flex: 1; font-size: 13px; color: var(--text); }
+        .calc-hint { font-size: 11px; color: var(--text-dim); white-space: nowrap; flex-shrink: 0; }
+        .calc-inp {
+            width: 90px;
+            padding: 5px 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 13px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .calc-inp:focus { outline: none; border-color: var(--accent-dim); }
+        @media (max-width: 600px) {
+            .calc-hint { display: none; }
+            .calc-inp { width: 72px; }
+        }
+
         /* Responsive */
         @media (max-width: 900px) {
             .grid { grid-template-columns: 1fr; }
@@ -970,11 +1133,52 @@
 </div>
 
 <div class="family-banner">
-    <div class="family-card">
-        <div class="info"><strong data-i18n="famLabel">Familia:</strong> 2 adultos + 3 criancas (4, 8, 12 anos)</div>
-        <div class="info"><strong data-i18n="moveLabel">Mudanca:</strong> 27 de Julho 2026</div>
-        <div class="info"><strong data-i18n="destLabel">Destino base:</strong> Desenzano del Garda</div>
-        <div class="info"><strong data-i18n="filterLabel">Filtro ativo:</strong> escola 4-13 anos + saude + mercados + transporte</div>
+    <div class="profile-selector">
+        <div class="profile-header" onclick="toggleProfilePanel()">
+            <span class="profile-title">
+                <span>👤</span>
+                <span>Meu Perfil</span>
+                <span class="profile-active-badge" id="profile-active-count"></span>
+            </span>
+            <button class="profile-toggle-btn" id="profile-toggle-btn" onclick="event.stopPropagation();toggleProfilePanel()">▼ editar perfil</button>
+        </div>
+        <div class="profile-panel" id="profile-panel">
+            <div class="profile-section">
+                <div class="profile-section-label">Composição Familiar</div>
+                <div class="profile-chips">
+                    <button class="profile-chip" data-group="family" data-val="solo" onclick="toggleChip(this)">👤 Solo</button>
+                    <button class="profile-chip" data-group="family" data-val="casal" onclick="toggleChip(this)">👫 Casal s/ filhos</button>
+                    <button class="profile-chip" data-group="family" data-val="bebes" onclick="toggleChip(this)">👶 Filhos 0–5</button>
+                    <button class="profile-chip" data-group="family" data-val="escolares" onclick="toggleChip(this)">🎒 Filhos 6–13</button>
+                    <button class="profile-chip" data-group="family" data-val="adolescentes" onclick="toggleChip(this)">🧑 Adolescentes</button>
+                    <button class="profile-chip" data-group="family" data-val="aposentados" onclick="toggleChip(this)">🏖️ Aposentados</button>
+                </div>
+            </div>
+            <div class="profile-section">
+                <div class="profile-section-label">Minhas Prioridades</div>
+                <div class="profile-chips">
+                    <button class="profile-chip" data-group="priority" data-val="escola" onclick="toggleChip(this)">🎓 Escolas</button>
+                    <button class="profile-chip" data-group="priority" data-val="saude" onclick="toggleChip(this)">🏥 Saúde</button>
+                    <button class="profile-chip" data-group="priority" data-val="custo" onclick="toggleChip(this)">💰 Custo baixo</button>
+                    <button class="profile-chip" data-group="priority" data-val="litoral" onclick="toggleChip(this)">🌊 Litoral</button>
+                    <button class="profile-chip" data-group="priority" data-val="montanha" onclick="toggleChip(this)">⛰️ Montanha</button>
+                    <button class="profile-chip" data-group="priority" data-val="urbana" onclick="toggleChip(this)">🏙️ Urbana</button>
+                    <button class="profile-chip" data-group="priority" data-val="transporte" onclick="toggleChip(this)">🚆 Transporte público</button>
+                    <button class="profile-chip" data-group="priority" data-val="seguranca" onclick="toggleChip(this)">🛡️ Segurança</button>
+                    <button class="profile-chip" data-group="priority" data-val="lago" onclick="toggleChip(this)">🏞️ Lago / Mar</button>
+                </div>
+            </div>
+            <div class="profile-section">
+                <div class="profile-section-label">Quando Pretende Se Mudar</div>
+                <div class="profile-chips">
+                    <button class="profile-chip" data-group="timing" data-val="2025" onclick="toggleChip(this)">📅 2025</button>
+                    <button class="profile-chip" data-group="timing" data-val="2026" onclick="toggleChip(this)">📅 2026</button>
+                    <button class="profile-chip" data-group="timing" data-val="2027" onclick="toggleChip(this)">📅 2027+</button>
+                    <button class="profile-chip" data-group="timing" data-val="pesquisando" onclick="toggleChip(this)">🔍 Só pesquisando</button>
+                </div>
+            </div>
+        </div>
+        <div class="profile-summary" id="profile-summary">Selecione seu perfil para personalizar a experiência &nbsp;▲</div>
     </div>
 </div>
 
@@ -1035,23 +1239,106 @@
 
 <!-- TAB: CALCULATOR -->
 <div id="tab-calculator" class="tab-content">
-    <div style="max-width:700px;margin:0 auto;padding:32px 24px;">
-        <h2 style="font-size:20px;margin-bottom:8px;" data-i18n="calcTitle">Calculadora de Viabilidade</h2>
-        <p style="color:var(--text-dim);font-size:14px;margin-bottom:28px;" data-i18n="calcSubtitle">Informe seu orçamento e veja quais cidades são viáveis.</p>
+<div style="max-width:820px;margin:0 auto;padding:28px 24px;">
+    <h2 style="font-size:20px;margin-bottom:6px;">🧮 Calculadora de Custo de Vida</h2>
+    <p style="color:var(--text-dim);font-size:13px;margin-bottom:24px;">Estimativa mensal real para o Norte da Itália. Ajuste cada categoria e descubra seu orçamento ideal.</p>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
-            <div>
-                <label style="font-size:12px;color:var(--text-dim);display:block;margin-bottom:6px;" data-i18n="calcBudget">Orçamento mensal total (€)</label>
-                <input type="number" id="calc-budget" value="4000" min="1000" max="20000" step="100" style="width:100%;padding:10px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;" oninput="runCalc()">
-            </div>
-            <div>
-                <label style="font-size:12px;color:var(--text-dim);display:block;margin-bottom:6px;" data-i18n="calcRentPct">% do orçamento para aluguel</label>
-                <input type="number" id="calc-rent-pct" value="35" min="10" max="70" step="5" style="width:100%;padding:10px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:16px;" oninput="runCalc()">
+    <!-- Cabeçalho: adultos + crianças + orçamento -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;">
+        <div>
+            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;">Adultos</label>
+            <input type="number" id="calc-adults" value="2" min="1" max="6" step="1" style="width:100%;padding:9px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:15px;" oninput="resetCalcDefaults()">
+        </div>
+        <div>
+            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;">Crianças</label>
+            <input type="number" id="calc-kids" value="0" min="0" max="8" step="1" style="width:100%;padding:9px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:15px;" oninput="resetCalcDefaults()">
+        </div>
+        <div>
+            <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;">Meu Orçamento (€)</label>
+            <input type="number" id="calc-budget" value="4000" min="500" max="30000" step="100" style="width:100%;padding:9px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:15px;" oninput="runCalc()">
+        </div>
+    </div>
+
+    <!-- Tabela de despesas -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;">
+        <div style="padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">Categoria de Despesa</span>
+            <div style="display:flex;gap:8px;align-items:center;">
+                <span style="font-size:11px;color:var(--text-dim);">Valor Mensal (€)</span>
+                <button onclick="resetCalcDefaults()" style="font-size:11px;padding:3px 10px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text-dim);cursor:pointer;">↺ redefinir</button>
             </div>
         </div>
 
-        <div id="calc-result" style="margin-top:8px;"></div>
+        <!-- Moradia -->
+        <div style="padding:8px 16px 4px;background:rgba(108,140,255,0.04);">
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);padding:6px 0 2px;font-weight:700;">🏠 Moradia</div>
+        </div>
+        <div class="calc-row"><span class="calc-lbl">🛏️ Aluguel (3 quartos)</span><span class="calc-hint">€900–2.500/mês</span><input class="calc-inp" id="ce-rent" type="number" value="1200" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">💡 Energia elétrica</span><span class="calc-hint">€70–160/mês</span><input class="calc-inp" id="ce-energia" type="number" value="100" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">🔥 Gás (aquecimento + cozinha)</span><span class="calc-hint">€60–200/mês (mais no inverno)</span><input class="calc-inp" id="ce-gas" type="number" value="90" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">💧 Água</span><span class="calc-hint">€25–45/mês</span><input class="calc-inp" id="ce-agua" type="number" value="30" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">🌐 Internet em casa (fibra)</span><span class="calc-hint">€25–40/mês</span><input class="calc-inp" id="ce-internet" type="number" value="30" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">🏢 Condomínio</span><span class="calc-hint">€50–200/mês</span><input class="calc-inp" id="ce-condo" type="number" value="80" min="0" oninput="runCalc()"></div>
+
+        <!-- Alimentação -->
+        <div style="padding:8px 16px 4px;background:rgba(74,222,128,0.04);">
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--green);padding:6px 0 2px;font-weight:700;">🛒 Alimentação</div>
+        </div>
+        <div class="calc-row"><span class="calc-lbl">🛒 Supermercado + feira</span><span class="calc-hint">€400–700 por família de 4</span><input class="calc-inp" id="ce-supermercado" type="number" value="500" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">🍕 Restaurantes / refeições fora</span><span class="calc-hint">€150–400/mês</span><input class="calc-inp" id="ce-restaurante" type="number" value="200" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">☕ Cafés, padaria, bar</span><span class="calc-hint">€40–100/mês</span><input class="calc-inp" id="ce-cafe" type="number" value="50" min="0" oninput="runCalc()"></div>
+
+        <!-- Transporte -->
+        <div style="padding:8px 16px 4px;background:rgba(251,191,36,0.04);">
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--yellow);padding:6px 0 2px;font-weight:700;">🚆 Transporte</div>
+        </div>
+        <div class="calc-row"><span class="calc-lbl">🚆 Trem / Metrô / Ônibus (por adulto)</span><span class="calc-hint">€50–130/adulto/mês</span><input class="calc-inp" id="ce-transporte" type="number" value="100" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">🚗 Carro: combustível + seguro</span><span class="calc-hint">€250–500/mês (se tiver)</span><input class="calc-inp" id="ce-carro" type="number" value="0" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">🅿️ Estacionamento / ZTL</span><span class="calc-hint">€30–120/mês</span><input class="calc-inp" id="ce-estac" type="number" value="0" min="0" oninput="runCalc()"></div>
+
+        <!-- Comunicação -->
+        <div style="padding:8px 16px 4px;background:rgba(167,139,250,0.04);">
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--purple);padding:6px 0 2px;font-weight:700;">📱 Comunicação</div>
+        </div>
+        <div class="calc-row"><span class="calc-lbl">📱 Celular (por adulto)</span><span class="calc-hint">€8–25/pessoa/mês (Iliad €8)</span><input class="calc-inp" id="ce-celular" type="number" value="20" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">📺 Streaming (Netflix, Disney+…)</span><span class="calc-hint">€15–35/mês</span><input class="calc-inp" id="ce-streaming" type="number" value="20" min="0" oninput="runCalc()"></div>
+
+        <!-- Saúde -->
+        <div style="padding:8px 16px 4px;background:rgba(248,113,113,0.04);">
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--red);padding:6px 0 2px;font-weight:700;">🏥 Saúde</div>
+        </div>
+        <div class="calc-row"><span class="calc-lbl">💊 Farmácia + ticket SSN</span><span class="calc-hint">€30–80/mês</span><input class="calc-inp" id="ce-farmacia" type="number" value="40" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">🦷 Dentista + especialistas</span><span class="calc-hint">€30–100/mês (estimativa)</span><input class="calc-inp" id="ce-dentista" type="number" value="40" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">🏋️ Academia / esporte</span><span class="calc-hint">€30–80/pessoa/mês</span><input class="calc-inp" id="ce-academia" type="number" value="40" min="0" oninput="runCalc()"></div>
+
+        <!-- Educação e Filhos -->
+        <div style="padding:8px 16px 4px;background:rgba(74,222,128,0.03);">
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--green);padding:6px 0 2px;font-weight:700;">🎒 Educação e Filhos</div>
+        </div>
+        <div class="calc-row"><span class="calc-lbl">📚 Material escolar + uniformes</span><span class="calc-hint">€30–80/mês/criança</span><input class="calc-inp" id="ce-escola" type="number" value="0" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">⚽ Atividades extracurriculares</span><span class="calc-hint">€50–150/mês/criança</span><input class="calc-inp" id="ce-atividades" type="number" value="0" min="0" oninput="runCalc()"></div>
+
+        <!-- Impostos e Taxas -->
+        <div style="padding:8px 16px 4px;background:rgba(251,191,36,0.03);">
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--yellow);padding:6px 0 2px;font-weight:700;">📋 Impostos e Taxas</div>
+        </div>
+        <div class="calc-row"><span class="calc-lbl">🗑️ TARI (taxa de lixo anual ÷ 12)</span><span class="calc-hint">~€20–50/mês</span><input class="calc-inp" id="ce-tari" type="number" value="25" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">🧾 Canone RAI (TV pública ÷ 12)</span><span class="calc-hint">~€8/mês (€90/ano)</span><input class="calc-inp" id="ce-rai" type="number" value="8" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">📊 Commercialista (contador)</span><span class="calc-hint">€50–200/mês</span><input class="calc-inp" id="ce-contador" type="number" value="0" min="0" oninput="runCalc()"></div>
+
+        <!-- Lazer e Pessoal -->
+        <div style="padding:8px 16px 4px;background:rgba(108,140,255,0.03);">
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);padding:6px 0 2px;font-weight:700;">🎭 Lazer e Despesas Pessoais</div>
+        </div>
+        <div class="calc-row"><span class="calc-lbl">🎭 Lazer, cinema, saídas</span><span class="calc-hint">€100–300/mês</span><input class="calc-inp" id="ce-lazer" type="number" value="150" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">👗 Roupas e calçados</span><span class="calc-hint">€50–150/mês</span><input class="calc-inp" id="ce-roupas" type="number" value="60" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">🏖️ Viagens e férias</span><span class="calc-hint">€100–400/mês (reserva)</span><input class="calc-inp" id="ce-viagens" type="number" value="150" min="0" oninput="runCalc()"></div>
+        <div class="calc-row"><span class="calc-lbl">🆘 Imprevistos e reserva</span><span class="calc-hint">mín. 5-10% do total</span><input class="calc-inp" id="ce-imprev" type="number" value="200" min="0" oninput="runCalc()"></div>
     </div>
+
+    <!-- Resultado -->
+    <div id="calc-result"></div>
+</div>
 </div>
 
 <!-- TAB: MAP -->
@@ -1066,63 +1353,144 @@
 
 <!-- TAB: CHECKLIST -->
 <div id="tab-checklist" class="tab-content">
-    <div style="max-width:800px;margin:0 auto;padding:24px;">
-        <h2 style="margin-bottom:24px;font-size:20px;">Checklist de Documentos e Providencias</h2>
+    <div style="max-width:820px;margin:0 auto;padding:24px;">
+        <h2 style="margin-bottom:6px;font-size:20px;">🗺️ Jornada do Imigrante</h2>
+        <p style="color:var(--text-dim);font-size:13px;margin-bottom:20px;">Checklist completo da pré-partida até os 6 primeiros meses na Itália. Marque conforme avança.</p>
 
-        <div style="margin-bottom:24px;">
-            <h3 style="color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);">Documentos Pessoais (todos)</h3>
-            <div class="check-item"><input type="checkbox"><span>Passaportes italianos validos</span></div>
-            <div class="check-item"><input type="checkbox"><span>Certidao de nascimento de todos</span></div>
-            <div class="check-item"><input type="checkbox"><span>Certidao de casamento</span></div>
-            <div class="check-item"><input type="checkbox"><span>RG e CPF</span></div>
-            <div class="check-item"><input type="checkbox"><span>Traducao juramentada das certidoes para italiano</span></div>
-            <div class="check-item"><input type="checkbox"><span>Apostila de Haia nas certidoes</span></div>
+        <!-- Progress bar -->
+        <div class="checklist-progress-wrap">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:13px;font-weight:600;">Progresso Geral</span>
+                <span id="checklist-progress-label" style="font-size:13px;color:var(--accent);font-weight:600;">0/72 concluídos</span>
+            </div>
+            <div class="checklist-progress-bar-bg">
+                <div class="checklist-progress-bar-fill" id="checklist-progress-bar" style="width:0%"></div>
+            </div>
         </div>
 
-        <div style="margin-bottom:24px;">
-            <h3 style="color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);">Documentos das Criancas</h3>
-            <div class="check-item"><input type="checkbox"><span>Certidao de nascimento (traduzida + apostilada)</span></div>
-            <div class="check-item"><input type="checkbox"><span>Historico escolar das criancas maiores</span></div>
-            <div class="check-item"><input type="checkbox"><span>Declaracao de escolaridade da escola atual</span></div>
-            <div class="check-item"><input type="checkbox"><span>Traducao juramentada do historico escolar</span></div>
-            <div class="check-item"><input type="checkbox"><span>Carteira de vacinacao completa</span></div>
-            <div class="check-item"><input type="checkbox"><span>Traducao da carteira de vacinacao</span></div>
+        <!-- FASE 0: Documentos no Brasil -->
+        <div class="checklist-phase">
+            <div class="checklist-phase-header">
+                <span>🇧🇷</span><span style="color:var(--accent);">Documentação no Brasil</span>
+            </div>
+            <div class="checklist-sub-label">📋 Documentos Pessoais de Todos</div>
+            <div class="check-item"><input type="checkbox" data-id="cl-1" onchange="saveChecklistItem(this)"><span>Passaportes italianos de todos válidos (mín. 2 anos de validade restante)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-2" onchange="saveChecklistItem(this)"><span>Certidão de nascimento de todos: original + tradução juramentada + apostila Haia</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-3" onchange="saveChecklistItem(this)"><span>Certidão de casamento: original + tradução juramentada + apostila Haia</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-4" onchange="saveChecklistItem(this)"><span>RG e CPF de todos os adultos</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-5" onchange="saveChecklistItem(this)"><span>CNH (carteira de motorista) + tradução juramentada oficial (para conversão italiana)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-6" onchange="saveChecklistItem(this)"><span>Certidão negativa criminal federal + estadual + apostila Haia</span></div>
+            <div class="checklist-sub-label">🎒 Documentos das Crianças</div>
+            <div class="check-item"><input type="checkbox" data-id="cl-7" onchange="saveChecklistItem(this)"><span>Histórico escolar de cada criança: traduzido + apostilado</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-8" onchange="saveChecklistItem(this)"><span>Declaração de matrícula / frequência escolar atual</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-9" onchange="saveChecklistItem(this)"><span>Carteira de vacinação completa de todos + tradução para italiano</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-10" onchange="saveChecklistItem(this)"><span>Receitas médicas para medicamentos de uso contínuo (traduzidas)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-11" onchange="saveChecklistItem(this)"><span>Exames médicos recentes e resumo clínico de cada membro</span></div>
+            <div class="checklist-sub-label">💰 Documentos Financeiros</div>
+            <div class="check-item"><input type="checkbox" data-id="cl-12" onchange="saveChecklistItem(this)"><span>Extratos bancários dos últimos 6 meses</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-13" onchange="saveChecklistItem(this)"><span>Declaração de IR dos últimos 2 anos</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-14" onchange="saveChecklistItem(this)"><span>Comprovante de renda (holerites, pró-labore ou contrato de trabalho)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-15" onchange="saveChecklistItem(this)"><span>Carta do contador declarando situação financeira</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-16" onchange="saveChecklistItem(this)"><span>Carta de referência bancária</span></div>
+            <div class="checklist-sub-label">🗂️ Organização e Preparação</div>
+            <div class="check-item"><input type="checkbox" data-id="cl-17" onchange="saveChecklistItem(this)"><span>Escanear TODOS os documentos em alta qualidade → armazenar em nuvem (Google Drive / iCloud)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-18" onchange="saveChecklistItem(this)"><span>Fazer 3 cópias físicas de cada doc: original + cópia simples + envelope com digitais</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-19" onchange="saveChecklistItem(this)"><span>Organizar uma pasta física por membro da família</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-20" onchange="saveChecklistItem(this)"><span>Reserva financeira: mínimo 3 meses de custo de vida + 3 meses de caução do aluguel</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-21" onchange="saveChecklistItem(this)"><span>Seguro de saúde privado para os primeiros 3–6 meses (antes de entrar no SSN)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-22" onchange="saveChecklistItem(this)"><span>Pesquisar imobiliárias italianas: Immobiliare.it, Idealista, Casa.it</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-23" onchange="saveChecklistItem(this)"><span>Entrar em grupos de brasileiros na cidade escolhida (Facebook, WhatsApp)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-24" onchange="saveChecklistItem(this)"><span>Confirmar vagas escolares e calendário de matrículas da escola italiana</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-25" onchange="saveChecklistItem(this)"><span>Verificar medicamentos que precisam ser trazidos em maior quantidade</span></div>
         </div>
 
-        <div style="margin-bottom:24px;">
-            <h3 style="color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);">Documentos Financeiros</h3>
-            <div class="check-item"><input type="checkbox"><span>Extratos bancarios ultimos 6 meses</span></div>
-            <div class="check-item"><input type="checkbox"><span>Declaracao de imposto de renda</span></div>
-            <div class="check-item"><input type="checkbox"><span>Contratos de trabalho ou empresa</span></div>
-            <div class="check-item"><input type="checkbox"><span>Comprovante de renda</span></div>
-            <div class="check-item"><input type="checkbox"><span>Carta do contador</span></div>
-            <div class="check-item"><input type="checkbox"><span>Carta de referencia bancaria</span></div>
+        <!-- FASE 1: Chegada -->
+        <div class="checklist-phase">
+            <div class="checklist-phase-header">
+                <span>✈️</span><span style="color:var(--yellow);">Chegada — Primeiras 48h</span>
+            </div>
+            <div class="check-item"><input type="checkbox" data-id="cl-26" onchange="saveChecklistItem(this)"><span>Acomodação inicial confirmada (hotel, AirBnB ou aluguel já assinado)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-27" onchange="saveChecklistItem(this)"><span>Chip SIM italiano ativo: TIM, WindTre, Iliad (dados + ligações)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-28" onchange="saveChecklistItem(this)"><span>Compra de necessidades básicas (supermercado, farmácia)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-29" onchange="saveChecklistItem(this)"><span>Localizar a Agenzia delle Entrate mais próxima (para Codice Fiscale)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-30" onchange="saveChecklistItem(this)"><span>Localizar o Comune / Municipio (para registro de residência)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-31" onchange="saveChecklistItem(this)"><span>Verificar prazo e condições do contrato de aluguel definitivo</span></div>
         </div>
 
-        <div style="margin-bottom:24px;">
-            <h3 style="color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);">Documentos Complementares</h3>
-            <div class="check-item"><input type="checkbox"><span>Carteira de motorista brasileira</span></div>
-            <div class="check-item"><input type="checkbox"><span>Certidao negativa criminal</span></div>
-            <div class="check-item"><input type="checkbox"><span>Receitas medicas das criancas</span></div>
-            <div class="check-item"><input type="checkbox"><span>Exames medicos recentes</span></div>
-            <div class="check-item"><input type="checkbox"><span>Receitas traduzidas (medicacao continua)</span></div>
+        <!-- FASE 2: Primeiras 2 semanas -->
+        <div class="checklist-phase">
+            <div class="checklist-phase-header">
+                <span>📅</span><span style="color:var(--orange);">Primeiras 2 Semanas</span>
+            </div>
+            <div class="check-item"><input type="checkbox" data-id="cl-32" onchange="saveChecklistItem(this)"><span>🔑 Codice Fiscale para cada adulto — Agenzia delle Entrate (presencial, com passaporte)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-33" onchange="saveChecklistItem(this)"><span>🔑 Codice Fiscale para cada criança (mesmo processo, mesmo local)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-34" onchange="saveChecklistItem(this)"><span>Assinar contrato de aluguel definitivo</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-35" onchange="saveChecklistItem(this)"><span>Confirmar que contrato foi registrado na Agenzia delle Entrate pelo proprietário</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-36" onchange="saveChecklistItem(this)"><span>Abrir conta bancária italiana: Fineco, Intesa Sanpaolo, N26 ou Revolut</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-37" onchange="saveChecklistItem(this)"><span>Contratar internet banda larga (TIM Fibra, Fastweb, WINDTRE, Vodafone)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-38" onchange="saveChecklistItem(this)"><span>Contratar gás e energia elétrica (se não incluso no aluguel)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-39" onchange="saveChecklistItem(this)"><span>Cartão de débito/crédito europeu funcional para despesas do dia a dia</span></div>
         </div>
 
-        <div style="margin-bottom:24px;">
-            <h3 style="color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);">Levar 3 Versoes de Cada Documento</h3>
-            <div class="check-item"><input type="checkbox"><span>Original</span></div>
-            <div class="check-item"><input type="checkbox"><span>Copia simples</span></div>
-            <div class="check-item"><input type="checkbox"><span>Versao digital (escanear tudo)</span></div>
+        <!-- FASE 3: Primeiro mês -->
+        <div class="checklist-phase">
+            <div class="checklist-phase-header">
+                <span>🏠</span><span style="color:var(--green);">Primeiro Mês — Burocracia Essencial</span>
+            </div>
+            <div class="check-item"><input type="checkbox" data-id="cl-40" onchange="saveChecklistItem(this)"><span>🔑 Registrar residência no Comune (Anagrafe) — base de tudo, obrigatório</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-41" onchange="saveChecklistItem(this)"><span>Solicitar Certificato di Residenza após o registro (usado em todas as repartições)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-42" onchange="saveChecklistItem(this)"><span>🔑 Inscrição no SSN (Servizio Sanitario Nazionale) — Azienda Sanitaria Locale (ASL)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-43" onchange="saveChecklistItem(this)"><span>Escolher e registrar Medico di Base (médico de família) para cada adulto</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-44" onchange="saveChecklistItem(this)"><span>Escolher e registrar Pediatra para cada criança</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-45" onchange="saveChecklistItem(this)"><span>🔑 Matrículas escolares na Segreteria da escola (necessita Codice Fiscale + residência)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-46" onchange="saveChecklistItem(this)"><span>Aguardar Tessera Sanitaria pelo correio (cartão do SUS italiano)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-47" onchange="saveChecklistItem(this)"><span>Transferências Brasil → Itália via Wise (melhor câmbio e menor taxa)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-48" onchange="saveChecklistItem(this)"><span>Verificar se crianças precisam de teste de nivelamento de italiano (a escola organiza)</span></div>
         </div>
 
-        <div style="margin-bottom:24px;">
-            <h3 style="color:var(--green);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);">Ao Chegar na Italia (sequencia)</h3>
-            <div class="check-item"><input type="checkbox"><span>1. Codice Fiscale (Agenzia delle Entrate)</span></div>
-            <div class="check-item"><input type="checkbox"><span>2. Alugar imovel (contrato)</span></div>
-            <div class="check-item"><input type="checkbox"><span>3. Registrar residencia no Comune</span></div>
-            <div class="check-item"><input type="checkbox"><span>4. Inscricao no SSN (Servizio Sanitario Nazionale)</span></div>
-            <div class="check-item"><input type="checkbox"><span>5. Matricular criancas na escola</span></div>
-            <div class="check-item"><input type="checkbox"><span>6. Abrir conta bancaria</span></div>
+        <!-- FASE 4: Primeiros 3 meses -->
+        <div class="checklist-phase">
+            <div class="checklist-phase-header">
+                <span>🏥</span><span style="color:var(--accent);">Primeiros 3 Meses — Saúde e Trabalho</span>
+            </div>
+            <div class="check-item"><input type="checkbox" data-id="cl-49" onchange="saveChecklistItem(this)"><span>Consultas médicas de check-up para todos com o Medico di Base</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-50" onchange="saveChecklistItem(this)"><span>Atualizar vacinas conforme o Calendario Vaccinale italiano</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-51" onchange="saveChecklistItem(this)"><span>Consulta odontológica para todos</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-52" onchange="saveChecklistItem(this)"><span>Verificar necessidade de equivalência de diploma para atuar profissionalmente</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-53" onchange="saveChecklistItem(this)"><span>Abrir Partita IVA se for autônomo/freelancer — sempre com ajuda de commercialista</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-54" onchange="saveChecklistItem(this)"><span>Contratar commercialista (contador italiano) de confiança para orientação fiscal</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-55" onchange="saveChecklistItem(this)"><span>Verificar obrigações fiscais: declaração de residente no exterior para a Receita Federal BR</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-56" onchange="saveChecklistItem(this)"><span>Iniciar processo de conversão da CNH (Motorizzazione Civile) — prazo: 1 ano da residência</span></div>
+        </div>
+
+        <!-- FASE 5: Primeiros 6 meses -->
+        <div class="checklist-phase">
+            <div class="checklist-phase-header">
+                <span>🎓</span><span style="color:var(--purple);">Primeiros 6 Meses — Integração</span>
+            </div>
+            <div class="check-item"><input type="checkbox" data-id="cl-57" onchange="saveChecklistItem(this)"><span>Aulas de italiano: Centri Territoriali Permanenti (CTP) — gratuito para residentes</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-58" onchange="saveChecklistItem(this)"><span>Participar de grupos e associações locais para integração na comunidade</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-59" onchange="saveChecklistItem(this)"><span>Pesquisar e inscrever crianças em atividades extracurriculares</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-60" onchange="saveChecklistItem(this)"><span>Verificar elegibilidade a benefícios municipais (bolsas, renda de cidadania, ISEE)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-61" onchange="saveChecklistItem(this)"><span>Declarar bens e contas no exterior — Quadro RW (até abril do ano seguinte ao da residência)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-62" onchange="saveChecklistItem(this)"><span>Verificar IVIE (imóvel no BR) e IVAFE (conta bancária no BR) — impostos italianos sobre bens externos</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-63" onchange="saveChecklistItem(this)"><span>Preparar documentação para primeira declaração IRPEF italiano (entrega em junho/ano seguinte)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-64" onchange="saveChecklistItem(this)"><span>Avaliação: a cidade atendeu às expectativas? Decidir permanência ou buscar nova cidade</span></div>
+        </div>
+
+        <!-- Alertas -->
+        <div style="background:rgba(248,113,113,0.07);border:1px solid rgba(248,113,113,0.2);border-radius:12px;padding:20px;margin-bottom:12px;">
+            <div class="checklist-phase-header" style="border-color:rgba(248,113,113,0.25);">
+                <span>⚠️</span><span style="color:var(--red);">Erros Clássicos a Evitar</span>
+            </div>
+            <div class="check-item"><input type="checkbox" data-id="cl-65" onchange="saveChecklistItem(this)"><span>Chegar sem histórico escolar traduzido e apostilado das crianças</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-66" onchange="saveChecklistItem(this)"><span>Chegar sem carteira de vacinação traduzida (pediatra exige)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-67" onchange="saveChecklistItem(this)"><span>Chegar sem comprovante de renda (trava a aprovação do aluguel)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-68" onchange="saveChecklistItem(this)"><span>Não apostilar certidões antes de sair do Brasil</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-69" onchange="saveChecklistItem(this)"><span>Subestimar o depósito do aluguel — quase sempre 3 meses adiantados</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-70" onchange="saveChecklistItem(this)"><span>Não contratar commercialista italiano cedo (pode custar caro depois)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-71" onchange="saveChecklistItem(this)"><span>Perder prazo da conversão da CNH (máximo 1 ano após residência)</span></div>
+            <div class="check-item"><input type="checkbox" data-id="cl-72" onchange="saveChecklistItem(this)"><span>Não declarar bens no exterior (Quadro RW) — multa de até 25% do patrimônio</span></div>
         </div>
     </div>
 </div>
@@ -4682,39 +5050,151 @@ function openCompareModal() {
 }
 function closeCompareModal() { document.getElementById('compare-modal').classList.remove('open'); }
 
+// ── Calculator ────────────────────────────────────────────────────────────────
+const calcDefaults = {
+    rent: { base: 1200 },
+    energia: { base: 100 },
+    gas: { base: 90 },
+    agua: { base: 30 },
+    internet: { base: 30 },
+    condo: { base: 80 },
+    supermercado: { perAdult: 180, perKid: 100 },
+    restaurante: { base: 100, perAdult: 50 },
+    cafe: { base: 30, perAdult: 10 },
+    transporte: { perAdult: 80 },
+    carro: { base: 0 },
+    estac: { base: 0 },
+    celular: { perAdult: 15 },
+    streaming: { base: 20 },
+    farmacia: { perPerson: 15 },
+    dentista: { perPerson: 15 },
+    academia: { base: 0 },
+    escola: { perKid: 50 },
+    atividades: { perKid: 80 },
+    tari: { base: 25 },
+    rai: { base: 8 },
+    contador: { base: 0 },
+    lazer: { base: 80, perAdult: 50 },
+    roupas: { base: 30, perPerson: 10 },
+    viagens: { base: 100, perPerson: 20 },
+    imprev: { base: 150 }
+};
+
+function getCalcValue(key) {
+    return parseInt(document.getElementById('ce-' + key)?.value) || 0;
+}
+
+function resetCalcDefaults() {
+    const adults = parseInt(document.getElementById('calc-adults')?.value) || 2;
+    const kids = parseInt(document.getElementById('calc-kids')?.value) || 0;
+    const people = adults + kids;
+    const d = calcDefaults;
+    const set = (id, v) => { const el = document.getElementById('ce-' + id); if (el) el.value = Math.round(v); };
+    set('rent', d.rent.base);
+    set('energia', d.energia.base);
+    set('gas', d.gas.base);
+    set('agua', d.agua.base);
+    set('internet', d.internet.base);
+    set('condo', d.condo.base);
+    set('supermercado', d.supermercado.perAdult * adults + d.supermercado.perKid * kids);
+    set('restaurante', d.restaurante.base + d.restaurante.perAdult * adults);
+    set('cafe', d.cafe.base + d.cafe.perAdult * adults);
+    set('transporte', d.transporte.perAdult * adults);
+    set('carro', d.carro.base);
+    set('estac', d.estac.base);
+    set('celular', d.celular.perAdult * adults);
+    set('streaming', d.streaming.base);
+    set('farmacia', d.farmacia.perPerson * people);
+    set('dentista', d.dentista.perPerson * people);
+    set('academia', d.academia.base);
+    set('escola', d.escola.perKid * kids);
+    set('atividades', d.atividades.perKid * kids);
+    set('tari', d.tari.base);
+    set('rai', d.rai.base);
+    set('contador', d.contador.base);
+    set('lazer', d.lazer.base + d.lazer.perAdult * adults);
+    set('roupas', d.roupas.base + d.roupas.perPerson * people);
+    set('viagens', d.viagens.base + d.viagens.perPerson * people);
+    set('imprev', d.imprev.base);
+    runCalc();
+}
+
 function runCalc() {
-    const budget = parseInt(document.getElementById('calc-budget').value) || 4000;
-    const rentPct = parseInt(document.getElementById('calc-rent-pct').value) || 35;
-    const maxRent = Math.round(budget * rentPct / 100);
-    const viable = cities.filter(c => c.rentApt3br && c.rentApt3br <= maxRent)
+    const budget = parseInt(document.getElementById('calc-budget')?.value) || 4000;
+    const cats = ['rent','energia','gas','agua','internet','condo','supermercado','restaurante','cafe','transporte','carro','estac','celular','streaming','farmacia','dentista','academia','escola','atividades','tari','rai','contador','lazer','roupas','viagens','imprev'];
+    const total = cats.reduce((s, k) => s + getCalcValue(k), 0);
+    const diff = budget - total;
+    const pct = budget > 0 ? Math.round(total / budget * 100) : 100;
+    const rentVal = getCalcValue('rent');
+    const rentPct = total > 0 ? Math.round(rentVal / total * 100) : 0;
+
+    // Find viable cities
+    const viable = cities.filter(c => c.rentApt3br && c.rentApt3br <= rentVal)
         .sort((a,b) => (gradeOrder[b.grade]||0) - (gradeOrder[a.grade]||0));
+
+    const diffColor = diff >= 0 ? 'var(--green)' : 'var(--red)';
+    const diffLabel = diff >= 0 ? `+€${diff.toLocaleString()} de sobra` : `−€${Math.abs(diff).toLocaleString()} acima do orçamento`;
+    const barColor = pct <= 90 ? 'var(--green)' : pct <= 110 ? 'var(--yellow)' : 'var(--red)';
+
     const el = document.getElementById('calc-result');
-    if (!viable.length) {
-        el.innerHTML = `<div style="color:var(--red);padding:20px;text-align:center;">${t('calcNone')}</div>`;
-        return;
-    }
     el.innerHTML = `
-        <div style="margin-bottom:12px;font-size:13px;color:var(--text-dim);">
-            ${t('calcMaxRent')}: <strong style="color:var(--accent)">€${maxRent.toLocaleString()}</strong> &nbsp;|&nbsp;
-            ${t('calcFound')}: <strong style="color:var(--green)">${viable.length} ${t('calcCities')}</strong>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:14px;">
+                <div>
+                    <div style="font-size:12px;color:var(--text-dim);margin-bottom:3px;">TOTAL ESTIMADO</div>
+                    <div style="font-size:28px;font-weight:800;color:${barColor}">€${total.toLocaleString()}<span style="font-size:14px;color:var(--text-dim);font-weight:400;">/mês</span></div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:12px;color:var(--text-dim);margin-bottom:3px;">SEU ORÇAMENTO</div>
+                    <div style="font-size:22px;font-weight:700;color:var(--text)">€${budget.toLocaleString()}</div>
+                    <div style="font-size:13px;font-weight:600;color:${diffColor};margin-top:2px;">${diffLabel}</div>
+                </div>
+            </div>
+            <div style="background:rgba(255,255,255,0.05);border-radius:4px;height:8px;overflow:hidden;margin-bottom:12px;">
+                <div style="width:${Math.min(pct,100)}%;height:100%;background:${barColor};border-radius:4px;transition:width 0.4s;"></div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:12px;">
+                <div style="text-align:center;">
+                    <div style="color:var(--text-dim);">Moradia</div>
+                    <div style="font-weight:700;font-size:15px;">€${(getCalcValue('rent')+getCalcValue('energia')+getCalcValue('gas')+getCalcValue('agua')+getCalcValue('internet')+getCalcValue('condo')).toLocaleString()}</div>
+                    <div style="color:var(--text-dim);">${total>0?Math.round((getCalcValue('rent')+getCalcValue('energia')+getCalcValue('gas')+getCalcValue('agua')+getCalcValue('internet')+getCalcValue('condo'))/total*100):0}%</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="color:var(--text-dim);">Alimentação</div>
+                    <div style="font-weight:700;font-size:15px;">€${(getCalcValue('supermercado')+getCalcValue('restaurante')+getCalcValue('cafe')).toLocaleString()}</div>
+                    <div style="color:var(--text-dim);">${total>0?Math.round((getCalcValue('supermercado')+getCalcValue('restaurante')+getCalcValue('cafe'))/total*100):0}%</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="color:var(--text-dim);">Transporte</div>
+                    <div style="font-weight:700;font-size:15px;">€${(getCalcValue('transporte')+getCalcValue('carro')+getCalcValue('estac')).toLocaleString()}</div>
+                    <div style="color:var(--text-dim);">${total>0?Math.round((getCalcValue('transporte')+getCalcValue('carro')+getCalcValue('estac'))/total*100):0}%</div>
+                </div>
+            </div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:8px;max-height:420px;overflow-y:auto;">
-        ${viable.slice(0,20).map(c => `
-            <div onclick="openModal('${c.name}')" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+
+        ${viable.length > 0 ? `
+        <div style="margin-bottom:8px;font-size:13px;color:var(--text-dim);">
+            Cidades com aluguel 3Q ≤ <strong style="color:var(--accent)">€${rentVal}</strong>:
+            <strong style="color:var(--green)">${viable.length} cidades</strong>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;max-height:360px;overflow-y:auto;">
+        ${viable.slice(0,12).map(c => `
+            <div onclick="openModal('${c.name}')" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
                 <div>
                     <div style="font-weight:700;font-size:14px;">${c.name}</div>
-                    <div style="font-size:12px;color:var(--text-dim);">${c.region}</div>
+                    <div style="font-size:11px;color:var(--text-dim);">${c.region}</div>
                 </div>
-                <div style="display:flex;gap:16px;align-items:center;">
+                <div style="display:flex;gap:14px;align-items:center;">
                     <div style="text-align:right;">
                         <div style="font-size:13px;font-weight:600;color:var(--green)">€${c.rentApt3br}/mês</div>
-                        <div style="font-size:11px;color:var(--text-dim);">3 quartos</div>
+                        <div style="font-size:11px;color:var(--text-dim);">aluguel 3Q</div>
                     </div>
-                    <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;">${c.gradeLabel}</div>
+                    <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">${c.gradeLabel}</div>
                 </div>
             </div>
         `).join('')}
         </div>
+        ` : `<div style="color:var(--red);padding:16px;text-align:center;font-size:13px;">Nenhuma cidade com aluguel ≤ €${rentVal}. Aumente o valor do aluguel ou ajuste seu orçamento.</div>`}
     `;
 }
 
@@ -5033,9 +5513,110 @@ function closeLightbox(e) {
     document.body.style.overflow = "hidden"; // modal still open
 }
 
+// ── User Profile ──────────────────────────────────────────────────────────────
+let userProfile = JSON.parse(localStorage.getItem('italia_profile') || '{"family":[],"priority":[],"timing":[]}');
+
+function initProfile() {
+    if (!userProfile.family) userProfile.family = [];
+    if (!userProfile.priority) userProfile.priority = [];
+    if (!userProfile.timing) userProfile.timing = [];
+    document.querySelectorAll('.profile-chip').forEach(btn => {
+        const group = btn.dataset.group;
+        const val = btn.dataset.val;
+        if (userProfile[group] && userProfile[group].includes(val)) {
+            btn.classList.add('active');
+        }
+    });
+    updateProfileSummary();
+    // Auto-open panel on first visit
+    const total = userProfile.family.length + userProfile.priority.length + userProfile.timing.length;
+    if (total === 0) toggleProfilePanel();
+}
+
+function toggleChip(btn) {
+    const group = btn.dataset.group;
+    const val = btn.dataset.val;
+    btn.classList.toggle('active');
+    if (!userProfile[group]) userProfile[group] = [];
+    if (btn.classList.contains('active')) {
+        if (!userProfile[group].includes(val)) userProfile[group].push(val);
+    } else {
+        userProfile[group] = userProfile[group].filter(v => v !== val);
+    }
+    localStorage.setItem('italia_profile', JSON.stringify(userProfile));
+    updateProfileSummary();
+}
+
+function updateProfileSummary() {
+    const summaryEl = document.getElementById('profile-summary');
+    const countEl = document.getElementById('profile-active-count');
+    if (!summaryEl) return;
+    const family = userProfile.family || [];
+    const priority = userProfile.priority || [];
+    const timing = userProfile.timing || [];
+    const total = family.length + priority.length + timing.length;
+    const familyLabels = { solo:'Solo', casal:'Casal s/ filhos', bebes:'Filhos 0–5', escolares:'Filhos 6–13', adolescentes:'Adolescentes', aposentados:'Aposentados' };
+    const priorityLabels = { escola:'Escolas', saude:'Saúde', custo:'Custo baixo', litoral:'Litoral', montanha:'Montanha', urbana:'Urbana', transporte:'Transporte', seguranca:'Segurança', lago:'Lago/Mar' };
+    if (countEl) {
+        countEl.textContent = total + (total === 1 ? ' selecionado' : ' selecionados');
+        countEl.style.display = total > 0 ? 'inline' : 'none';
+    }
+    if (total === 0) {
+        summaryEl.textContent = 'Selecione seu perfil para personalizar a experiência ▲';
+        return;
+    }
+    const parts = [];
+    if (family.length) parts.push('👤 ' + family.map(v => familyLabels[v] || v).join(' · '));
+    if (priority.length) parts.push('⭐ ' + priority.map(v => priorityLabels[v] || v).join(' · '));
+    if (timing.length) parts.push('📅 ' + timing.map(v => v === 'pesquisando' ? 'Só pesquisando' : v).join(' / '));
+    summaryEl.textContent = parts.join('   ');
+}
+
+function toggleProfilePanel() {
+    const panel = document.getElementById('profile-panel');
+    const btn = document.getElementById('profile-toggle-btn');
+    if (!panel) return;
+    panel.classList.toggle('open');
+    const isOpen = panel.classList.contains('open');
+    if (btn) btn.textContent = isOpen ? '▲ fechar' : '▼ editar perfil';
+}
+
+// ── Checklist ─────────────────────────────────────────────────────────────────
+function initChecklist() {
+    const saved = JSON.parse(localStorage.getItem('italia_checklist') || '{}');
+    document.querySelectorAll('#tab-checklist .check-item input[type="checkbox"]').forEach(cb => {
+        if (saved[cb.dataset.id]) {
+            cb.checked = true;
+            cb.closest('.check-item').classList.add('done');
+        }
+    });
+    updateChecklistProgress();
+}
+
+function saveChecklistItem(cb) {
+    const saved = JSON.parse(localStorage.getItem('italia_checklist') || '{}');
+    if (cb.checked) { saved[cb.dataset.id] = true; cb.closest('.check-item').classList.add('done'); }
+    else { delete saved[cb.dataset.id]; cb.closest('.check-item').classList.remove('done'); }
+    localStorage.setItem('italia_checklist', JSON.stringify(saved));
+    updateChecklistProgress();
+}
+
+function updateChecklistProgress() {
+    const all = document.querySelectorAll('#tab-checklist .check-item input[type="checkbox"]');
+    const done = document.querySelectorAll('#tab-checklist .check-item input[type="checkbox"]:checked');
+    const pct = all.length ? Math.round(done.length / all.length * 100) : 0;
+    const bar = document.getElementById('checklist-progress-bar');
+    const lbl = document.getElementById('checklist-progress-label');
+    if (bar) bar.style.width = pct + '%';
+    if (lbl) lbl.textContent = `${done.length}/${all.length} concluídos (${pct}%)`;
+}
+
 // INIT
 renderCards(sortCities(cities));
 renderRegions();
+initProfile();
+initChecklist();
+resetCalcDefaults();
 </script>
 
 <!-- Compare Bar -->
